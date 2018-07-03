@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2018-07-03T15:15:58Z" product-name="pxa_intelliplan_jobs">
+		<header/>
+		<body>
+			<!--FE LABELS:START-->
+			<trans-unit id="fe.no_categories_found">
+			    <source></source>
+			</trans-unit>
+			<trans-unit id="fe.no_root_category_set">
+			    <source></source>
+			</trans-unit>
+			<!--FE LABELS:END-->
+			
+			<trans-unit id="tx_pxa_intelliplan_jobs_domain_model_pi1">
+				<source>Intelliplan jobs</source>
+			</trans-unit>
+			<trans-unit id="tx_pxa_intelliplan_jobs_domain_model_pi1.description">
+				<source>Intelliplan jobs integration</source>
+			</trans-unit>
+			<trans-unit id="tx_pxaintelliplanjobs_domain_model_job">
+				<source>Job</source>
+			</trans-unit>
+			<trans-unit id="tx_pxaintelliplanjobs_domain_model_job.title">
+				<source>Title</source>
+			</trans-unit>
+			<trans-unit id="tx_pxaintelliplanjobs_domain_model_job.city">
+				<source>City</source>
+			</trans-unit>
+			<trans-unit id="tx_pxaintelliplanjobs_domain_model_job.region">
+				<source>Region</source>
+			</trans-unit>
+			<trans-unit id="tx_pxaintelliplanjobs_domain_model_job.company">
+				<source>Company</source>
+			</trans-unit>
+			<trans-unit id="tx_pxaintelliplanjobs_domain_model_job.extent">
+				<source>Extent</source>
+			</trans-unit>
+			<trans-unit id="tx_pxaintelliplanjobs_domain_model_job.start">
+				<source>Start</source>
+			</trans-unit>
+			<trans-unit id="tx_pxaintelliplanjobs_domain_model_job.apply_start">
+				<source>Apply Start</source>
+			</trans-unit>
+			<trans-unit id="tx_pxaintelliplanjobs_domain_model_job.body">
+				<source>Body</source>
+			</trans-unit>
+			<trans-unit id="tx_pxaintelliplanjobs_domain_model_job.content_elements">
+				<source>Content Elements</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

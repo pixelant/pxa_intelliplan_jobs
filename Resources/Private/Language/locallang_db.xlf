@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2018-07-03T15:15:58Z" product-name="pxa_intelliplan_jobs">
+		<header/>
+		<body>
+			<trans-unit id="tx_pxa_intelliplan_jobs_domain_model_pi1">
+				<source>Intelliplan jobs</source>
+			</trans-unit>
+			<trans-unit id="tx_pxa_intelliplan_jobs_domain_model_pi1.description">
+				<source>Intelliplan jobs integration</source>
+			</trans-unit>
+			<trans-unit id="tx_pxaintelliplanjobs_domain_model_job">
+				<source>Job</source>
+			</trans-unit>
+			<trans-unit id="tx_pxaintelliplanjobs_domain_model_job.title">
+				<source>Title</source>
+			</trans-unit>
+			<trans-unit id="tx_pxaintelliplanjobs_domain_model_job.city">
+				<source>City</source>
+			</trans-unit>
+			<trans-unit id="tx_pxaintelliplanjobs_domain_model_job.region">
+				<source>Region</source>
+			</trans-unit>
+			<trans-unit id="tx_pxaintelliplanjobs_domain_model_job.company">
+				<source>Company</source>
+			</trans-unit>
+			<trans-unit id="tx_pxaintelliplanjobs_domain_model_job.extent">
+				<source>Extent</source>
+			</trans-unit>
+			<trans-unit id="tx_pxaintelliplanjobs_domain_model_job.start">
+				<source>Start</source>
+			</trans-unit>
+			<trans-unit id="tx_pxaintelliplanjobs_domain_model_job.apply_start">
+				<source>Apply Start</source>
+			</trans-unit>
+			<trans-unit id="tx_pxaintelliplanjobs_domain_model_job.body">
+				<source>Body</source>
+			</trans-unit>
+			<trans-unit id="tx_pxaintelliplanjobs_domain_model_job.content_elements">
+				<source>Content Elements</source>
+			</trans-unit>
+			<trans-unit id="tx_pxaintelliplanjobs_domain_model_job.categories">
+			    <source>Categories</source>
+			</trans-unit>
+			
+			
+			<!--Flexform:START-->
+			<trans-unit id="mode.list">
+			    <source>List job offers</source>
+			</trans-unit>
+			<trans-unit id="mode.show">
+				<source>Single view</source>
+			</trans-unit>
+			<trans-unit id="flexform.root_category">
+			    <source>Root category</source>
+			</trans-unit>
+			<!--Flexform:END-->
+
+			<!--Typoscript constant editor:START-->
+			<trans-unit id="ts.hideCategoriesWithoutJobs">
+			    <source>Hide categories without job offers</source>
+			</trans-unit>
+			<!--Typoscript constant editor:END-->
+		</body>
+	</file>
+</xliff>

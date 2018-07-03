@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2018-07-03T15:15:58Z" product-name="pxa_intelliplan_jobs">
+		<header/>
+		<body>
+			<trans-unit id="tx_pxa_intelliplan_jobs_domain_model_pi1">
+				<source>Intelliplan jobs</source>
+			</trans-unit>
+			<trans-unit id="tx_pxa_intelliplan_jobs_domain_model_pi1.description">
+				<source>Intelliplan jobs integration</source>
+			</trans-unit>
+			<trans-unit id="title.description">
+				<source>title</source>
+			</trans-unit>
+			<trans-unit id="city.description">
+				<source>city</source>
+			</trans-unit>
+			<trans-unit id="region.description">
+				<source>region</source>
+			</trans-unit>
+			<trans-unit id="company.description">
+				<source>company</source>
+			</trans-unit>
+			<trans-unit id="extent.description">
+				<source>extent</source>
+			</trans-unit>
+			<trans-unit id="start.description">
+				<source>start</source>
+			</trans-unit>
+			<trans-unit id="apply_start.description">
+				<source>applyStart</source>
+			</trans-unit>
+			<trans-unit id="body.description">
+				<source>body</source>
+			</trans-unit>
+			<trans-unit id="content_elements.description">
+				<source>contentElements</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

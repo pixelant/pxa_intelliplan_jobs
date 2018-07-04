@@ -9,7 +9,8 @@
 				<el>
 					<switchableControllerActions>
 						<TCEforms>
-							<label>Select function</label>
+							<label>LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:mode.select</label>
+							<onChange>reload</onChange>
 							<config>
 								<type>select</type>
 								<items>
@@ -26,9 +27,31 @@
 						</TCEforms>
 					</switchableControllerActions>
 
+					<settings.singleViewPid>
+						<TCEforms>
+							<label>LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:flexform.singleViewPid</label>
+							<displayCond>FIELD:switchableControllerActions:!=:Job->show</displayCond>
+							<config>
+								<type>group</type>
+								<internal_type>db</internal_type>
+								<allowed>pages</allowed>
+								<size>1</size>
+								<maxitems>1</maxitems>
+								<minitems>1</minitems>
+								<show_thumbs>1</show_thumbs>
+								<wizards>
+									<suggest>
+										<type>suggest</type>
+									</suggest>
+								</wizards>
+							</config>
+						</TCEforms>
+					</settings.singleViewPid>
+
 					<settings.root_category>
 						<TCEforms>
 							<label>LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:flexform.root_category</label>
+							<displayCond>FIELD:switchableControllerActions:!=:Job->show</displayCond>
 							<config>
 								<type>select</type>
 								<renderMode>tree</renderMode>

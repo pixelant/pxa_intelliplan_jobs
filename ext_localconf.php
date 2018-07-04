@@ -11,7 +11,19 @@ call_user_func(
             ],
             // non-cacheable actions
             [
-                'Job' => ''
+                'Job' => 'list'
+            ]
+        );
+
+        \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+            'Pixelant.PxaIntelliplanJobs',
+            'Pi2',
+            [
+                'JobAjax' => 'share'
+            ],
+            // non-cacheable actions
+            [
+                'JobAjax' => 'share'
             ]
         );
 
@@ -22,3 +34,15 @@ call_user_func(
     },
     $_EXTKEY
 );
+
+if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('realurl')) {
+    $configuration = \Pixelant\PxaIntelliplanJobs\Utility\RealurlUtility::getRealurlConfiguration();
+
+    if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['realurl']['_DEFAULT']['fixedPostVars'])) {
+        $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['realurl']['_DEFAULT']['fixedPostVars'] +=
+            $configuration;
+    } else {
+        $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['realurl']['_DEFAULT']['fixedPostVars'] =
+            $configuration;
+    }
+}

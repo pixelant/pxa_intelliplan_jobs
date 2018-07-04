@@ -1,23 +1,43 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
 <f:layout name="Default" />
 
-This Template is responsible for displaying a single view for a domain object
-
-If you modify this template, do not forget to change the overwrite settings
-in /Configuration/ExtensionBuilder/settings.yaml:
-  Resources:
-    Private:
-      Templates:
-        Show.html: keep
-
-Otherwise your changes will be overwritten the next time you save the extension in the extension builder
-
 <f:section name="main">
-<h1>Single View for Job</h1>
 
-<f:flashMessages />
-<f:render partial="Job/Properties" arguments="{job:job}" />
-<f:link.action action="list">Back to list</f:link.action><br />
-<f:link.action action="new">New Job</f:link.action>
+    <f:flashMessages />
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <f:if condition="{job.contentElementsUids}">
+                    <f:cObject typoscriptObjectPath="lib.pxaIntelliplanJobsContentElementsRenderer" data="{uids: job.contentElementsUids}" />
+                </f:if>
+
+                <f:if condition="{settings.showShareForm}">
+                    <f:form controller="JobAjax" action="share" pluginName="Pi2" pageType="{settings.sharePageType}" objectName="shareJob">
+                        <f:form.textfield property="receiverName"/>
+                        <f:form.textfield property="receiverEmail"/>
+                        <f:form.textfield property="senderName"/>
+
+                        <f:form.submit>Send</f:form.submit>
+                    </f:form>
+                </f:if>
+            </div>
+            <div class="col-md-9">
+                <f:format.html>{job.body}</f:format.html>
+            </div>
+        </div>
+    </div>
+
+    <div class="page-navigation visible-md visible-lg">
+        <div class="container">
+            <f:cObject typoscriptObjectPath="lib.pxaIntelliplanJobsBreadCrumbs" />
+        </div>
+    </div>
+
+    <div class="page-navigation visible-md visible-lg">
+        <div class="container">
+            <f:cObject typoscriptObjectPath="lib.pxaIntelliplanJobsBreadCrumbs" />
+        </div>
+    </div>
 </f:section>
 </html>

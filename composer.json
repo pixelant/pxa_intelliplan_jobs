@@ -1,0 +1,15 @@
+{
+  "name": "pixelant/pxa-intelliplan-jobs",
+  "description": "Intelliplan jobs integration",
+  "type": "typo3-cms-extension",
+  "license": "GPL-2.0+",
+  "autoload": {
+    "psr-4": {
+      "Pixelant\\PxaIntelliplanJobs\\": "Classes/"
+    }
+  },
+  "replace": {
+    "pxa_intelliplan_jobs": "self.version",
+    "typo3-ter/pxa_intelliplan_jobs": "self.version"
+  }
+}

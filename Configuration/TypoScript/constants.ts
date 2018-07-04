@@ -21,5 +21,14 @@ plugin.tx_pxaintelliplanjobs_pi1 {
     settings {
         # cat=plugin.tx_pxaintelliplanjobs_pi1/pxaintelliplanjobs/010; type=options[Yes=1,No=0]; label=LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:ts.hideCategoriesWithoutJobs
         hideCategoriesWithoutJobs = 1
+
+        # cat=plugin.tx_pxaintelliplanjobs_pi1/pxaintelliplanjobs/020; type=string; label=LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:ts.dateFormat
+        dateFormat = Y-m-d
+
+        # cat=plugin.tx_pxaintelliplanjobs_pi1/pxaintelliplanjobs/030; type=options[Yes=1,No=0]; label=LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:ts.showShareForm
+        showShareForm = 1
+
+        # cat=plugin.tx_pxaintelliplanjobs_pi1/pxaintelliplanjobs/040; type=string; label=LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:ts.defaultSenderEmail
+        shareJob.defaultSenderEmail = noreply@site.com
     }
 }

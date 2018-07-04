@@ -45,6 +45,9 @@
 			
 			
 			<!--Flexform:START-->
+			<trans-unit id="mode.select">
+			    <source>Select function</source>
+			</trans-unit>
 			<trans-unit id="mode.list">
 			    <source>List job offers</source>
 			</trans-unit>
@@ -54,13 +57,31 @@
 			<trans-unit id="flexform.root_category">
 			    <source>Root category</source>
 			</trans-unit>
+			<trans-unit id="flexform.singleViewPid">
+			    <source>Single view page</source>
+			</trans-unit>
 			<!--Flexform:END-->
 
 			<!--Typoscript constant editor:START-->
 			<trans-unit id="ts.hideCategoriesWithoutJobs">
 			    <source>Hide categories without job offers</source>
 			</trans-unit>
+			<trans-unit id="ts.dateFormat">
+			    <source>Date format</source>
+			</trans-unit>
+			<trans-unit id="ts.showShareForm">
+			    <source>Show share form on job single view</source>
+			</trans-unit>
+			<trans-unit id="ts.defaultSenderEmail">
+			    <source>Default sender email (Share function)</source>
+			</trans-unit>
 			<!--Typoscript constant editor:END-->
+
+			<!--Extension manager:START-->
+			<trans-unit id="extmng.singleViewPids">
+			    <source>Single view pids for reaurl configuration</source>
+			</trans-unit>
+			<!--Extension manager:END-->
 		</body>
 	</file>
 </xliff>

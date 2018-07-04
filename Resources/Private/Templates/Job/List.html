@@ -1,11 +1,102 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
 <f:layout name="Default" />
-uilder
+
+<f:debug>{_all}</f:debug>
 
 <f:section name="main">
-    <h1>Listing for Job</h1>
+
+    <f:flashMessages />
+
+    <div class="category-filter js__category-filter">
+        <div class="container">
+            <f:if condition="{rootCategory}">
+                <f:else><p class="bg-danger"><f:translate key="fe.no_root_category_set" /></p></f:else>
+            </f:if>
+
+            <f:if condition="{subCategories -> f:count()} > 0">
+                <f:then>
+                    <ul class="category-filter__list" id="js__category-filter">
+                        <f:for each="{subCategories}" as="category">
+                            <li class="category-filter__list-item" data-value="{category.uid}">{category.title}</li>
+                        </f:for>
+                    </ul>
+                </f:then>
+                <f:else>
+                    <p class="bg-danger"><f:translate key="fe.no_categories_found" /></p>
+                </f:else>
+            </f:if>
+        </div>
+    </div>
 
 
-	<f:debug>{_all}</f:debug>
+    <f:if condition="{cities -> f:count()} > 0">
+        <div class="category-filter _sub-filter js__category-filter">
+            <div class="container">
+                <ul class="category-filter__list" id="js__city-filter">
+                    <f:for each="{cities}" as="city" key="cityKey">
+                        <li class="category-filter__list-item" data-value="{cityKey}">{city}</li>
+                    </f:for>
+                </ul>
+            </div>
+        </div>
+    </f:if>
+
+    <f:if condition="{jobs -> f:count()}">
+        <f:then>
+            <div class="filter-container">
+                <div class="container" id="js__filter-container">
+                    <f:for each="{jobs}" as="job">
+                        <div class="filtering-item" data-categories="{job.filteringIdentifiers}">
+                            <div class="filtering-item__logo">
+                                <img class="filtering-item__logo-image" src="https://cdn0.iconfinder.com/data/icons/prostitute/332/prostitution-001-512.png" alt="">
+                            </div>
+
+                            <div class="filtering-item__body">
+                                <f:if condition="{job.company}">
+                                    <p class="filtering-item__subheader">{job.company}</p>
+                                </f:if>
+                                <f:if condition="{job.title}">
+                                    <p class="filtering-item__header">{job.title}</p>
+                                </f:if>
+
+                                <ul class="filtering-item__tags-list">
+                                    <f:if condition="{job.city}">
+                                        <li class="tags-list__item">
+                                            <i class="icons icon-map-marker"></i>
+                                            {job.city}
+                                        </li>
+                                    </f:if>
+
+                                    <f:if condition="{job.categories}">
+                                        <li class="tags-list__item">
+                                            <i class="icons icon-tag2"></i>
+                                            {job.categoriesList}
+                                        </li>
+                                    </f:if>
+
+                                    <f:if condition="{job.applyStart}">
+                                        <li class="tags-list__item">
+                                            <i class="icons icon-pencil"></i>
+                                            <f:translate key="fe.apply_start" /> <f:format.date date="{job.applyStart}" format="{settings.dateFormat}"/>
+                                        </li>
+                                    </f:if>
+                                </ul>
+
+                                <p class="filtering-item__marker"><f:translate key="fe.new" /></p>
+                            </div>
+                            <div class="filtering-item__action">
+                                <f:link.action pageUid="{settings.singleViewPid}" arguments="{job: job}" class="filtering-item__action-link btn btn-default">
+                                    <f:translate key="fe.read_more" />
+                                </f:link.action>
+                            </div>
+                        </div>
+                    </f:for>
+                </div>
+            </div>
+        </f:then>
+        <f:else>
+            <p class="bg-warning"><f:translate key="fe.no_jobs" /></p>
+        </f:else>
+    </f:if>
 </f:section>
 </html>

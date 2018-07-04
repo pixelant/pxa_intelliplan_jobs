@@ -12,6 +12,9 @@ namespace Pixelant\PxaIntelliplanJobs\Domain\Model;
  *
  ***/
 
+use TYPO3\CMS\Core\Charset\CharsetConverter;
+use TYPO3\CMS\Extbase\Domain\Model\Category;
+
 /**
  * Job
  */
@@ -139,6 +142,26 @@ class Job extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     public function getCity()
     {
+        return $this->city;
+    }
+
+    /**
+     * Remove all special chars and spaces from city string
+     *
+     * @return string
+     */
+    public function getCityProcessed(): string
+    {
+        if (TYPO3_MODE === 'FE') {
+            /** @var CharsetConverter $csConvObj */
+            $csConvObj = $GLOBALS['TSFE']->csConvObj;
+
+            $cityProcessed = strtolower(str_replace(' ', '', $this->getCity()));
+            $cityProcessed = $csConvObj->specCharsToASCII('utf-8', $cityProcessed);
+
+            return $cityProcessed;
+        }
+
         return $this->city;
     }
 
@@ -291,6 +314,23 @@ class Job extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     }
 
     /**
+     * Content elements uids list
+     *
+     * @return string
+     */
+    public function getContentElementsUids(): string
+    {
+        $uids = [];
+
+        /** @var ContentElement $contentElement */
+        foreach ($this->getContentElements() as $contentElement) {
+            $uids[] = $contentElement->getUid();
+        }
+
+        return implode(',', $uids);
+    }
+
+    /**
      * Sets the contentElements
      *
      * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<> $contentElements
@@ -307,6 +347,40 @@ class Job extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function getCategories(): \TYPO3\CMS\Extbase\Persistence\ObjectStorage
     {
         return $this->categories;
+    }
+
+    /**
+     * Get uid list of categories
+     *
+     * @return string
+     */
+    public function getCategoriesList(): string
+    {
+        $list = [];
+
+        /** @var Category $category */
+        foreach ($this->categories as $category) {
+            $list[] = $category->getTitle();
+        }
+
+        return implode(',', $list);
+    }
+
+    /**
+     * Get uid list of categories
+     *
+     * @return string
+     */
+    public function getCategoriesUidsList(): string
+    {
+        $list = [];
+
+        /** @var Category $category */
+        foreach ($this->categories as $category) {
+            $list[] = $category->getUid();
+        }
+
+        return implode(',', $list);
     }
 
     /**
@@ -336,5 +410,22 @@ class Job extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function setBody($body)
     {
         $this->body = $body;
+    }
+
+    /**
+     * Get identifier for FE filtering
+     *
+     * @return string
+     */
+    public function getFilteringIdentifiers(): string
+    {
+        $categories = $this->getCategoriesUidsList();
+        $city = $this->getCityProcessed();
+
+        if (!empty($city) && !empty($categories)) {
+            return $categories . ',' . $city;
+        }
+
+        return $categories . $city;
     }
 }

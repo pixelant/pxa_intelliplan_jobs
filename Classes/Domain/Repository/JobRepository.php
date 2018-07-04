@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Pixelant\PxaIntelliplanJobs\Domain\Repository;
 
 use TYPO3\CMS\Extbase\Domain\Model\Category;
+use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Persistence\Repository;
 
 /**
@@ -12,6 +13,13 @@ use TYPO3\CMS\Extbase\Persistence\Repository;
  */
 class JobRepository extends Repository
 {
+    /**
+     * @var array
+     */
+    protected $defaultOrderings = [
+        'crdate' => QueryInterface::ORDER_DESCENDING
+    ];
+
     /**
      * Count job offers by category
      *

@@ -18,6 +18,7 @@ use Pixelant\PxaIntelliplanJobs\Domain\Model\Job;
 use TYPO3\CMS\Extbase\Domain\Model\Category;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
+use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
 /**
  * JobController
@@ -35,6 +36,19 @@ class JobController extends ActionController
      * @inject
      */
     protected $categoryRepository = null;
+
+    /**
+     * @var TypoScriptFrontendController
+     */
+    protected $tsfe = null;
+
+    /**
+     * Initialize on every action
+     */
+    public function initializeAction()
+    {
+        $this->tsfe = $GLOBALS['TSFE'];
+    }
 
     /**
      * action list
@@ -103,10 +117,10 @@ class JobController extends ActionController
         /** @var Job $job */
         foreach ($jobs as $job) {
             if (!empty($job->getCity())) {
-                $hash = sha1($job->getCity());
+                $cityProcessed = $job->getCityProcessed();
 
-                if (!array_key_exists($hash, $cities)) {
-                    $cities[$hash] = $job->getCity();
+                if (!array_key_exists($cityProcessed, $cities)) {
+                    $cities[$cityProcessed] = $job->getCity();
                 }
             }
         }

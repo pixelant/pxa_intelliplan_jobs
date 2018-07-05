@@ -81,7 +81,19 @@
 			<trans-unit id="extmng.singleViewPids">
 			    <source>Single view pids for reaurl configuration</source>
 			</trans-unit>
+			<trans-unit id="extmng.partnerCode">
+			    <source>Intelliplan Partner Code</source>
+			</trans-unit>
 			<!--Extension manager:END-->
+
+			<!--TASK:START-->
+			<trans-unit id="importJobsAndDataTask.name">
+			    <source>Import intelliplan jobs data</source>
+			</trans-unit>
+			<trans-unit id="importJobsAndDataTask.description">
+			    <source>Intelliplan importer. Update job offers, categories and other data using API.</source>
+			</trans-unit>
+			<!--TASK:END-->
 		</body>
 	</file>
 </xliff>

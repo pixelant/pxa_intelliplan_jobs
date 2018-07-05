@@ -46,6 +46,27 @@
 			<trans-unit id="fe.success_sent">
 				<source>E-post skickades</source>
 			</trans-unit>
+			<trans-unit id="fe.quick_facts">
+			    <target>Snabbfakta</target>
+			</trans-unit>
+			<trans-unit id="fe.region">
+			    <target>Område</target>
+			</trans-unit>
+			<trans-unit id="fe.city">
+			    <target>Ort</target>
+			</trans-unit>
+			<trans-unit id="fe.extent">
+			    <target>Omfattning</target>
+			</trans-unit>
+			<trans-unit id="fe.duration">
+			    <target>Varaktighet</target>
+			</trans-unit>
+			<trans-unit id="fe.start">
+				<target>Start</target>
+			</trans-unit>
+			<trans-unit id="fe.job">
+				<source>Jobb</source>
+			</trans-unit>
 			<!--FE LABELS:END-->
 		</body>
 	</file>

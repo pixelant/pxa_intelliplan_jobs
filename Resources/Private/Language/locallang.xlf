@@ -46,6 +46,28 @@
 			<trans-unit id="fe.success_sent">
 				<source>Email was sent</source>
 			</trans-unit>
+			<trans-unit id="fe.quick_facts">
+			    <source>Quick facts</source>
+			</trans-unit>
+			<trans-unit id="fe.region">
+			    <source>Region</source>
+			</trans-unit>
+			<trans-unit id="fe.city">
+			    <source>City</source>
+			</trans-unit>
+			<trans-unit id="fe.extent">
+			    <source>Extent</source>
+			</trans-unit>
+			<trans-unit id="fe.duration">
+			    <source>Duration</source>
+			</trans-unit>
+			<trans-unit id="fe.start">
+			    <source>Start</source>
+			</trans-unit>
+			<trans-unit id="fe.job">
+			    <source>Job</source>
+			</trans-unit>
+
 			<trans-unit id="mail.your_field">
 			    <source>Your friend</source>
 			</trans-unit>

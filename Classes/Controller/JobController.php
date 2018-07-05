@@ -77,10 +77,10 @@ class JobController extends ActionController
     /**
      * action show
      *
-     * @param \Pixelant\PxaIntelliplanJobs\Domain\Model\Job $job
+     * @param Job $job
      * @return void
      */
-    public function showAction(\Pixelant\PxaIntelliplanJobs\Domain\Model\Job $job)
+    public function showAction(Job $job)
     {
         $this->view->assign('shareUrl', urlencode($this->getShareUrl($job)));
         $this->view->assign('job', $job);

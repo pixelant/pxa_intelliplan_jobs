@@ -46,3 +46,11 @@ if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('realurl')) {
             $configuration;
     }
 }
+
+// Register scheduler task
+$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks'][\Pixelant\PxaIntelliplanJobs\Task\ImportJobsAndDataTask::class] = [
+    'extension' => $_EXTKEY,
+    'title' => 'LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:importJobsAndDataTask.name',
+    'description' => 'LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:importJobsAndDataTask.description',
+    'additionalFields' => \Pixelant\PxaIntelliplanJobs\Task\ImportJobsAndDataTaskAdditionalFieldProvider::class
+];

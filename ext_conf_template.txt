@@ -1,2 +1,5 @@
-# cat=backend basic/enable/10; type=string; label=LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:extmng.singleViewPids
+# cat=backend basic/enable/10; type=string; label=LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:extmng.partnerCode
+partnerCode =
+
+# cat=backend basic/enable/20; type=string; label=LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:extmng.singleViewPids
 singleViewPids =

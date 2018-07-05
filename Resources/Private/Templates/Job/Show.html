@@ -10,11 +10,23 @@
             <div class="col-md-3">
                 <div class="light-gray-background">
                     <div class="side-content">
-                        <h3>Lorem Ipsum</h3>
-                        <p><strong>Lorem</strong> <br>Ipsum lorem</p>
-                        <p><strong>Lorem</strong> <br>Ipsum lorem</p>
-                        <p><strong>Lorem</strong> <br>Ipsum lorem</p>
-                        <p><strong>Lorem</strong> <br>Ipsum lorem</p>
+                        <h3><f:translate key="fe.quick_facts" /></h3>
+                        <p><strong><f:translate key="fe.job" /></strong> <br>{job.title}</p>
+                        <f:if condition="{job.region}">
+                            <p><strong><f:translate key="fe.region" /></strong> <br>{job.region}</p>
+                        </f:if>
+                        <f:if condition="{job.city}">
+                            <p><strong><f:translate key="fe.city" /></strong> <br>{job.city}</p>
+                        </f:if>
+                        <f:if condition="{job.extent}">
+                            <p><strong><f:translate key="fe.extent" /></strong> <br>{job.extent}</p>
+                        </f:if>
+                        <f:if condition="{job.start}">
+                            <p><strong><f:translate key="fe.start" /></strong> <br>{job.start}</p>
+                        </f:if>
+                        <f:if condition="{job.applyStart}">
+                            <p><strong><f:translate key="fe.apply_start" /></strong> <br><f:format.date date="{job.applyStart}" format="{settings.dateFormat}"/></p>
+                        </f:if>
                     </div>
                 </div>
 

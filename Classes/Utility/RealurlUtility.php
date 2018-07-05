@@ -35,7 +35,7 @@ class RealurlUtility
     {
         static $pids;
         if ($pids === null) {
-            $extConf = unserialize(($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['pxa_intelliplan_jobs']) ?? '') ?: [];
+            $extConf = ConfigurationUtility::getExtensionConfiguration();
 
             $pids = GeneralUtility::intExplode(',', $extConf['singleViewPids'] ?? '');
         }

@@ -41,7 +41,10 @@ const PxaIntelliplanJobsTellFriend = (function () {
 			let that = this,
 				url = this.form.attr('action');
 
-			that.form.find('[type="submit"]').prop('disabled', true);
+			this.form.find('[type="submit"]').prop('disabled', true);
+			this.form
+				.find('.' + that.settings.errorFieldClass)
+				.removeClass(that.settings.errorFieldClass);
 
 			$.ajax({
 				type: 'POST',
@@ -52,9 +55,6 @@ const PxaIntelliplanJobsTellFriend = (function () {
 				.done(function (data) {
 					if (data.success) {
 						that.messagesHolder.html(that.getMessage(data.successMessage, true));
-						that.form
-							.find(that.settings.errorFieldClass)
-							.removeClass(that.settings.errorFieldClass);
 					} else {
 						for (let i = 0; i < data.errorFields.length; i++) {
 							let field = that.form.find('[data-field="' + data.errorFields[i] + '"]');

@@ -30,6 +30,11 @@ class ShareJob
     protected $senderEmail = '';
 
     /**
+     * @var string
+     */
+    protected $shareUrl = '';
+
+    /**
      * @return string
      */
     public function getReceiverName(): string
@@ -91,5 +96,29 @@ class ShareJob
     public function setSenderEmail(string $senderEmail)
     {
         $this->senderEmail = $senderEmail;
+    }
+
+    /**
+     * @return string
+     */
+    public function getShareUrl(): string
+    {
+        return $this->shareUrl;
+    }
+
+    /**
+     * @param string $shareUrl
+     */
+    public function setShareUrl(string $shareUrl)
+    {
+        $this->shareUrl = $shareUrl;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDecodedShareUrl(): string
+    {
+        return urldecode($this->shareUrl);
     }
 }

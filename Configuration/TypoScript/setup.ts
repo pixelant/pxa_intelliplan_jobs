@@ -1,15 +1,15 @@
-plugin.tx_pxaintelliplanjobs_pi1 {
+plugin.tx_pxaintelliplanjobs {
     view {
         templateRootPaths.0 = EXT:pxa_intelliplan_jobs/Resources/Private/Templates/
-        templateRootPaths.1 = {$plugin.tx_pxaintelliplanjobs_pi1.view.templateRootPath}
+        templateRootPaths.1 = {$plugin.tx_pxaintelliplanjobs.view.templateRootPath}
         partialRootPaths.0 = EXT:pxa_intelliplan_jobs/Resources/Private/Partials/
-        partialRootPaths.1 = {$plugin.tx_pxaintelliplanjobs_pi1.view.partialRootPath}
+        partialRootPaths.1 = {$plugin.tx_pxaintelliplanjobs.view.partialRootPath}
         layoutRootPaths.0 = EXT:pxa_intelliplan_jobs/Resources/Private/Layouts/
-        layoutRootPaths.1 = {$plugin.tx_pxaintelliplanjobs_pi1.view.layoutRootPath}
+        layoutRootPaths.1 = {$plugin.tx_pxaintelliplanjobs.view.layoutRootPath}
     }
 
     persistence {
-        storagePid = {$plugin.tx_pxaintelliplanjobs_pi1.persistence.storagePid}
+        storagePid = {$plugin.tx_pxaintelliplanjobs.persistence.storagePid}
         #recursive = 1
     }
 
@@ -22,16 +22,24 @@ plugin.tx_pxaintelliplanjobs_pi1 {
     }
 
     settings {
-        hideCategoriesWithoutJobs = {$plugin.tx_pxaintelliplanjobs_pi1.settings.hideCategoriesWithoutJobs}
-        dateFormat = {$plugin.tx_pxaintelliplanjobs_pi1.settings.dateFormat}
-        showShareForm = {$plugin.tx_pxaintelliplanjobs_pi1.settings.showShareForm}
+        hideCategoriesWithoutJobs = {$plugin.tx_pxaintelliplanjobs.settings.hideCategoriesWithoutJobs}
+        dateFormat = {$plugin.tx_pxaintelliplanjobs.settings.dateFormat}
+        showShareForm = {$plugin.tx_pxaintelliplanjobs.settings.showShareForm}
 
         sharePageType = 7087989
 
         shareJob {
-            allowMappingProperties = receiverName,receiverEmail,senderName,senderEmail
-            defaultSenderEmail = {$plugin.tx_pxaintelliplanjobs_pi1.settings.shareJob.defaultSenderEmail}
+            allowMappingProperties = receiverName,receiverEmail,senderName,senderEmail,shareUrl
+            defaultSenderEmail = {$plugin.tx_pxaintelliplanjobs.settings.shareJob.defaultSenderEmail}
+
+            template = EXT:pxa_intelliplan_jobs/Resources/Private/Templates/Email/ShareJob.html
         }
+    }
+}
+
+page {
+    includeJSFooter {
+        pxa_intelliplan_jobs = EXT:pxa_intelliplan_jobs/Resources/Public/Js/pxa_intelliplan_jobs.js
     }
 }
 
@@ -52,9 +60,9 @@ PXA_INTELLIPLAN_JOBS_AJAX {
         pluginName = Pi2
         vendorName = Pixelant
 
-        settings =< plugin.tx_pxaintelliplanjobs_pi1.settings
-        persistence =< plugin.tx_pxaintelliplanjobs_pi1.persistence
-        view =< plugin.tx_pxaintelliplanjobs_pi1.view
+        settings =< plugin.tx_pxaintelliplanjobs.settings
+        persistence =< plugin.tx_pxaintelliplanjobs.persistence
+        view =< plugin.tx_pxaintelliplanjobs.view
 
         switchableControllerActions {
             JobAjax {
@@ -94,7 +102,7 @@ lib.pxaIntelliplanJobsBreadCrumbs {
                 10 = RECORDS
                 10 {
                     tables = tx_pxaintelliplanjobs_domain_model_job
-                    source.data = GP:tx_pxaintelliplanjobs_pi1|job
+                    source.data = GP:tx_pxaintelliplanjobs|job
                     source.intval = 1
                     conf {
                         tx_pxaintelliplanjobs_domain_model_job = TEXT

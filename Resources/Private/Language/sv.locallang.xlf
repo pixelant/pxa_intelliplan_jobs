@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" target-language="sv" datatype="plaintext" original="messages" date="2018-07-03T15:15:58Z" product-name="pxa_intelliplan_jobs">
+		<header/>
+		<body>
+			<!--FE LABELS:START-->
+			<trans-unit id="fe.no_categories_found">
+			    <target>Det finns ingen synlig kategori.</target>
+			</trans-unit>
+			<trans-unit id="fe.no_root_category_set">
+			    <target>Rotkategori var inte inställd</target>
+			</trans-unit>
+			<trans-unit id="fe.no_jobs">
+			    <target>Inga jobbbjudanden hittades</target>
+			</trans-unit>
+			<trans-unit id="fe.apply_start">
+			    <target>Ansök senast</target>
+			</trans-unit>
+			<trans-unit id="fe.new">
+			    <target>NY</target>
+			</trans-unit>
+			<trans-unit id="fe.read_more">
+			    <target>Läs mer</target>
+			</trans-unit>
+			<trans-unit id="fe.tell_friend">
+			    <target>Tipsa en vän</target>
+			</trans-unit>
+			<trans-unit id="fe.friend_name">
+				<target>Din väns namn</target>
+			</trans-unit>
+			<trans-unit id="fe.friend_email">
+			    <target>Din väns e-post</target>
+			</trans-unit>
+			<trans-unit id="fe.your_name">
+			    <target>Ditt namn</target>
+			</trans-unit>
+			<trans-unit id="fe.submit">
+			    <target>Tipsa!</target>
+			</trans-unit>
+			<trans-unit id="fe.error_all_fields_required">
+				<source>Alla fält krävs</source>
+			</trans-unit>
+			<trans-unit id="fe.error_valid_email">
+				<source>E-post är inte giltig</source>
+			</trans-unit>
+			<trans-unit id="fe.success_sent">
+				<source>E-post skickades</source>
+			</trans-unit>
+			<!--FE LABELS:END-->
+		</body>
+	</file>
+</xliff>

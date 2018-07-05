@@ -22,44 +22,40 @@
 			<trans-unit id="fe.read_more">
 			    <source>Read more</source>
 			</trans-unit>
+			<trans-unit id="fe.tell_friend">
+			    <source>Tell a friend</source>
+			</trans-unit>
+			<trans-unit id="fe.friend_name">
+			    <source>Your friends name</source>
+			</trans-unit>
+			<trans-unit id="fe.friend_email">
+			    <source>Your friend's email</source>
+			</trans-unit>
+			<trans-unit id="fe.your_name">
+			    <source>Your name</source>
+			</trans-unit>
+			<trans-unit id="fe.submit">
+			    <source>Send</source>
+			</trans-unit>
+			<trans-unit id="fe.error_all_fields_required">
+			    <source>All fields required</source>
+			</trans-unit>
+			<trans-unit id="fe.error_valid_email">
+			    <source>E-mail is not valid</source>
+			</trans-unit>
+			<trans-unit id="fe.success_sent">
+				<source>Email was sent</source>
+			</trans-unit>
+			<trans-unit id="mail.your_field">
+			    <source>Your friend</source>
+			</trans-unit>
+			<trans-unit id="mail.recommend">
+			    <source>has recommend you a link. Click the link below.</source>
+			</trans-unit>
+			<trans-unit id="mail.link">
+			    <source>See more</source>
+			</trans-unit>
 			<!--FE LABELS:END-->
-			
-			<trans-unit id="tx_pxa_intelliplan_jobs_domain_model_pi1">
-				<source>Intelliplan jobs</source>
-			</trans-unit>
-			<trans-unit id="tx_pxa_intelliplan_jobs_domain_model_pi1.description">
-				<source>Intelliplan jobs integration</source>
-			</trans-unit>
-			<trans-unit id="tx_pxaintelliplanjobs_domain_model_job">
-				<source>Job</source>
-			</trans-unit>
-			<trans-unit id="tx_pxaintelliplanjobs_domain_model_job.title">
-				<source>Title</source>
-			</trans-unit>
-			<trans-unit id="tx_pxaintelliplanjobs_domain_model_job.city">
-				<source>City</source>
-			</trans-unit>
-			<trans-unit id="tx_pxaintelliplanjobs_domain_model_job.region">
-				<source>Region</source>
-			</trans-unit>
-			<trans-unit id="tx_pxaintelliplanjobs_domain_model_job.company">
-				<source>Company</source>
-			</trans-unit>
-			<trans-unit id="tx_pxaintelliplanjobs_domain_model_job.extent">
-				<source>Extent</source>
-			</trans-unit>
-			<trans-unit id="tx_pxaintelliplanjobs_domain_model_job.start">
-				<source>Start</source>
-			</trans-unit>
-			<trans-unit id="tx_pxaintelliplanjobs_domain_model_job.apply_start">
-				<source>Apply Start</source>
-			</trans-unit>
-			<trans-unit id="tx_pxaintelliplanjobs_domain_model_job.body">
-				<source>Body</source>
-			</trans-unit>
-			<trans-unit id="tx_pxaintelliplanjobs_domain_model_job.content_elements">
-				<source>Content Elements</source>
-			</trans-unit>
 		</body>
 	</file>
 </xliff>

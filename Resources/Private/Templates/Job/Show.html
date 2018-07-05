@@ -8,18 +8,48 @@
     <div class="container">
         <div class="row">
             <div class="col-md-3">
+                <div class="light-gray-background">
+                    <div class="side-content">
+                        <h3>Lorem Ipsum</h3>
+                        <p><strong>Lorem</strong> <br>Ipsum lorem</p>
+                        <p><strong>Lorem</strong> <br>Ipsum lorem</p>
+                        <p><strong>Lorem</strong> <br>Ipsum lorem</p>
+                        <p><strong>Lorem</strong> <br>Ipsum lorem</p>
+                    </div>
+                </div>
+
                 <f:if condition="{job.contentElementsUids}">
                     <f:cObject typoscriptObjectPath="lib.pxaIntelliplanJobsContentElementsRenderer" data="{uids: job.contentElementsUids}" />
                 </f:if>
 
                 <f:if condition="{settings.showShareForm}">
-                    <f:form controller="JobAjax" action="share" pluginName="Pi2" pageType="{settings.sharePageType}" objectName="shareJob">
-                        <f:form.textfield property="receiverName"/>
-                        <f:form.textfield property="receiverEmail"/>
-                        <f:form.textfield property="senderName"/>
+                    <div class="light-gray-background">
+                        <div class="side-form">
+                            <h3><f:translate key="fe.tell_friend" /></h3>
 
-                        <f:form.submit>Send</f:form.submit>
-                    </f:form>
+                            <f:form controller="JobAjax" action="share" pluginName="Pi2" pageType="{settings.sharePageType}" objectName="shareJob" class="pxa-tell-friend">
+                                <div class="form-group" data-field="receiverName">
+                                    <f:form.textfield class="form-control" placeholder="{f:translate(key: 'fe.friend_name')}" property="receiverName"/>
+                                </div>
+                                <div class="form-group" data-field="receiverEmail">
+                                    <f:form.textfield class="form-control" placeholder="{f:translate(key: 'fe.friend_email')}" property="receiverEmail"/>
+                                </div>
+                                <div class="form-group" data-field="senderName">
+                                    <f:form.textfield class="form-control" placeholder="{f:translate(key: 'fe.your_name')}" property="senderName"/>
+                                </div>
+
+                                <div class="messages-holder"></div>
+                                <button type="submit" class="btn btn-default"><f:translate key="fe.submit" /></button>
+
+                                <f:form.hidden property="shareUrl" value="{shareUrl}" />
+                                <f:form.hidden name="job" value="{job}" />
+                            </f:form>
+                            <!-- '_ready' -->
+                            <div class="loader _ready">
+                                <f:render partial="AjaxLoader" />
+                            </div>
+                        </div>
+                    </div>
                 </f:if>
             </div>
             <div class="col-md-9">

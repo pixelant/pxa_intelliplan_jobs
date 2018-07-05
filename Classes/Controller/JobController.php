@@ -82,6 +82,7 @@ class JobController extends ActionController
      */
     public function showAction(\Pixelant\PxaIntelliplanJobs\Domain\Model\Job $job)
     {
+        $this->view->assign('shareUrl', urlencode($this->getShareUrl($job)));
         $this->view->assign('job', $job);
     }
 
@@ -126,6 +127,21 @@ class JobController extends ActionController
         }
 
         return $cities;
+    }
+
+    /**
+     * Generate url for share
+     *
+     * @return string
+     */
+    protected function getShareUrl(Job $job): string
+    {
+        $uriBuilder = $this->getControllerContext()->getUriBuilder()->reset();
+
+        return $uriBuilder
+            ->setTargetPageUid($this->settings['singleViewPid'])
+            ->setCreateAbsoluteUri(true)
+            ->uriFor('show', ['job' => $job]);
     }
 
     /**

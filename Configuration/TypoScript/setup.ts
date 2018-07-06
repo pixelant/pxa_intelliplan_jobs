@@ -21,6 +21,12 @@ plugin.tx_pxaintelliplanjobs {
                     }
                 }
             }
+
+            Pixelant\PxaIntelliplanJobs\Domain\Model\ContentElement {
+                mapping {
+                    tableName = tt_content
+                }
+            }
         }
     }
 

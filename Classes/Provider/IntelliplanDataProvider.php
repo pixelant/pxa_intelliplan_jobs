@@ -16,20 +16,22 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class IntelliplanDataProvider implements SingletonInterface
 {
-
-    const API_CALL_GET_CATEGORIES = 1;
-
     /**
      * Importer type
      */
     const CATEGORIES_IMPORTER = 1;
 
     /**
+     * Jobs importer
+     */
+    const JOBS_IMPORTER = 2;
+
+    /**
      * Api url template
      *
      * @var string
      */
-    protected static $apiUrl = 'https://%s.app.intelliplan.eu/CandidatePortal_v1/%s';
+    protected static $apiUrl = 'https://%s.app.intelliplan.eu/api/CandidatePortal_v1/%s';
 
     /**
      * Customer name
@@ -65,9 +67,23 @@ class IntelliplanDataProvider implements SingletonInterface
         switch ($type) {
             case self::CATEGORIES_IMPORTER:
                 return $this->getAllCategories();
+            case self::JOBS_IMPORTER:
+                return$this->getJobsData();
             default:
                 throw new ImporterNotSupportedException('Importer with type "' . $type . '" not supported.', 1530868260960);
         }
+    }
+
+    /**
+     * Fetch all public jobs
+     * @return array
+     */
+    public function getJobsData(): array
+    {
+        $apiUrl = $this->getApiCallUrl(self::JOBS_IMPORTER);
+        $response = $this->performGetRequest($apiUrl);
+
+
     }
 
     /**
@@ -77,7 +93,7 @@ class IntelliplanDataProvider implements SingletonInterface
      */
     public function getAllCategories(): array
     {
-        $apiUrl = $this->getApiCallUrl(self::API_CALL_GET_CATEGORIES);
+        $apiUrl = $this->getApiCallUrl(self::CATEGORIES_IMPORTER);
         $response = $this->performGetRequest($apiUrl);
 
         return json_decode($response, true) ?: [];
@@ -92,12 +108,14 @@ class IntelliplanDataProvider implements SingletonInterface
     protected function getApiCallUrl(int $callType): string
     {
         switch ($callType) {
-            case self::API_CALL_GET_CATEGORIES:
+            case self::CATEGORIES_IMPORTER:
                 return sprintf(
                     self::$apiUrl,
                     $this->customerName,
                     'JobCategories/GetAllJobCategories?partner_code=' . $this->partnerId
                 );
+            case self::JOBS_IMPORTER:
+                return'https://cv-speedgroup-se.app.intelliplan.eu/JobAdGlobePages/Feed.aspx?pid=AA31EA47-FDA6-42F3-BD9F-E42186E5A960&version=2';
             default:
                 throw new \UnexpectedValueException('Api call with type "' . $callType . '" not supported.', 1530863121487);
         }
@@ -112,7 +130,7 @@ class IntelliplanDataProvider implements SingletonInterface
      * @throws \HTTP_Request2_Exception
      * @throws \HTTP_Request2_LogicException
      */
-    protected function performGetRequest(string $url)
+    protected function performGetRequest(string $url): string
     {
         /** @var HttpRequest $httpRequest */
         $httpRequest = GeneralUtility::makeInstance(

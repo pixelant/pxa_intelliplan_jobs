@@ -5,6 +5,7 @@ namespace Pixelant\PxaIntelliplanJobs\Services;
 
 use Pixelant\PxaIntelliplanJobs\Importer\CategoriesImporter;
 use Pixelant\PxaIntelliplanJobs\Importer\ImporterInterface;
+use Pixelant\PxaIntelliplanJobs\Importer\JobDataImporter;
 use Pixelant\PxaIntelliplanJobs\Provider\IntelliplanDataProvider;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -29,7 +30,8 @@ class IntelliplanImportService
      * @var array
      */
     protected $importers = [
-        CategoriesImporter::class
+        //CategoriesImporter::class
+        JobDataImporter::class
     ];
 
     /**

@@ -42,4 +42,15 @@ class ConfigurationUtility
     {
         return self::getExtensionConfiguration()['partnerCode'] ?? '';
     }
+
+
+    /**
+     * Return customer name
+     *
+     * @return string
+     */
+    public static function getCustomerName(): string
+    {
+        return self::getExtensionConfiguration()['customer'] ?? '';
+    }
 }

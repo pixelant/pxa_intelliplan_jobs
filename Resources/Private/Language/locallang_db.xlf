@@ -84,6 +84,9 @@
 			<trans-unit id="extmng.partnerCode">
 			    <source>Intelliplan Partner Code</source>
 			</trans-unit>
+			<trans-unit id="extmng.customer">
+			    <source>Intelliplan customer name</source>
+			</trans-unit>
 			<!--Extension manager:END-->
 
 			<!--TASK:START-->
@@ -92,6 +95,12 @@
 			</trans-unit>
 			<trans-unit id="importJobsAndDataTask.description">
 			    <source>Intelliplan importer. Update job offers, categories and other data using API.</source>
+			</trans-unit>
+			<trans-unit id="importJobsAndDataTask.pid">
+			    <source>Storage of records</source>
+			</trans-unit>
+			<trans-unit id="importJobsAndDataTask.pidRequired">
+			    <source>Storage is required</source>
 			</trans-unit>
 			<!--TASK:END-->
 		</body>

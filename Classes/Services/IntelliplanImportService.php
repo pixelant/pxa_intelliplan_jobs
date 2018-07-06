@@ -24,7 +24,7 @@ class IntelliplanImportService
 
     /**
      */
-    public function import()
+    public function run()
     {
 
     }

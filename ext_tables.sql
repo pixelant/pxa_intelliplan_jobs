@@ -55,3 +55,10 @@ CREATE TABLE tx_pxaintelliplanjobs_domain_model_job_content_mm (
 	KEY uid_local (uid_local),
 	KEY uid_foreign (uid_foreign)
 );
+
+#
+# Table structure for table 'sys_category'
+#
+CREATE TABLE sys_category (
+	tx_pxaintelliplanjobs_import_id int(11) DEFAULT '0' NOT NULL
+);

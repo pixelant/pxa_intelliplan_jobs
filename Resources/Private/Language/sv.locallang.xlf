@@ -7,9 +7,6 @@
 			<trans-unit id="fe.no_categories_found">
 			    <target>Det finns ingen synlig kategori.</target>
 			</trans-unit>
-			<trans-unit id="fe.no_root_category_set">
-			    <target>Rotkategori var inte inställd</target>
-			</trans-unit>
 			<trans-unit id="fe.no_jobs">
 			    <target>Inga jobbbjudanden hittades</target>
 			</trans-unit>

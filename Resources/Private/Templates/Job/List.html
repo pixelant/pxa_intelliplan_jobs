@@ -9,10 +9,6 @@
 
     <div class="category-filter js__category-filter">
         <div class="container">
-            <f:if condition="{rootCategory}">
-                <f:else><p class="bg-danger"><f:translate key="fe.no_root_category_set" /></p></f:else>
-            </f:if>
-
             <f:if condition="{subCategories -> f:count()} > 0">
                 <f:then>
                     <ul class="category-filter__list" id="js__category-filter">

@@ -7,9 +7,6 @@
 			<trans-unit id="fe.no_categories_found">
 			    <source>There is not any visible category.</source>
 			</trans-unit>
-			<trans-unit id="fe.no_root_category_set">
-			    <source>Root category was not set. Check plugin settings.</source>
-			</trans-unit>
 			<trans-unit id="fe.no_jobs">
 			    <source>No job offers were found</source>
 			</trans-unit>

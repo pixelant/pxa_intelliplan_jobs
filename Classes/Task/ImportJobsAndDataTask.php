@@ -27,7 +27,7 @@ class ImportJobsAndDataTask extends AbstractTask
     public function execute()
     {
         $importService = GeneralUtility::makeInstance(IntelliplanImportService::class, $this->pid);
-        $importService->import();
+        $importService->run();
     }
 
     /**

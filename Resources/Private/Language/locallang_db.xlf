@@ -42,6 +42,12 @@
 			<trans-unit id="tx_pxaintelliplanjobs_domain_model_job.categories">
 			    <source>Categories</source>
 			</trans-unit>
+			<trans-unit id="tca.tx_pxaintelliplanjobs_import_id">
+			    <source>External intelliplan ID</source>
+			</trans-unit>
+			<trans-unit id="tca.category_tab">
+			    <source>Intelliplan</source>
+			</trans-unit>
 			
 			
 			<!--Flexform:START-->
@@ -53,9 +59,6 @@
 			</trans-unit>
 			<trans-unit id="mode.show">
 				<source>Single view</source>
-			</trans-unit>
-			<trans-unit id="flexform.root_category">
-			    <source>Root category</source>
 			</trans-unit>
 			<trans-unit id="flexform.singleViewPid">
 			    <source>Single view page</source>

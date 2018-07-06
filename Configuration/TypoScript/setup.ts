@@ -10,7 +10,18 @@ plugin.tx_pxaintelliplanjobs {
 
     persistence {
         storagePid = {$plugin.tx_pxaintelliplanjobs.persistence.storagePid}
-        #recursive = 1
+
+        classes {
+            Pixelant\PxaIntelliplanJobs\Domain\Model\Category {
+                mapping {
+                    tableName = sys_category
+
+                    columns {
+                        tx_pxaintelliplanjobs_import_id.mapOnProperty = importId
+                    }
+                }
+            }
+        }
     }
 
     features {

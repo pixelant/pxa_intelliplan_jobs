@@ -58,14 +58,16 @@ class JobController extends ActionController
     public function listAction()
     {
         $jobs = $this->jobRepository->findAll();
-        $rootCategory = $this->categoryRepository->findByUid(
-            (int)$this->settings['root_category']
-        );
 
-        if ($rootCategory !== null) {
-            /** @var QueryResultInterface $subCategories */
-            $subCategories = $this->categoryRepository->findByParent($rootCategory);
-            $this->view->assign('subCategories', $this->filterOutHiddenCategories($subCategories->toArray()));
+        if ($jobs->count() > 0) {
+            $subCategories = [];
+
+            /** @var Job $job */
+            foreach ($jobs as $job) {
+                $subCategories = array_merge($subCategories, $job->getCategories()->toArray());
+            }
+
+            $this->view->assign('subCategories', $this->filterOutHiddenCategories($subCategories));
         }
 
         $this->view
@@ -99,8 +101,10 @@ class JobController extends ActionController
 
             /** @var Category $category */
             foreach ($categories as $category) {
-                if ($this->jobRepository->countByCategory($category) > 0) {
-                    $resultCategories[] = $category;
+                if (!array_key_exists($category->getUid(), $resultCategories)
+                    && $this->jobRepository->countByCategory($category) > 0
+                ) {
+                    $resultCategories[$category->getUid()] = $category;
                 }
             }
 

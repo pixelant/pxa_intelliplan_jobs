@@ -15,4 +15,11 @@ interface ImporterInterface
      * @return void
      */
     public function import(array $data, int $pid);
+
+    /**
+     * Identify importer type
+     *
+     * @return int
+     */
+    public function getImporterType(): int;
 }

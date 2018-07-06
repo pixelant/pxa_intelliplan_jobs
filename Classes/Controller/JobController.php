@@ -15,6 +15,7 @@ namespace Pixelant\PxaIntelliplanJobs\Controller;
  ***/
 
 use Pixelant\PxaIntelliplanJobs\Domain\Model\Job;
+use Pixelant\PxaIntelliplanJobs\Services\IntelliplanImportService;
 use TYPO3\CMS\Extbase\Domain\Model\Category;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
@@ -57,6 +58,9 @@ class JobController extends ActionController
      */
     public function listAction()
     {
+        $test = new IntelliplanImportService(217);
+        $test->run();
+
         $jobs = $this->jobRepository->findAll();
 
         if ($jobs->count() > 0) {

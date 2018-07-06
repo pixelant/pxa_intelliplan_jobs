@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Pixelant\PxaIntelliplanJobs\Provider;
 
 use Pixelant\PxaIntelliplanJobs\Exception\ApiCallBadRequestException;
+use Pixelant\PxaIntelliplanJobs\Exception\ImporterNotSupportedException;
 use Pixelant\PxaIntelliplanJobs\Utility\ConfigurationUtility;
 use TYPO3\CMS\Core\Http\HttpRequest;
 use TYPO3\CMS\Core\SingletonInterface;
@@ -17,6 +18,11 @@ class IntelliplanDataProvider implements SingletonInterface
 {
 
     const API_CALL_GET_CATEGORIES = 1;
+
+    /**
+     * Importer type
+     */
+    const CATEGORIES_IMPORTER = 1;
 
     /**
      * Api url template
@@ -46,6 +52,22 @@ class IntelliplanDataProvider implements SingletonInterface
     {
         $this->customerName = ConfigurationUtility::getCustomerName();
         $this->partnerId = ConfigurationUtility::getPartnerCode();
+    }
+
+    /**
+     * Generate data for importers
+     *
+     * @param int $type
+     * @return array
+     */
+    public function getDataByImporterType(int $type): array
+    {
+        switch ($type) {
+            case self::CATEGORIES_IMPORTER:
+                return $this->getAllCategories();
+            default:
+                throw new ImporterNotSupportedException('Importer with type "' . $type . '" not supported.', 1530868260960);
+        }
     }
 
     /**

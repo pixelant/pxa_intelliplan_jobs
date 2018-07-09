@@ -30,7 +30,7 @@ class IntelliplanImportService
      * @var array
      */
     protected $importers = [
-        //CategoriesImporter::class
+        //CategoriesImporter::class Collect categories from job listing instead
         JobDataImporter::class
     ];
 

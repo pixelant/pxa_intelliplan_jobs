@@ -113,7 +113,7 @@ return [
 	        'config' => [
 			    'type' => 'input',
 			    'size' => 30,
-			    'eval' => 'trim'
+			    'eval' => 'trim, required'
 			],
 	    ],
 	    'company' => [
@@ -423,17 +423,11 @@ return [
 	        'exclude' => true,
 	        'label' => 'LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:tx_pxaintelliplanjobs_domain_model_job.content_elements',
 	        'config' => [
-			    'type' => 'inline',
-			    'foreign_table' => '',
-			    'foreign_field' => 'job',
-			    'maxitems' => 9999,
-			    'appearance' => [
-			        'collapseAll' => 0,
-			        'levelLinksPosition' => 'top',
-			        'showSynchronizationLink' => 1,
-			        'showPossibleLocalizationRecords' => 1,
-			        'showAllLocalizationLink' => 1
-			    ],
+                'type' => 'group',
+                'internal_type' => 'db',
+                'allowed' => 'tt_content',
+                'MM' => 'tx_pxaintelliplanjobs_domain_model_job_content_mm',
+                'foreign_table' => 'tt_content'
 			],
 	    ],
     ],

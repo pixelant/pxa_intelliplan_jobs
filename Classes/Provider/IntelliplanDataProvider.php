@@ -76,6 +76,7 @@ class IntelliplanDataProvider implements SingletonInterface
 
     /**
      * Fetch all public jobs
+     *
      * @return array
      */
     public function getJobsData(): array
@@ -88,15 +89,7 @@ class IntelliplanDataProvider implements SingletonInterface
 
         $data = $this->convertJobXmlToArray($xml->channel->item, $ns['intelliplan']);
 
-        //$firest = $xml->channel->item[0];
-        //\TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($xml->getNamespaces(true),'Debug',16);
-        //
-        // \TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($ns['intelliplan'],'Debug',16);
-        //$child = $firest->children($ns['intelliplan']);
-        //\TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump((array)$child,'Debug',16);
-        //$firest->registerXPathNamespace('intelliplan', 'http://www.intelliplan.se');
-        //print_r($firest->xpath('intelliplan:descriptions'));
-        //\TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump(json_decode(json_encode($xml), true),'Debug',16);
+        return $data;
     }
 
     /**

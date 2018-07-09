@@ -10,8 +10,8 @@ call_user_func(function () {
             'label' => $ll . 'tca.tx_pxaintelliplanjobs_import_id',
             'config' => [
                 'type' => 'input',
-                'size' => 5,
-                'eval' => 'int'
+                'size' => 30,
+                'eval' => 'trim'
             ]
         ]
     ];

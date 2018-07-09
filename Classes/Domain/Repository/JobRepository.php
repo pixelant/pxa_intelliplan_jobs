@@ -35,4 +35,25 @@ class JobRepository extends Repository
 
         return $query->count();
     }
+
+    /**
+     * Find job by ID
+     *
+     * @param int $id
+     * @return object
+     */
+    public function findById(int $id)
+    {
+        $query = $this->createQuery();
+
+        $query->getQuerySettings()
+            ->setRespectSysLanguage(false)
+            ->setRespectStoragePage(false);
+
+        $query->matching(
+            $query->equals('id', $id)
+        );
+
+        return $query->execute()->getFirst();
+    }
 }

@@ -68,7 +68,7 @@ class IntelliplanDataProvider implements SingletonInterface
             case self::CATEGORIES_IMPORTER:
                 return $this->getAllCategories();
             case self::JOBS_IMPORTER:
-                return$this->getJobsData();
+                return $this->getJobsData();
             default:
                 throw new ImporterNotSupportedException('Importer with type "' . $type . '" not supported.', 1530868260960);
         }
@@ -83,7 +83,20 @@ class IntelliplanDataProvider implements SingletonInterface
         $apiUrl = $this->getApiCallUrl(self::JOBS_IMPORTER);
         $response = $this->performGetRequest($apiUrl);
 
+        $xml = simplexml_load_string($response);
+        $ns = $xml->getNamespaces(true);
 
+        $data = $this->convertJobXmlToArray($xml->channel->item, $ns['intelliplan']);
+
+        //$firest = $xml->channel->item[0];
+        //\TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($xml->getNamespaces(true),'Debug',16);
+        //
+        // \TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($ns['intelliplan'],'Debug',16);
+        //$child = $firest->children($ns['intelliplan']);
+        //\TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump((array)$child,'Debug',16);
+        //$firest->registerXPathNamespace('intelliplan', 'http://www.intelliplan.se');
+        //print_r($firest->xpath('intelliplan:descriptions'));
+        //\TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump(json_decode(json_encode($xml), true),'Debug',16);
     }
 
     /**
@@ -97,6 +110,46 @@ class IntelliplanDataProvider implements SingletonInterface
         $response = $this->performGetRequest($apiUrl);
 
         return json_decode($response, true) ?: [];
+    }
+
+    /**
+     * Convert jobs feed to array
+     *
+     * @param \SimpleXMLElement $simpleXMLElement
+     * @param string $ns
+     * @return array
+     */
+    protected function convertJobXmlToArray(\SimpleXMLElement $simpleXMLElement, string $ns): array
+    {
+        $feedItems = [];
+
+        foreach ($simpleXMLElement as $item) {
+            $itemRow = [];
+            // Go through simple fields
+            foreach ($item as $itemFieldName => $itemFieldValue) {
+                $itemRow[$itemFieldName] = (string)$itemFieldValue;
+            }
+
+            // Go through namespace fields
+            foreach ($item->children($ns) as $itemFieldName => $itemFieldValue) {
+                if ($itemFieldName === 'descriptions') {
+                    $descriptions = [];
+                    foreach ($itemFieldValue as $description) {
+                        $descriptions[] = [
+                            'descriptionheader' => (string)$description->descriptionheader,
+                            'descriptiontext' => (string)$description->descriptiontext
+                        ];
+                    }
+                    $itemRow[$itemFieldName] = $descriptions;
+                } else {
+                    $itemRow[$itemFieldName] = (string)$itemFieldValue;
+                }
+            }
+
+            $feedItems[] = $itemRow;
+        }
+
+        return $feedItems;
     }
 
     /**
@@ -115,7 +168,7 @@ class IntelliplanDataProvider implements SingletonInterface
                     'JobCategories/GetAllJobCategories?partner_code=' . $this->partnerId
                 );
             case self::JOBS_IMPORTER:
-                return'https://cv-speedgroup-se.app.intelliplan.eu/JobAdGlobePages/Feed.aspx?pid=AA31EA47-FDA6-42F3-BD9F-E42186E5A960&version=2';
+                return 'https://cv-speedgroup-se.app.intelliplan.eu/JobAdGlobePages/Feed.aspx?pid=AA31EA47-FDA6-42F3-BD9F-E42186E5A960&version=2';
             default:
                 throw new \UnexpectedValueException('Api call with type "' . $callType . '" not supported.', 1530863121487);
         }

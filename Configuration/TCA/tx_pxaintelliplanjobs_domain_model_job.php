@@ -16,14 +16,14 @@ return [
             'starttime' => 'starttime',
             'endtime' => 'endtime',
         ],
-		'searchFields' => 'title,company,apply_start,description,pub_date,category,id,number_of_positions_to_fill,job_position_title,job_position_title_id,job_position_title_category_id,job_location,job_location_id,job_occupation,job_occupation_id,job_category,job_category_id,service_category,service,country,country_id,state,state_id,municipality,municipality_id,company_logo_url,employment_extent,employment_extent_id,job_level,job_level_id,contact1name,contact1email,pub_date_to,last_updated,content_elements',
+		'searchFields' => 'title,company,apply_start,description,pub_date,category,id,number_of_positions_to_fill,type,job_position_title,job_position_title_id,job_position_category_id,job_location,job_location_id,job_occupation,job_occupation_id,job_category,job_category_id,service_category,service,country,country_id,state,state_id,municipality,municipality_id,company_logo_url,employment_extent,employment_extent_id,employment_type,employment_type_id,job_level,job_level_id,contact1name,contact1email,pub_date_to,last_updated,content_elements',
         'iconfile' => 'EXT:pxa_intelliplan_jobs/Resources/Public/Icons/job.svg'
     ],
     'interface' => [
-		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, title, company, apply_start, description, pub_date, category, id, number_of_positions_to_fill, job_position_title, job_position_title_id, job_position_title_category_id, job_location, job_location_id, job_occupation, job_occupation_id, job_category, job_category_id, service_category, service, country, country_id, state, state_id, municipality, municipality_id, company_logo_url, employment_extent, employment_extent_id, job_level, job_level_id, contact1name, contact1email, pub_date_to, last_updated, content_elements',
+		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, title, company, apply_start, description, pub_date, category, id, number_of_positions_to_fill, type, job_position_title, job_position_title_id, job_position_category_id, job_location, job_location_id, job_occupation, job_occupation_id, job_category, job_category_id, service_category, service, country, country_id, state, state_id, municipality, municipality_id, company_logo_url, employment_extent, employment_extent_id, employment_type, employment_type_id, job_level, job_level_id, contact1name, contact1email, pub_date_to, last_updated, content_elements',
     ],
     'types' => [
-		'1' => ['showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, title, company, apply_start, description, pub_date, category, id, number_of_positions_to_fill, job_position_title, job_position_title_id, job_position_title_category_id, job_location, job_location_id, job_occupation, job_occupation_id, job_category, job_category_id, service_category, service, country, country_id, state, state_id, municipality, municipality_id, company_logo_url, employment_extent, employment_extent_id, job_level, job_level_id, contact1name, contact1email, pub_date_to, last_updated, content_elements, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime'],
+		'1' => ['showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, title, company, apply_start, description, pub_date, category, id, number_of_positions_to_fill, type, job_position_title, job_position_title_id, job_position_category_id, job_location, job_location_id, job_occupation, job_occupation_id, job_category, job_category_id, service_category, service, country, country_id, state, state_id, municipality, municipality_id, company_logo_url, employment_extent, employment_extent_id, employment_type, employment_type_id, job_level, job_level_id, contact1name, contact1email, pub_date_to, last_updated, content_elements, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime'],
     ],
     'columns' => [
 		'sys_language_uid' => [
@@ -183,6 +183,15 @@ return [
 			    'eval' => 'int'
 			]
 	    ],
+        'type' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:tx_pxaintelliplanjobs_domain_model_job.type',
+            'config' => [
+                'type' => 'input',
+                'size' => 30,
+                'eval' => 'trim'
+            ],
+        ],
 	    'job_position_title' => [
 	        'exclude' => true,
 	        'label' => 'LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:tx_pxaintelliplanjobs_domain_model_job.job_position_title',
@@ -201,9 +210,9 @@ return [
 			    'eval' => 'int'
 			]
 	    ],
-	    'job_position_title_category_id' => [
+	    'job_position_category_id' => [
 	        'exclude' => true,
-	        'label' => 'LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:tx_pxaintelliplanjobs_domain_model_job.job_position_title_category_id',
+	        'label' => 'LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:tx_pxaintelliplanjobs_domain_model_job.job_position_category_id',
 	        'config' => [
 			    'type' => 'input',
 			    'size' => 4,
@@ -363,6 +372,24 @@ return [
 			    'eval' => 'int'
 			]
 	    ],
+        'employment_type' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:tx_pxaintelliplanjobs_domain_model_job.employment_type',
+            'config' => [
+                'type' => 'input',
+                'size' => 30,
+                'eval' => 'trim'
+            ],
+        ],
+        'employment_type_id' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:tx_pxaintelliplanjobs_domain_model_job.employment_type_id',
+            'config' => [
+                'type' => 'input',
+                'size' => 4,
+                'eval' => 'int'
+            ]
+        ],
 	    'job_level' => [
 	        'exclude' => true,
 	        'label' => 'LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:tx_pxaintelliplanjobs_domain_model_job.job_level',

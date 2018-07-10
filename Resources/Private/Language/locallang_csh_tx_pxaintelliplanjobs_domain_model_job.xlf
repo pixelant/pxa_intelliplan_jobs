@@ -33,6 +33,9 @@
 			<trans-unit id="number_of_positions_to_fill.description">
 				<source>numberOfPositionsToFill</source>
 			</trans-unit>
+			<trans-unit id="type.description">
+			    <source>Type</source>
+			</trans-unit>
 			<trans-unit id="job_position_title.description">
 				<source>jobPositionTitle</source>
 			</trans-unit>

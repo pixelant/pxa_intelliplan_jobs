@@ -36,14 +36,17 @@
 			<trans-unit id="tx_pxaintelliplanjobs_domain_model_job.number_of_positions_to_fill">
 				<source>Number Of Positions To Fill</source>
 			</trans-unit>
+			<trans-unit id="tx_pxaintelliplanjobs_domain_model_job.type">
+			    <source>Type</source>
+			</trans-unit>
 			<trans-unit id="tx_pxaintelliplanjobs_domain_model_job.job_position_title">
 				<source>Job Position Title</source>
 			</trans-unit>
 			<trans-unit id="tx_pxaintelliplanjobs_domain_model_job.job_position_title_id">
 				<source>Job Position Title Id</source>
 			</trans-unit>
-			<trans-unit id="tx_pxaintelliplanjobs_domain_model_job.job_position_title_category_id">
-				<source>Job Position Title Category Id</source>
+			<trans-unit id="tx_pxaintelliplanjobs_domain_model_job.job_position_category_id">
+				<source>Job Position Category Id</source>
 			</trans-unit>
 			<trans-unit id="tx_pxaintelliplanjobs_domain_model_job.job_location">
 				<source>Job Location</source>
@@ -96,6 +99,12 @@
 			<trans-unit id="tx_pxaintelliplanjobs_domain_model_job.employment_extent_id">
 				<source>Employment Extent Id</source>
 			</trans-unit>
+			<trans-unit id="tx_pxaintelliplanjobs_domain_model_job.employment_type">
+			    <source>Employment Type</source>
+			</trans-unit>
+			<trans-unit id="tx_pxaintelliplanjobs_domain_model_job.employment_type_id">
+			    <source>Employment Type Id</source>
+			</trans-unit>
 			<trans-unit id="tx_pxaintelliplanjobs_domain_model_job.job_level">
 				<source>Job Level</source>
 			</trans-unit>
@@ -117,8 +126,16 @@
 			<trans-unit id="tx_pxaintelliplanjobs_domain_model_job.content_elements">
 				<source>Content Elements</source>
 			</trans-unit>
-			
-			
+
+			<!--TCA:START-->
+			<trans-unit id="tca.category_tab">
+			    <source>Intelliplan jobs</source>
+			</trans-unit>
+			<trans-unit id="tca.tx_pxaintelliplanjobs_import_id">
+			    <source>Import ID</source>
+			</trans-unit>
+			<!--TCA:END-->
+
 			<!--Flexform:START-->
 			<trans-unit id="mode.select">
 			    <source>Select function</source>

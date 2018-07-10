@@ -100,9 +100,9 @@ class IntelliplanDataProvider implements SingletonInterface
     public function getAllCategories(): array
     {
         $apiUrl = $this->getApiCallUrl(self::CATEGORIES_IMPORTER);
-        $response = $this->performGetRequest($apiUrl);
+        $response = json_decode($this->performGetRequest($apiUrl), true);
 
-        return json_decode($response, true) ?: [];
+        return is_array($response['service_categories']) ? $response['service_categories'] : [];
     }
 
     /**
@@ -158,7 +158,7 @@ class IntelliplanDataProvider implements SingletonInterface
                 return sprintf(
                     self::$apiUrl,
                     $this->customerName,
-                    'JobCategories/GetAllJobCategories?partner_code=' . $this->partnerId
+                    'Jobs/GetAllServiceCategories?partner_code=' . $this->partnerId
                 );
             case self::JOBS_IMPORTER:
                 return 'https://cv-speedgroup-se.app.intelliplan.eu/JobAdGlobePages/Feed.aspx?pid=AA31EA47-FDA6-42F3-BD9F-E42186E5A960&version=2';

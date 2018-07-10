@@ -14,9 +14,10 @@ CREATE TABLE tx_pxaintelliplanjobs_domain_model_job (
 	category varchar(55) DEFAULT '' NOT NULL,
 	id int(11) DEFAULT '0' NOT NULL,
 	number_of_positions_to_fill int(11) DEFAULT '0' NOT NULL,
+  type varchar(55) DEFAULT '' NOT NULL,
 	job_position_title varchar(55) DEFAULT '' NOT NULL,
 	job_position_title_id int(11) DEFAULT '0' NOT NULL,
-	job_position_title_category_id int(11) DEFAULT '0' NOT NULL,
+	job_position_category_id int(11) DEFAULT '0' NOT NULL,
 	job_location varchar(55) DEFAULT '' NOT NULL,
 	job_location_id int(11) DEFAULT '0' NOT NULL,
 	job_occupation varchar(55) DEFAULT '' NOT NULL,
@@ -31,9 +32,11 @@ CREATE TABLE tx_pxaintelliplanjobs_domain_model_job (
 	state_id int(11) DEFAULT '0' NOT NULL,
 	municipality varchar(55) DEFAULT '' NOT NULL,
 	municipality_id int(11) DEFAULT '0' NOT NULL,
-	company_logo_url varchar(55) DEFAULT '' NOT NULL,
+	company_logo_url varchar(255) DEFAULT '' NOT NULL,
 	employment_extent varchar(55) DEFAULT '' NOT NULL,
 	employment_extent_id int(11) DEFAULT '0' NOT NULL,
+	employment_type varchar(55) DEFAULT '' NOT NULL,
+	employment_type_id int(11) DEFAULT '0' NOT NULL,
 	job_level varchar(55) DEFAULT '' NOT NULL,
 	job_level_id int(11) DEFAULT '0' NOT NULL,
 	contact1name varchar(55) DEFAULT '' NOT NULL,
@@ -87,5 +90,5 @@ CREATE TABLE tx_pxaintelliplanjobs_domain_model_job_content_mm (
 # Table structure for table 'sys_category'
 #
 CREATE TABLE sys_category (
-	tx_pxaintelliplanjobs_import_id varchar(55) DEFAULT '' NOT NULL,
+	tx_pxaintelliplanjobs_import_id int(11) DEFAULT '0' NOT NULL,
 );

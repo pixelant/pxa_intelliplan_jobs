@@ -17,7 +17,7 @@ class JobRepository extends Repository
      * @var array
      */
     protected $defaultOrderings = [
-        'crdate' => QueryInterface::ORDER_DESCENDING
+        'pubDate' => QueryInterface::ORDER_DESCENDING
     ];
 
     /**

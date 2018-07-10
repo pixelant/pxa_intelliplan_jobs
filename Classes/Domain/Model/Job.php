@@ -1,8 +1,10 @@
 <?php
+
 namespace Pixelant\PxaIntelliplanJobs\Domain\Model;
 
 use TYPO3\CMS\Core\Charset\CharsetConverter;
 use TYPO3\CMS\Extbase\Domain\Model\Category;
+
 /***
  *
  * This file is part of the "Intelliplan jobs integration" Extension for TYPO3 CMS.
@@ -22,10 +24,10 @@ class Job extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * contentElements
      *
-     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Pixelant\PxaIntelliplanJobs\Domain\Model\Category>
+     * @var \Pixelant\PxaIntelliplanJobs\Domain\Model\Category>
      * @lazy
      */
-    protected $categories = null;
+    protected $categoryTypo3 = null;
 
     /**
      * title
@@ -84,6 +86,11 @@ class Job extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $numberOfPositionsToFill = 0;
 
     /**
+     * @var string
+     */
+    protected $type = '';
+
+    /**
      * jobPositionTitle
      *
      * @var string
@@ -102,7 +109,7 @@ class Job extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      *
      * @var int
      */
-    protected $jobPositionTitleCategoryId = 0;
+    protected $jobPositionCategoryId = 0;
 
     /**
      * jobLocation
@@ -231,6 +238,16 @@ class Job extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $employmentExtentId = 0;
 
     /**
+     * @var string
+     */
+    protected $employmentType = '';
+
+    /**
+     * @var int
+     */
+    protected $employmentTypeId = 0;
+
+    /**
      * jobLevel
      *
      * @var string
@@ -292,7 +309,6 @@ class Job extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected function initStorageObjects()
     {
         $this->contentElements = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
-        $this->categories = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
     }
 
     /**
@@ -434,49 +450,19 @@ class Job extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     }
 
     /**
-     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage
+     * @return \Pixelant\PxaIntelliplanJobs\Domain\Model\Category
      */
-    public function getCategories()
+    public function getCategoryTypo3()
     {
-        return $this->categories;
+        return $this->categoryTypo3;
     }
 
     /**
-     * Get uid list of categories
-     *
-     * @return string
+     * @param \Pixelant\PxaIntelliplanJobs\Domain\Model\Category $categoryTypo3
      */
-    public function getCategoriesList()
+    public function setCategoryTypo3(\Pixelant\PxaIntelliplanJobs\Domain\Model\Category $categoryTypo3)
     {
-        $list = array();
-        /** @var Category $category */
-        foreach ($this->categories as $category) {
-            $list[] = $category->getTitle();
-        }
-        return implode(',', $list);
-    }
-
-    /**
-     * Get uid list of categories
-     *
-     * @return string
-     */
-    public function getCategoriesUidsList()
-    {
-        $list = array();
-        /** @var Category $category */
-        foreach ($this->categories as $category) {
-            $list[] = $category->getUid();
-        }
-        return implode(',', $list);
-    }
-
-    /**
-     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage $categories
-     */
-    public function setCategories(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $categories)
-    {
-        $this->categories = $categories;
+        $this->categoryTypo3 = $categoryTypo3;
     }
 
     /**
@@ -486,12 +472,15 @@ class Job extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     public function getFilteringIdentifiers()
     {
-        $categories = $this->getCategoriesUidsList();
+        $category = $this->getCategoryTypo3()
+            ? $this->getCategoryTypo3()->getUid()
+            : '';
         $city = $this->getCityProcessed();
-        if (!empty($city) && !empty($categories)) {
-            return $categories . ',' . $city;
+        if (!empty($city) && !empty($category)) {
+            return $category . ',' . $city;
         }
-        return $categories . $city;
+
+        return $category . $city;
     }
 
     /**
@@ -579,6 +568,22 @@ class Job extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     }
 
     /**
+     * @return string
+     */
+    public function getType(): string
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param string $type
+     */
+    public function setType(string $type)
+    {
+        $this->type = $type;
+    }
+
+    /**
      * Returns the jobPositionTitle
      *
      * @return string $jobPositionTitle
@@ -625,20 +630,20 @@ class Job extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      *
      * @return int $jobPositionTitleCategoryId
      */
-    public function getJobPositionTitleCategoryId()
+    public function getJobPositionCategoryId()
     {
-        return $this->jobPositionTitleCategoryId;
+        return $this->jobPositionCategoryId;
     }
 
     /**
      * Sets the jobPositionTitleCategoryId
      *
-     * @param int $jobPositionTitleCategoryId
+     * @param int $jobPositionCategoryId
      * @return void
      */
-    public function setJobPositionTitleCategoryId($jobPositionTitleCategoryId)
+    public function setJobPositionCategoryId($jobPositionCategoryId)
     {
-        $this->jobPositionTitleCategoryId = $jobPositionTitleCategoryId;
+        $this->jobPositionCategoryId = $jobPositionCategoryId;
     }
 
     /**
@@ -1017,6 +1022,38 @@ class Job extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function setEmploymentExtentId($employmentExtentId)
     {
         $this->employmentExtentId = $employmentExtentId;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEmploymentType(): string
+    {
+        return $this->employmentType;
+    }
+
+    /**
+     * @param string $employmentType
+     */
+    public function setEmploymentType(string $employmentType)
+    {
+        $this->employmentType = $employmentType;
+    }
+
+    /**
+     * @return int
+     */
+    public function getEmploymentTypeId(): int
+    {
+        return $this->employmentTypeId;
+    }
+
+    /**
+     * @param int $employmentTypeId
+     */
+    public function setEmploymentTypeId(int $employmentTypeId)
+    {
+        $this->employmentTypeId = $employmentTypeId;
     }
 
     /**

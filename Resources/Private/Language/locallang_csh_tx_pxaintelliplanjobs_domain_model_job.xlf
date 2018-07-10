@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <xliff version="1.0">
-	<file source-language="en" datatype="plaintext" original="messages" date="2018-07-03T15:15:58Z" product-name="pxa_intelliplan_jobs">
+	<file source-language="en" datatype="plaintext" original="messages" date="2018-07-09T14:15:25Z" product-name="pxa_intelliplan_jobs">
 		<header/>
 		<body>
 			<trans-unit id="tx_pxa_intelliplan_jobs_domain_model_pi1">
@@ -12,26 +12,107 @@
 			<trans-unit id="title.description">
 				<source>title</source>
 			</trans-unit>
-			<trans-unit id="city.description">
-				<source>city</source>
-			</trans-unit>
-			<trans-unit id="region.description">
-				<source>region</source>
-			</trans-unit>
 			<trans-unit id="company.description">
 				<source>company</source>
-			</trans-unit>
-			<trans-unit id="extent.description">
-				<source>extent</source>
-			</trans-unit>
-			<trans-unit id="start.description">
-				<source>start</source>
 			</trans-unit>
 			<trans-unit id="apply_start.description">
 				<source>applyStart</source>
 			</trans-unit>
-			<trans-unit id="body.description">
-				<source>body</source>
+			<trans-unit id="description.description">
+				<source>description</source>
+			</trans-unit>
+			<trans-unit id="pub_date.description">
+				<source>pubDate</source>
+			</trans-unit>
+			<trans-unit id="category.description">
+				<source>category</source>
+			</trans-unit>
+			<trans-unit id="id.description">
+				<source>id</source>
+			</trans-unit>
+			<trans-unit id="number_of_positions_to_fill.description">
+				<source>numberOfPositionsToFill</source>
+			</trans-unit>
+			<trans-unit id="type.description">
+			    <source>Type</source>
+			</trans-unit>
+			<trans-unit id="job_position_title.description">
+				<source>jobPositionTitle</source>
+			</trans-unit>
+			<trans-unit id="job_position_title_id.description">
+				<source>jobPositionTitleId</source>
+			</trans-unit>
+			<trans-unit id="job_position_title_category_id.description">
+				<source>jobPositionTitleCategoryId</source>
+			</trans-unit>
+			<trans-unit id="job_location.description">
+				<source>jobLocation</source>
+			</trans-unit>
+			<trans-unit id="job_location_id.description">
+				<source>jobLocationId</source>
+			</trans-unit>
+			<trans-unit id="job_occupation.description">
+				<source>jobOccupation</source>
+			</trans-unit>
+			<trans-unit id="job_occupation_id.description">
+				<source>jobOccupationId</source>
+			</trans-unit>
+			<trans-unit id="job_category.description">
+				<source>jobCategory</source>
+			</trans-unit>
+			<trans-unit id="job_category_id.description">
+				<source>jobCategoryId</source>
+			</trans-unit>
+			<trans-unit id="service_category.description">
+				<source>serviceCategory</source>
+			</trans-unit>
+			<trans-unit id="service.description">
+				<source>service</source>
+			</trans-unit>
+			<trans-unit id="country.description">
+				<source>country</source>
+			</trans-unit>
+			<trans-unit id="country_id.description">
+				<source>countryId</source>
+			</trans-unit>
+			<trans-unit id="state.description">
+				<source>state</source>
+			</trans-unit>
+			<trans-unit id="state_id.description">
+				<source>stateId</source>
+			</trans-unit>
+			<trans-unit id="municipality.description">
+				<source>municipality</source>
+			</trans-unit>
+			<trans-unit id="municipality_id.description">
+				<source>municipalityId</source>
+			</trans-unit>
+			<trans-unit id="company_logo_url.description">
+				<source>companyLogoUrl</source>
+			</trans-unit>
+			<trans-unit id="employment_extent.description">
+				<source>employmentExtent</source>
+			</trans-unit>
+			<trans-unit id="employment_extent_id.description">
+				<source>employmentExtentId</source>
+			</trans-unit>
+			<trans-unit id="job_level.description">
+				<source>jobLevel</source>
+			</trans-unit>
+			<trans-unit id="job_level_id.description">
+				<source>jobLevelId</source>
+			</trans-unit>
+			<trans-unit id="contact1name.description">
+				<source>contact1name</source>
+			</trans-unit>
+			<trans-unit id="contact1email.description">
+				<source>contact1email</source>
+			</trans-unit>
+			<trans-unit id="pub_date_to.description">
+				<source>pubDateTo</source>
+			</trans-unit>
+			<trans-unit id="last_updated.description">
+				<source>lastUpdated</source>
 			</trans-unit>
 			<trans-unit id="content_elements.description">
 				<source>contentElements</source>

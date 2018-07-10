@@ -58,9 +58,6 @@ class JobController extends ActionController
      */
     public function listAction()
     {
-        $test = new IntelliplanImportService(217);
-        $test->run();
-
         $jobs = $this->jobRepository->findAll();
 
         if ($jobs->count() > 0) {

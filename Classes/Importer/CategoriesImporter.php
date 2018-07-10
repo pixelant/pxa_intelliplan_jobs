@@ -21,9 +21,8 @@ class CategoriesImporter extends AbstractImporter
     public function import(array $importData, int $pid)
     {
         $data = [];
-        $categories = is_array($importData['job_categories']) ? $importData['job_categories'] : [];
 
-        foreach ($categories as $category) {
+        foreach ($importData as $category) {
             $existingCategory = $this->categoryRepository->findByExternalImportId((int)$category['id']);
 
             if ($existingCategory !== null) {

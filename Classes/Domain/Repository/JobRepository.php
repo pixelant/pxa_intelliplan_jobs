@@ -17,7 +17,7 @@ class JobRepository extends Repository
      * @var array
      */
     protected $defaultOrderings = [
-        'crdate' => QueryInterface::ORDER_DESCENDING
+        'pubDate' => QueryInterface::ORDER_DESCENDING
     ];
 
     /**
@@ -34,5 +34,26 @@ class JobRepository extends Repository
         $query->matching($query->contains('categories', $category));
 
         return $query->count();
+    }
+
+    /**
+     * Find job by ID
+     *
+     * @param int $id
+     * @return object
+     */
+    public function findById(int $id)
+    {
+        $query = $this->createQuery();
+
+        $query->getQuerySettings()
+            ->setRespectSysLanguage(false)
+            ->setRespectStoragePage(false);
+
+        $query->matching(
+            $query->equals('id', $id)
+        );
+
+        return $query->execute()->getFirst();
     }
 }

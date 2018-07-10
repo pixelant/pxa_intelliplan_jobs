@@ -10,8 +10,9 @@ call_user_func(function () {
             'label' => $ll . 'tca.tx_pxaintelliplanjobs_import_id',
             'config' => [
                 'type' => 'input',
-                'size' => 5,
-                'eval' => 'int'
+                'size' => 10,
+                'eval' => 'int',
+                'readOnly' => true
             ]
         ]
     ];
@@ -23,6 +24,6 @@ call_user_func(function () {
 
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes(
         'sys_category',
-        '--div--;' . $ll .'tca.category_tab, tx_pxaintelliplanjobs_import_id'
+        '--div--;' . $ll . 'tca.category_tab, tx_pxaintelliplanjobs_import_id'
     );
 });

@@ -13,10 +13,10 @@ class CategoryRepository extends \TYPO3\CMS\Extbase\Domain\Repository\CategoryRe
     /**
      * Find intelliplan category
      *
-     * @param int $id
+     * @param $id
      * @return Category|null
      */
-    public function findByExternalImportId(int $id)
+    public function findByExternalImportId($id)
     {
         $query = $this->createQuery();
 

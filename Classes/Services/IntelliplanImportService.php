@@ -30,7 +30,7 @@ class IntelliplanImportService
      * @var array
      */
     protected $importers = [
-        //CategoriesImporter::class
+        CategoriesImporter::class,
         JobDataImporter::class
     ];
 

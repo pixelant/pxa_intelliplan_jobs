@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Pixelant\PxaIntelliplanJobs\Task;
 
+use Pixelant\PxaIntelliplanJobs\Services\IntelliplanImportService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Scheduler\Task\AbstractTask;
 

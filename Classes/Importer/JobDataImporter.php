@@ -2,7 +2,14 @@
 declare(strict_types=1);
 
 namespace Pixelant\PxaIntelliplanJobs\Importer;
+
+use Pixelant\PxaIntelliplanJobs\Domain\Model\Category;
+use Pixelant\PxaIntelliplanJobs\Domain\Model\Job;
+use Pixelant\PxaIntelliplanJobs\Exception\CategoryNotFoundException;
 use Pixelant\PxaIntelliplanJobs\Provider\IntelliplanDataProvider;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Utility\StringUtility;
+use TYPO3\CMS\Extbase\Reflection\ObjectAccess;
 
 /**
  * Class JobDataImporter
@@ -11,14 +18,168 @@ use Pixelant\PxaIntelliplanJobs\Provider\IntelliplanDataProvider;
 class JobDataImporter extends AbstractImporter
 {
     /**
+     * While checking job list, save categories here in order to import it later
+     *
+     * @var array
+     */
+    protected $categories = [];
+
+    /**
+     * Import fields from feed to TYPO3
+     *
+     * @var array
+     */
+    protected $importFields = [
+        'title',
+        'pubDate',
+        'description',
+        'category',
+        'id',
+        'numberOfPositionsToFill',
+        'type',
+        'jobPositionTitle',
+        'jobPositionTitleId',
+        'jobPositionCategoryId',
+        'jobLocation',
+        'jobLocationId',
+        'jobOccupation',
+        'jobOccupationId',
+        'jobCategory',
+        'jobCategoryId',
+        'service',
+        'serviceCategory',
+        'country',
+        'countryId',
+        'state',
+        'stateId',
+        'municipality',
+        'municipalityId',
+        'company',
+        'companyLogoUrl',
+        'employmentExtent',
+        'employmentExtentId',
+        'employmentType',
+        'employmentTypeId',
+        'jobLevel',
+        'jobLevelId',
+        'contact1name',
+        'contact1email',
+        'pubDateTo',
+        'lastUpdated'
+    ];
+
+    /**
      * Import jobs data
      *
-     * @param array $data
+     * @param array $importData
      * @param int $pid
      */
-    public function import(array $data, int $pid)
+    public function import(array $importData, int $pid)
     {
-        // TODO: Implement import() method.
+        $jobDataToTypo3 = [];
+        foreach ($importData as $jobData) {
+            /** @var Job $job */
+            if ($job = $this->jobRepository->findById((int)$jobData['id'])) {
+                $updateJobData = [];
+
+                foreach ($this->importFields as $importField) {
+                    $importValue = $jobData[strtolower($importField)];
+                    $dbField = GeneralUtility::camelCaseToLowerCaseUnderscored($importField);
+
+                    if ($importField === 'category') {
+                        $currentValue = $job->getCategoryTypo3()
+                            ? $job->getCategoryTypo3()->getTitle()
+                            : '';
+
+                        if ($currentValue !== $importValue) {
+                            /** @var Category $newCategory */
+                            if ($newCategory = $this->categoryRepository->findOneByTitle($importValue)) {
+                                $updateJobData['category'] = $importValue;
+                                $updateJobData['category_typo3'] = $newCategory->getUid();
+                            } else {
+                                throw new CategoryNotFoundException('Category "' . $importValue . '" not found while importing job', 1531211636899);
+                            }
+                        }
+                    } else {
+                        $currentValue = ObjectAccess::getProperty($job, $importField);
+
+                        if (is_int($currentValue) && $currentValue !== (int)$importValue) {
+                            $updateJobData[$dbField] = (int)$importValue;
+                        } elseif (is_string($currentValue) && $currentValue !== (string)$importValue) {
+                            $updateJobData[$dbField] = (string)$importValue;
+                        } elseif (is_object($currentValue) && $currentValue instanceof \DateTime) {
+                            $importValue = strtotime($importValue);
+
+                            // TYPO3 save in DB value with time zone difference
+                            if (($currentValue->getOffset() + $currentValue->getTimestamp()) !== $importValue) {
+                                $updateJobData[$dbField] = $importValue;
+                            }
+                        }
+                    }
+                }
+
+                if (!empty($updateJobData)) {
+                    $jobDataToTypo3[$job->getUid()] = $updateJobData;
+                }
+            } else {
+                $newId = StringUtility::getUniqueId('NEW');
+                $jobDataToTypo3[$newId] = [
+                    'pid' => $pid
+                ];
+
+                foreach ($this->importFields as $importField) {
+                    $this->setImportFieldValue($importField, $jobData, $jobDataToTypo3[$newId]);
+                }
+            }
+        }
+
+        if (!empty($jobDataToTypo3)) {
+            $jobDataToTypo3 = [
+                'tx_pxaintelliplanjobs_domain_model_job' => $jobDataToTypo3
+            ];
+
+            $dataHandler = $this->getDataHandler();
+            $dataHandler->start($jobDataToTypo3, []);
+            $dataHandler->process_datamap();
+        }
+    }
+
+    /**
+     * Get value for import field
+     *
+     * @param string $importField
+     * @param array $data
+     * @param array &$jobData
+     * @return void
+     */
+    protected function setImportFieldValue(string $importField, array $data, array &$jobData)
+    {
+        switch ($importField) {
+            // Date fields
+            case 'pubDateTo':
+            case 'lastUpdated':
+            case 'pubDate':
+                $value = strtotime($data[strtolower($importField)]);
+                break;
+            case 'category':
+                $value = $data[strtolower($importField)];
+
+                /** @var Category $category */
+                $category = $this->categoryRepository->findOneByTitle($value);
+                if ($category === null) {
+                    throw new CategoryNotFoundException('Category "' . $category . '" not found while importing job', 1531209414046);
+                }
+
+                // Set id to categories
+                $jobData['category_typo3'] = $category->getUid();
+                break;
+            default:
+                $value = $data[strtolower($importField)];
+        }
+
+        if (!empty($value)) {
+            $jobData[GeneralUtility::camelCaseToLowerCaseUnderscored($importField)] = $value;
+        }
     }
 
     /**

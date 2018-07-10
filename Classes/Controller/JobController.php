@@ -15,6 +15,8 @@ namespace Pixelant\PxaIntelliplanJobs\Controller;
  ***/
 
 use Pixelant\PxaIntelliplanJobs\Domain\Model\Job;
+use Pixelant\PxaIntelliplanJobs\Services\IntelliplanImportService;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 
@@ -42,6 +44,8 @@ class JobController extends ActionController
      */
     public function listAction()
     {
+        /*$tet = GeneralUtility::makeInstance(IntelliplanImportService::class, 217);
+        $tet->run();*/
         $jobs = $this->jobRepository->findAllWithOrder($this->settings['sortOrder']);
 
         if ($jobs->count() > 0) {

@@ -67,6 +67,30 @@
 			<trans-unit id="fe.duration">
 				<target>Varaktighet</target>
 			</trans-unit>
+			<trans-unit id="placeholder.first_name">
+				<target>Förnamn</target>
+			</trans-unit>
+			<trans-unit id="placeholder.surname">
+				<target>Efternamn</target>
+			</trans-unit>
+			<trans-unit id="placeholder.email">
+				<target>E-post</target>
+			</trans-unit>
+			<trans-unit id="placeholder.address">
+				<target>Gatuadress</target>
+			</trans-unit>
+			<trans-unit id="placeholder.city">
+				<target>Postort</target>
+			</trans-unit>
+			<trans-unit id="placeholder.postal_code">
+				<target>Postnummber</target>
+			</trans-unit>
+			<trans-unit id="placeholder.mobile_phone">
+				<target>Personnummber - format 800101-0101</target>
+			</trans-unit>
+			<trans-unit id="placeholder.telephone">
+				<target>Telefonnummber</target>
+			</trans-unit>
 			<!--FE LABELS:END-->
 		</body>
 	</file>

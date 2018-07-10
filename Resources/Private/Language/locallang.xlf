@@ -67,6 +67,30 @@
 			<trans-unit id="fe.duration">
 			    <source>Duration</source>
 			</trans-unit>
+			<trans-unit id="placeholder.first_name">
+			    <source>First name</source>
+			</trans-unit>
+			<trans-unit id="placeholder.surname">
+			    <source>Surname</source>
+			</trans-unit>
+			<trans-unit id="placeholder.email">
+			    <source>Email</source>
+			</trans-unit>
+			<trans-unit id="placeholder.address">
+			    <source>Address</source>
+			</trans-unit>
+			<trans-unit id="placeholder.city">
+			    <source>City</source>
+			</trans-unit>
+			<trans-unit id="placeholder.postal_code">
+			    <source>Postal code</source>
+			</trans-unit>
+			<trans-unit id="placeholder.mobile_phone">
+			    <source>Mobile phone</source>
+			</trans-unit>
+			<trans-unit id="placeholder.telephone">
+			    <source>Telephone</source>
+			</trans-unit>
 			<!--FE LABELS:END-->
 
 			<!--EMAIL LABELS:START-->

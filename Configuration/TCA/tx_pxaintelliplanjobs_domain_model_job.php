@@ -447,5 +447,10 @@ return [
                 'foreign_table' => 'tt_content'
 			],
 	    ],
+        'crdate' => [
+            'config' => [
+                'type' => 'passthrough',
+            ],
+        ],
     ],
 ];

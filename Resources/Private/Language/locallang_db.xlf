@@ -155,6 +155,9 @@
 			<trans-unit id="flexform.sortOrder">
 			    <source>Sorting order direction (By publish date)</source>
 			</trans-unit>
+			<trans-unit id="flexform.newForDays">
+			    <source>For how many days job ad is treated like a new</source>
+			</trans-unit>
 			<!--Flexform:END-->
 
 			<!--Typoscript constant editor:START-->

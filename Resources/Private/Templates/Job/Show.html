@@ -27,8 +27,8 @@
                         <f:if condition="{job.start}">
                             <p><strong><f:translate key="fe.start" /></strong> <br>{job.start}</p>
                         </f:if>
-                        <f:if condition="{job.applyStart}">
-                            <p><strong><f:translate key="fe.apply_start" /></strong> <br><f:format.date date="{job.applyStart}" format="{settings.dateFormat}"/></p>
+                        <f:if condition="{job.pubDateTo}">
+                            <p><strong><f:translate key="fe.apply_before" /></strong> <br><f:format.date date="{job.pubDateTo}" format="{settings.dateFormat}"/></p>
                         </f:if>
                     </div>
                 </div>
@@ -76,6 +76,196 @@
     <div class="page-navigation visible-md visible-lg">
         <div class="container">
             <f:cObject typoscriptObjectPath="lib.pxaIntelliplanJobsBreadCrumbs" />
+        </div>
+    </div>
+
+    <div class="light-gray-background">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 center-block">
+                    <div class="panel-box">
+                        <f:form action="applyForJob">
+
+                        </f:form>
+                        <form action="" _lpchecked="1">
+                            <div class="panel-box__body">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <f:for each="{0: 'first_name', 1: 'email', 2: 'postal_code', 3: 'mobile_phone'}" as="field">
+                                            <div class="form-item">
+                                                <input class="form-control" placeholder="{f:translate(key: 'placeholder.{field}')}" type="text">
+                                            </div>
+                                        </f:for>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <f:for each="{0: 'surname', 1: 'address', 2: 'city', 3: 'telephone'}" as="field">
+                                            <div class="form-item">
+                                                <input class="form-control" placeholder="{f:translate(key: 'placeholder.{field}')}" type="text">
+                                            </div>
+                                        </f:for>
+                                    </div>
+                                </div>
+                                <div class="form-additions">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <p class="additions-label">
+                                                <strong>Lagg till CV</strong>
+                                            </p>
+                                        </div>
+                                        <div class="col-sm-6 _actions">
+                                            <div class="file-uploader">
+                                                <label class="btn btn-upload">
+                                                    <input type="file" class="js__file-upload">
+                                                    <span>
+                                                    <span class="action-name">
+                                                        <i class="icons icon-paperclip"></i>
+                                                        BIFOGA DOCUMENTR
+                                                    </span>
+                                                    <span class="file-uploader__name"></span>
+                                                </span>
+                                                </label>
+                                                <i class="icons icon-clear file-uploader__clear js__file-upload__clear"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-additions">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <p class="additions-label">
+                                                <strong>Lagg till CV</strong>
+                                            </p>
+                                        </div>
+                                        <div class="col-sm-6 _actions">
+                                            <div class="file-uploader">
+                                                <label class="btn btn-upload">
+                                                    <input type="file" class="js__file-upload">
+                                                    <span>
+                                                    <span class="action-name">
+                                                        <i class="icons icon-paperclip"></i>
+                                                        BIFOGA DOCUMENTR
+                                                    </span>
+                                                    <span class="file-uploader__name"></span>
+                                                </span>
+                                                </label>
+                                                <i class="icons icon-clear file-uploader__clear js__file-upload__clear"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-additions">
+                                    <div class="form-additions__agreement">
+                                        <input type="checkbox">
+                                        <p>Sed ut perspiciatis, unde omnis iste natus error sit voluptatem accusantium doloremque laudantium</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-box__footer">
+                                <div class="form-actions text-center">
+                                    <button type="submit" class="btn btn-default">SOK TJANSTEN</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+
+                    <div class="panel-box">
+                        <div class="panel-header">
+                            <h2>Proshe pana CV?</h2>
+                        </div>
+                        <form action="" class="js__panel-collapsible" style="display: none;">
+                            <div class="panel-box__body">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-item">
+                                            <input class="form-control" placeholder="placeholder" type="text">
+                                        </div>
+                                        <div class="form-item">
+                                            <input class="form-control" placeholder="placeholder" type="text">
+                                        </div>
+                                        <div class="form-item">
+                                            <input class="form-control" placeholder="placeholder" type="text">
+                                        </div>
+                                        <div class="form-item">
+                                            <input class="form-control" placeholder="placeholder" type="text">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-item">
+                                            <input class="form-control" placeholder="placeholder" type="text">
+                                        </div>
+                                        <div class="form-item">
+                                            <input class="form-control" placeholder="placeholder" type="text">
+                                        </div>
+                                        <div class="form-item">
+                                            <input class="form-control" placeholder="placeholder" type="text">
+                                        </div>
+                                        <div class="form-item">
+                                            <input class="form-control" placeholder="placeholder" type="text">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-additions">
+                                    <p><strong>Sed ut perspiciatis</strong></p>
+                                    <div class="radio-item">
+                                        <label>
+                                            <input type="radio" name="radio">
+                                            <span>Yes</span>
+                                        </label>
+                                    </div>
+                                    <div class="radio-item">
+                                        <label>
+                                            <input type="radio" name="radio">
+                                            <span>No</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-additions">
+                                    <p><strong>Sed ut perspiciatis</strong></p>
+                                    <div class="radio-item">
+                                        <label>
+                                            <input type="radio" name="radio1">
+                                            <span>Yes</span>
+                                        </label>
+                                    </div>
+                                    <div class="radio-item">
+                                        <label>
+                                            <input type="radio" name="radio1">
+                                            <span>No</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-additions">
+                                    <p><strong>Sed ut perspiciatis</strong></p>
+                                    <div class="radio-item">
+                                        <label>
+                                            <input type="radio" name="radio2">
+                                            <span>Yes</span>
+                                        </label>
+                                    </div>
+                                    <div class="radio-item">
+                                        <label>
+                                            <input type="radio" name="radio2">
+                                            <span>No</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-additions">
+                                    <div class="form-additions__agreement">
+                                        <input type="checkbox">
+                                        <p>Sed ut perspiciatis, unde omnis iste natus error sit voluptatem accusantium doloremque laudantium</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-box__footer">
+                                <div class="form-actions text-center">
+                                    <button type="submit" class="btn btn-default">SOK TJANSTEN</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 

@@ -3,10 +3,8 @@ declare(strict_types=1);
 
 namespace Pixelant\PxaIntelliplanJobs\Provider;
 
-use Pixelant\PxaIntelliplanJobs\Exception\ApiCallBadRequestException;
+use Pixelant\PxaIntelliplanJobs\Api\IntelliplanApi;
 use Pixelant\PxaIntelliplanJobs\Exception\ImporterNotSupportedException;
-use Pixelant\PxaIntelliplanJobs\Utility\ConfigurationUtility;
-use TYPO3\CMS\Core\Http\HttpRequest;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -27,33 +25,16 @@ class IntelliplanDataProvider implements SingletonInterface
     const JOBS_IMPORTER = 2;
 
     /**
-     * Api url template
-     *
-     * @var string
+     * @var IntelliplanApi
      */
-    protected static $apiUrl = 'https://%s.app.intelliplan.eu/api/CandidatePortal_v1/%s';
-
-    /**
-     * Customer name
-     *
-     * @var string
-     */
-    protected $customerName = '';
-
-    /**
-     * Partner code
-     *
-     * @var string
-     */
-    protected $partnerId = '';
+    protected $intelliplanApi = null;
 
     /**
      * Initialize
      */
     public function __construct()
     {
-        $this->customerName = ConfigurationUtility::getCustomerName();
-        $this->partnerId = ConfigurationUtility::getPartnerCode();
+        $this->intelliplanApi = GeneralUtility::makeInstance(IntelliplanApi::class);
     }
 
     /**
@@ -79,10 +60,9 @@ class IntelliplanDataProvider implements SingletonInterface
      *
      * @return array
      */
-    public function getJobsData(): array
+    protected function getJobsData(): array
     {
-        $apiUrl = $this->getApiCallUrl(self::JOBS_IMPORTER);
-        $response = $this->performGetRequest($apiUrl);
+        $response = $this->intelliplanApi->getJobAdsListFeed();
 
         $xml = simplexml_load_string($response);
         $ns = $xml->getNamespaces(true);
@@ -97,10 +77,9 @@ class IntelliplanDataProvider implements SingletonInterface
      *
      * @return array
      */
-    public function getAllCategories(): array
+    protected function getAllCategories(): array
     {
-        $apiUrl = $this->getApiCallUrl(self::CATEGORIES_IMPORTER);
-        $response = json_decode($this->performGetRequest($apiUrl), true);
+        $response = json_decode($this->intelliplanApi->getAllServiceCategories(), true);
 
         return is_array($response['service_categories']) ? $response['service_categories'] : [];
     }
@@ -143,56 +122,5 @@ class IntelliplanDataProvider implements SingletonInterface
         }
 
         return $feedItems;
-    }
-
-    /**
-     * Get url for api call
-     *
-     * @param int $callType
-     * @return string
-     */
-    protected function getApiCallUrl(int $callType): string
-    {
-        switch ($callType) {
-            case self::CATEGORIES_IMPORTER:
-                return sprintf(
-                    self::$apiUrl,
-                    $this->customerName,
-                    'Jobs/GetAllServiceCategories?partner_code=' . $this->partnerId
-                );
-            case self::JOBS_IMPORTER:
-                return 'https://cv-speedgroup-se.app.intelliplan.eu/JobAdGlobePages/Feed.aspx?pid=AA31EA47-FDA6-42F3-BD9F-E42186E5A960&version=2';
-            default:
-                throw new \UnexpectedValueException('Api call with type "' . $callType . '" not supported.', 1530863121487);
-        }
-    }
-
-    /**
-     * Perform request
-     *
-     * @param string $url
-     * @return string
-     * @throws ApiCallBadRequestException
-     * @throws \HTTP_Request2_Exception
-     * @throws \HTTP_Request2_LogicException
-     */
-    protected function performGetRequest(string $url): string
-    {
-        /** @var HttpRequest $httpRequest */
-        $httpRequest = GeneralUtility::makeInstance(
-            HttpRequest::class,
-            $url,
-            'GET'
-        );
-        $httpRequest->setHeader(['Accept' => 'application/json']);
-
-        /** @var \HTTP_Request2_Response $response */
-        $response = $httpRequest->send();
-
-        if ($response->getStatus() === 200) {
-            return $response->getBody();
-        }
-
-        throw new ApiCallBadRequestException('Failed API call "' . $url . '" with code - ' . $response->getStatus());
     }
 }

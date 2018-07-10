@@ -27,9 +27,22 @@
 						</TCEforms>
 					</switchableControllerActions>
 
+					<settings.newForDays>
+						<TCEforms>
+							<label>LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:flexform.newForDays</label>
+							<displayCond>FIELD:switchableControllerActions:!=:Job->show</displayCond>
+							<config>
+								<type>input</type>
+								<default>7</default>
+								<eval>required,int</eval>
+							</config>
+						</TCEforms>
+					</settings.newForDays>
+
 					<settings.sortOrder>
 						<TCEforms>
 							<label>LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:flexform.sortOrder</label>
+							<displayCond>FIELD:switchableControllerActions:!=:Job->show</displayCond>
 							<config>
 								<type>select</type>
 								<items>

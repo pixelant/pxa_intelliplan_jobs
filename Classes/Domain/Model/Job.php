@@ -51,6 +51,13 @@ class Job extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $description = '';
 
     /**
+     * crdate
+     *
+     * @var \DateTime
+     */
+    protected $crdate = null;
+
+    /**
      * pubDate
      *
      * @var \DateTime
@@ -1135,5 +1142,21 @@ class Job extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function setLastUpdated(\DateTime $lastUpdated)
     {
         $this->lastUpdated = $lastUpdated;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getCrdate(): \DateTime
+    {
+        return $this->crdate;
+    }
+
+    /**
+     * @param \DateTime $crdate
+     */
+    public function setCrdate(\DateTime $crdate)
+    {
+        $this->crdate = $crdate;
     }
 }

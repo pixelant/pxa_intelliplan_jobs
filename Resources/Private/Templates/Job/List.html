@@ -13,7 +13,7 @@
                 <f:then>
                     <ul class="category-filter__list" id="js__category-filter">
                         <f:for each="{subCategories}" as="category">
-                            <li class="category-filter__list-item" data-value="{category.uid}">{category.title}</li>
+                            <li class="category-filter__list-item" data-value="cat{category.uid}">{category.title}</li>
                         </f:for>
                     </ul>
                 </f:then>
@@ -30,7 +30,7 @@
             <div class="container">
                 <ul class="category-filter__list" id="js__city-filter">
                     <f:for each="{cities}" as="city" key="cityKey">
-                        <li class="category-filter__list-item" data-value="{cityKey}">{city}</li>
+                        <li class="category-filter__list-item" data-value="city{cityKey}">{city}</li>
                     </f:for>
                 </ul>
             </div>
@@ -44,7 +44,9 @@
                     <f:for each="{jobs}" as="job">
                         <div class="filtering-item" data-categories="{job.filteringIdentifiers}">
                             <div class="filtering-item__logo">
-                                <img class="filtering-item__logo-image" src="https://cdn0.iconfinder.com/data/icons/prostitute/332/prostitution-001-512.png" alt="">
+                                <f:if condition="{job.companyLogoUrl}">
+                                    <img class="filtering-item__logo-image" src="{job.companyLogoUrl}" alt="{job.company}" title="{job.company}">
+                                </f:if>
                             </div>
 
                             <div class="filtering-item__body">
@@ -56,24 +58,24 @@
                                 </f:if>
 
                                 <ul class="filtering-item__tags-list">
-                                    <f:if condition="{job.city}">
+                                    <f:if condition="{job.municipality}">
                                         <li class="tags-list__item">
                                             <i class="icons icon-map-marker"></i>
-                                            {job.city}
+                                            {job.municipality}
                                         </li>
                                     </f:if>
 
-                                    <f:if condition="{job.categories}">
+                                    <f:if condition="{job.categoryTypo3}">
                                         <li class="tags-list__item">
                                             <i class="icons icon-tag2"></i>
-                                            {job.categoriesList}
+                                            {job.categoryTypo3.title}
                                         </li>
                                     </f:if>
 
-                                    <f:if condition="{job.applyStart}">
+                                    <f:if condition="{job.pubDateTo}">
                                         <li class="tags-list__item">
                                             <i class="icons icon-pencil"></i>
-                                            <f:translate key="fe.apply_start" /> <f:format.date date="{job.applyStart}" format="{settings.dateFormat}"/>
+                                            <f:translate key="fe.apply_before" /> <f:format.date date="{job.pubDateTo}" format="{settings.dateFormat}"/>
                                         </li>
                                     </f:if>
                                 </ul>

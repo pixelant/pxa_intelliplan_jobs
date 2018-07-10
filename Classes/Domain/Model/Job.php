@@ -44,13 +44,6 @@ class Job extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $company = '';
 
     /**
-     * applyStart
-     *
-     * @var \DateTime
-     */
-    protected $applyStart = null;
-
-    /**
      * description
      *
      * @var string
@@ -333,23 +326,6 @@ class Job extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     }
 
     /**
-     * Remove all special chars and spaces from city string
-     *
-     * @return string
-     */
-    public function getCityProcessed()
-    {
-        if (TYPO3_MODE === 'FE') {
-            /** @var CharsetConverter $csConvObj */
-            $csConvObj = $GLOBALS['TSFE']->csConvObj;
-            $cityProcessed = strtolower(str_replace(' ', '', $this->getCity()));
-            $cityProcessed = $csConvObj->specCharsToASCII('utf-8', $cityProcessed);
-            return $cityProcessed;
-        }
-        return $this->city;
-    }
-
-    /**
      * Returns the company
      *
      * @return string $company
@@ -368,27 +344,6 @@ class Job extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function setCompany($company)
     {
         $this->company = $company;
-    }
-
-    /**
-     * Returns the applyStart
-     *
-     * @return \DateTime $applyStart
-     */
-    public function getApplyStart()
-    {
-        return $this->applyStart;
-    }
-
-    /**
-     * Sets the applyStart
-     *
-     * @param \DateTime $applyStart
-     * @return void
-     */
-    public function setApplyStart(\DateTime $applyStart)
-    {
-        $this->applyStart = $applyStart;
     }
 
     /**
@@ -472,15 +427,15 @@ class Job extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     public function getFilteringIdentifiers()
     {
-        $category = $this->getCategoryTypo3()
-            ? $this->getCategoryTypo3()->getUid()
-            : '';
-        $city = $this->getCityProcessed();
-        if (!empty($city) && !empty($category)) {
-            return $category . ',' . $city;
+        $parts = [];
+        if ($this->getCategoryTypo3() !== null) {
+            $parts[] = 'cat' . $this->getCategoryTypo3()->getUid();
+        }
+        if ($this->getMunicipalityId()) {
+            $parts[] = 'city' . $this->getMunicipalityId();
         }
 
-        return $category . $city;
+        return implode(',', $parts);
     }
 
     /**

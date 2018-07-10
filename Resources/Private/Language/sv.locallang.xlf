@@ -10,7 +10,7 @@
 			<trans-unit id="fe.no_jobs">
 			    <target>Inga jobbbjudanden hittades</target>
 			</trans-unit>
-			<trans-unit id="fe.apply_start">
+			<trans-unit id="fe.apply_before">
 			    <target>Ansök senast</target>
 			</trans-unit>
 			<trans-unit id="fe.new">
@@ -62,7 +62,10 @@
 				<target>Start</target>
 			</trans-unit>
 			<trans-unit id="fe.job">
-				<source>Jobb</source>
+				<target>Jobb</target>
+			</trans-unit>
+			<trans-unit id="fe.duration">
+				<target>Varaktighet</target>
 			</trans-unit>
 			<!--FE LABELS:END-->
 		</body>

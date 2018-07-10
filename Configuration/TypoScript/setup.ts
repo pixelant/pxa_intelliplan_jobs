@@ -39,7 +39,6 @@ plugin.tx_pxaintelliplanjobs {
     }
 
     settings {
-        hideCategoriesWithoutJobs = {$plugin.tx_pxaintelliplanjobs.settings.hideCategoriesWithoutJobs}
         dateFormat = {$plugin.tx_pxaintelliplanjobs.settings.dateFormat}
         showShareForm = {$plugin.tx_pxaintelliplanjobs.settings.showShareForm}
 

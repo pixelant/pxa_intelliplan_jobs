@@ -15,11 +15,8 @@ namespace Pixelant\PxaIntelliplanJobs\Controller;
  ***/
 
 use Pixelant\PxaIntelliplanJobs\Domain\Model\Job;
-use Pixelant\PxaIntelliplanJobs\Services\IntelliplanImportService;
-use TYPO3\CMS\Extbase\Domain\Model\Category;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
-use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
 /**
  * JobController
@@ -39,42 +36,28 @@ class JobController extends ActionController
     protected $categoryRepository = null;
 
     /**
-     * @var TypoScriptFrontendController
-     */
-    protected $tsfe = null;
-
-    /**
-     * Initialize on every action
-     */
-    public function initializeAction()
-    {
-        $this->tsfe = $GLOBALS['TSFE'];
-    }
-
-    /**
      * action list
      *
      * @return void
      */
     public function listAction()
     {
-        $jobs = $this->jobRepository->findAll();
+        $jobs = $this->jobRepository->findAllWithOrder($this->settings['sortOrder']);
 
         if ($jobs->count() > 0) {
             $subCategories = [];
 
             /** @var Job $job */
             foreach ($jobs as $job) {
-                $subCategories = array_merge($subCategories, $job->getCategories()->toArray());
+                $subCategories[] = $job->getCategoryTypo3();
             }
 
-            $this->view->assign('subCategories', $this->filterOutHiddenCategories($subCategories));
+            $this->view->assign('subCategories', $subCategories);
         }
 
         $this->view
             ->assign('jobs', $jobs)
-            ->assign('cities', $this->collectJobCities($jobs))
-            ->assign('rootCategory', $rootCategory);
+            ->assign('cities', $this->collectJobCities($jobs));
     }
 
     /**
@@ -90,43 +73,20 @@ class JobController extends ActionController
     }
 
     /**
-     * Remove categories that are not visible
+     * Create array of locations
      *
-     * @param array $categories
+     * @param QueryResultInterface $jobs
      * @return array
      */
-    protected function filterOutHiddenCategories(array $categories): array
-    {
-        if ($this->isOptionEnabled('hideCategoriesWithoutJobs')) {
-            $resultCategories = [];
-
-            /** @var Category $category */
-            foreach ($categories as $category) {
-                if (!array_key_exists($category->getUid(), $resultCategories)
-                    && $this->jobRepository->countByCategory($category) > 0
-                ) {
-                    $resultCategories[$category->getUid()] = $category;
-                }
-            }
-
-            return $resultCategories;
-        }
-
-        return $categories;
-    }
-
-
     protected function collectJobCities(QueryResultInterface $jobs): array
     {
         $cities = [];
 
         /** @var Job $job */
         foreach ($jobs as $job) {
-            if (!empty($job->getCity())) {
-                $cityProcessed = $job->getCityProcessed();
-
-                if (!array_key_exists($cityProcessed, $cities)) {
-                    $cities[$cityProcessed] = $job->getCity();
+            if (!empty($job->getMunicipality()) && !empty($job->getMunicipalityId())) {
+                if (!array_key_exists($job->getMunicipalityId(), $cities)) {
+                    $cities[$job->getMunicipalityId()] = $job->getMunicipality();
                 }
             }
         }

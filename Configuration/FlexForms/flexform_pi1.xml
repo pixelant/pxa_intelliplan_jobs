@@ -27,6 +27,25 @@
 						</TCEforms>
 					</switchableControllerActions>
 
+					<settings.sortOrder>
+						<TCEforms>
+							<label>LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:flexform.sortOrder</label>
+							<config>
+								<type>select</type>
+								<items>
+									<numIndex index="0">
+										<numIndex index="0">LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:flexform.sortOrder.desc</numIndex>
+										<numIndex index="1">desc</numIndex>
+									</numIndex>
+									<numIndex index="1">
+										<numIndex index="0">LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:flexform.sortOrder.asc</numIndex>
+										<numIndex index="1">asc</numIndex>
+									</numIndex>
+								</items>
+							</config>
+						</TCEforms>
+					</settings.sortOrder>
+
 					<settings.singleViewPid>
 						<TCEforms>
 							<label>LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:flexform.singleViewPid</label>

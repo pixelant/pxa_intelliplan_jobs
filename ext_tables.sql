@@ -8,7 +8,6 @@ CREATE TABLE tx_pxaintelliplanjobs_domain_model_job (
 
 	title varchar(255) DEFAULT '' NOT NULL,
 	company varchar(55) DEFAULT '' NOT NULL,
-	apply_start int(11) DEFAULT '0' NOT NULL,
 	description text NOT NULL,
 	pub_date int(11) DEFAULT '0' NOT NULL,
 	category varchar(55) DEFAULT '' NOT NULL,

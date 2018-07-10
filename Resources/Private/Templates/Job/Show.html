@@ -11,15 +11,18 @@
                 <div class="light-gray-background">
                     <div class="side-content">
                         <h3><f:translate key="fe.quick_facts" /></h3>
-                        <p><strong><f:translate key="fe.job" /></strong> <br>{job.title}</p>
-                        <f:if condition="{job.region}">
-                            <p><strong><f:translate key="fe.region" /></strong> <br>{job.region}</p>
+                        <p><strong><f:translate key="fe.job" /></strong> <br>{job.service}</p>
+                        <f:if condition="{job.state}">
+                            <p><strong><f:translate key="fe.region" /></strong> <br>{job.state}</p>
                         </f:if>
-                        <f:if condition="{job.city}">
-                            <p><strong><f:translate key="fe.city" /></strong> <br>{job.city}</p>
+                        <f:if condition="{job.municipality}">
+                            <p><strong><f:translate key="fe.city" /></strong> <br>{job.municipality}</p>
                         </f:if>
-                        <f:if condition="{job.extent}">
-                            <p><strong><f:translate key="fe.extent" /></strong> <br>{job.extent}</p>
+                        <f:if condition="{job.employmentExtent}">
+                            <p><strong><f:translate key="fe.extent" /></strong> <br>{job.employmentExtent}</p>
+                        </f:if>
+                        <f:if condition="{job.employmentType}">
+                            <p><strong><f:translate key="fe.duration" /></strong> <br>{job.employmentType}</p>
                         </f:if>
                         <f:if condition="{job.start}">
                             <p><strong><f:translate key="fe.start" /></strong> <br>{job.start}</p>
@@ -65,7 +68,7 @@
                 </f:if>
             </div>
             <div class="col-md-9">
-                <f:format.html>{job.body}</f:format.html>
+                <f:format.html>{job.description}</f:format.html>
             </div>
         </div>
     </div>

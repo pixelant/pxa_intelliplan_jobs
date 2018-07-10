@@ -10,8 +10,8 @@
 			<trans-unit id="fe.no_jobs">
 			    <source>No job offers were found</source>
 			</trans-unit>
-			<trans-unit id="fe.apply_start">
-			    <source>Apply start</source>
+			<trans-unit id="fe.apply_before">
+			    <source>Apply by</source>
 			</trans-unit>
 			<trans-unit id="fe.new">
 			    <source>New</source>
@@ -64,7 +64,12 @@
 			<trans-unit id="fe.job">
 			    <source>Job</source>
 			</trans-unit>
+			<trans-unit id="fe.duration">
+			    <source>Duration</source>
+			</trans-unit>
+			<!--FE LABELS:END-->
 
+			<!--EMAIL LABELS:START-->
 			<trans-unit id="mail.your_field">
 			    <source>Your friend</source>
 			</trans-unit>
@@ -74,7 +79,7 @@
 			<trans-unit id="mail.link">
 			    <source>See more</source>
 			</trans-unit>
-			<!--FE LABELS:END-->
+			<!--EMAIL LABELS:END-->
 		</body>
 	</file>
 </xliff>

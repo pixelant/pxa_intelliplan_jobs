@@ -5,6 +5,7 @@ namespace Pixelant\PxaIntelliplanJobs\Domain\Repository;
 
 use TYPO3\CMS\Extbase\Domain\Model\Category;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
+use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use TYPO3\CMS\Extbase\Persistence\Repository;
 
 /**
@@ -55,5 +56,22 @@ class JobRepository extends Repository
         );
 
         return $query->execute()->getFirst();
+    }
+
+    /**
+     * Find all with custom order
+     *
+     * @param string $direction
+     * @return QueryResultInterface
+     */
+    public function findAllWithOrder(string $direction): QueryResultInterface
+    {
+        $query = $this->createQuery();
+
+        $orderDirection = $direction === 'asc' ? QueryInterface::ORDER_ASCENDING : QueryInterface::ORDER_DESCENDING;
+
+        $query->setOrderings(['pubDate' => $orderDirection]);
+
+        return $query->execute();
     }
 }

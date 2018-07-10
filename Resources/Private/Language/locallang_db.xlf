@@ -18,9 +18,6 @@
 			<trans-unit id="tx_pxaintelliplanjobs_domain_model_job.company">
 				<source>Company</source>
 			</trans-unit>
-			<trans-unit id="tx_pxaintelliplanjobs_domain_model_job.apply_start">
-				<source>Apply Start</source>
-			</trans-unit>
 			<trans-unit id="tx_pxaintelliplanjobs_domain_model_job.description">
 				<source>Description</source>
 			</trans-unit>
@@ -149,12 +146,18 @@
 			<trans-unit id="flexform.singleViewPid">
 			    <source>Single view page</source>
 			</trans-unit>
+			<trans-unit id="flexform.sortOrder.desc">
+			    <source>Descending</source>
+			</trans-unit>
+			<trans-unit id="flexform.sortOrder.asc">
+			    <source>Ascending</source>
+			</trans-unit>
+			<trans-unit id="flexform.sortOrder">
+			    <source>Sorting order direction (By publish date)</source>
+			</trans-unit>
 			<!--Flexform:END-->
 
 			<!--Typoscript constant editor:START-->
-			<trans-unit id="ts.hideCategoriesWithoutJobs">
-			    <source>Hide categories without job offers</source>
-			</trans-unit>
 			<trans-unit id="ts.dateFormat">
 			    <source>Date format</source>
 			</trans-unit>

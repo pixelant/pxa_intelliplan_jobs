@@ -19,11 +19,11 @@ call_user_func(
             'Pixelant.PxaIntelliplanJobs',
             'Pi2',
             [
-                'JobAjax' => 'share'
+                'JobAjax' => 'share, applyJob'
             ],
             // non-cacheable actions
             [
-                'JobAjax' => 'share'
+                'JobAjax' => 'share, applyJob'
             ]
         );
 

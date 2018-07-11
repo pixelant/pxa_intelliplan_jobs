@@ -170,6 +170,9 @@
 			<trans-unit id="ts.defaultSenderEmail">
 			    <source>Default sender email (Share function)</source>
 			</trans-unit>
+			<trans-unit id="ts.termsLink">
+			    <source>Accept terms link (Typolink format)</source>
+			</trans-unit>
 			<!--Typoscript constant editor:END-->
 
 			<!--Extension manager:START-->

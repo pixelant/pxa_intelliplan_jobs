@@ -34,6 +34,9 @@
 			<trans-unit id="fe.submit">
 			    <target>Tipsa!</target>
 			</trans-unit>
+			<trans-unit id="fe.sumit_2">
+				<target>Sök tjänsten</target>
+			</trans-unit>
 			<trans-unit id="fe.error_all_fields_required">
 				<source>Alla fält krävs</source>
 			</trans-unit>
@@ -90,6 +93,24 @@
 			</trans-unit>
 			<trans-unit id="placeholder.telephone">
 				<target>Telefonnummber</target>
+			</trans-unit>
+			<trans-unit id="fe.add_cv">
+			    <target>Lägg till CV</target>
+			</trans-unit>]
+			<trans-unit id="fe.add_letter">
+			    <target>Lägg till personligt brev</target>
+			</trans-unit>
+			<trans-unit id="fe.attach_document">
+			    <target>Bifoga dokument</target>
+			</trans-unit>
+			<trans-unit id="fe.accept_terms_text">
+				<target>Jag har läst %s. Jag samtycker till att Speed behandlar mina personuppgifter på det sätt som beskrivs i texten.</target>
+			</trans-unit>
+			<trans-unit id="fe.accept_term_link">
+				<target>Speeds Information om behandling av personuppgifter</target>
+			</trans-unit>
+			<trans-unit id="fe.no_cv">
+				<target>Inget CV? Ansökan utan!</target>
 			</trans-unit>
 			<!--FE LABELS:END-->
 		</body>

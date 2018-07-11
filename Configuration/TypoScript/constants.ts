@@ -27,5 +27,8 @@ plugin.tx_pxaintelliplanjobs {
 
         # cat=plugin.tx_pxaintelliplanjobs/pxaintelliplanjobs/040; type=string; label=LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:ts.defaultSenderEmail
         shareJob.defaultSenderEmail = noreply@site.com
+
+        # cat=plugin.tx_pxaintelliplanjobs/pxaintelliplanjobs/050; type=string; label=LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:ts.termsLink
+        applyJob.termsLink =
     }
 }

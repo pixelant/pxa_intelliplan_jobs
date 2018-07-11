@@ -34,14 +34,26 @@
 			<trans-unit id="fe.submit">
 			    <source>Send</source>
 			</trans-unit>
-			<trans-unit id="fe.error_all_fields_required">
-			    <source>All fields required</source>
+			<trans-unit id="fe.sumit_2">
+			    <source>Apply for this job</source>
+			</trans-unit>
+			<trans-unit id="fe.error_field_required">
+			    <source>This field is required</source>
 			</trans-unit>
 			<trans-unit id="fe.error_valid_email">
 			    <source>E-mail is not valid</source>
 			</trans-unit>
+			<trans-unit id="fe.error_acceptTerms">
+				<source>You need to accept terms</source>
+			</trans-unit>
+			<trans-unit id="fe.error_file_required">
+				<source>This file is required to upload</source>
+			</trans-unit>
 			<trans-unit id="fe.success_sent">
 				<source>Email was sent</source>
+			</trans-unit>
+			<trans-unit id="fe.success_apply_job">
+			    <source>Successfully applied job</source>
 			</trans-unit>
 			<trans-unit id="fe.quick_facts">
 			    <source>Quick facts</source>
@@ -90,6 +102,24 @@
 			</trans-unit>
 			<trans-unit id="placeholder.telephone">
 			    <source>Telephone</source>
+			</trans-unit>
+			<trans-unit id="fe.add_cv">
+			    <source>Add CV</source>
+			</trans-unit>
+			<trans-unit id="fe.add_letter">
+			    <source>Add a personal letter</source>
+			</trans-unit>
+			<trans-unit id="fe.attach_document">
+			    <source>Attach document</source>
+			</trans-unit>
+			<trans-unit id="fe.accept_terms_text">
+			    <source>I have read %s. I agree that Speed processes my personal information in the manner described in the text.</source>
+			</trans-unit>
+			<trans-unit id="fe.accept_term_link">
+			    <source>Speed's Information on the processing of personal data</source>
+			</trans-unit>
+			<trans-unit id="fe.no_cv">
+			    <source>No resume? Application without!</source>
 			</trans-unit>
 			<!--FE LABELS:END-->
 

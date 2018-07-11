@@ -1,21 +1,17 @@
-const PxaIntelliplanJobsTellFriend = (function () {
+const PxaIntelliplanJobs = (function () {
 
 	/**
 	 * Initialize
 	 * @param settings
 	 * @constructor
 	 */
-	function PxaIntelliplanJobsTellFriend(settings) {
-		this.form = $(settings.form);
-
-		if (this.form.length > 0) {
-			this.loader = this.form.parent().find(settings.loader);
-			this.messagesHolder = this.form.find(settings.messagesHolder);
-			this.settings = settings;
-		}
+	function PxaIntelliplanJobs(settings) {
+		this.formTellFriend = $(settings.formTellFriend);
+		this.formApplyJob = $(settings.formApplyJob);
+		this.settings = settings;
 	}
 
-	PxaIntelliplanJobsTellFriend.prototype = {
+	PxaIntelliplanJobs.prototype = {
 		/**
 		 * Init
 		 * @returns {boolean}
@@ -23,54 +19,112 @@ const PxaIntelliplanJobsTellFriend = (function () {
 		init: function () {
 			let that = this;
 
-			if (this.form.length > 0) {
-				this.form.on('submit', function (e) {
+			if (this.formTellFriend.length > 0) {
+				this.formTellFriend.on('submit', function (e) {
 					e.preventDefault();
+					let $form = $(this);
 
-					that.formSubmit();
+					that.sendAjax($form, function (data) {
+						let submit = $form.find('[type="submit"]');
+
+						submit.before(that.getMessage(data.successMessage, true));
+					});
+				});
+			}
+
+			if (this.formApplyJob.length > 0) {
+				this.formApplyJob.each(function () {
+					let $form = $(this),
+						$checkbox = $form.find(that.settings.acceptTerms);
+
+					if ($checkbox.length > 0) {
+						$checkbox.on('change', function () {
+							that.acceptTermsAction($checkbox, $form);
+						});
+					}
+				});
+
+				this.formApplyJob.on('submit', function (e) {
+					e.preventDefault();
+					let $form = $(this);
+
+					if (that.isFormApplyJobSubmitAllowed($form)) {
+						that.sendAjax($form, function (data) {
+							$form.replaceWith(that.getMessage(data.successMessage, true));
+						});
+					}
 				});
 			}
 		},
 
 		/**
-		 * Actions on form submit
+		 * When user accepted terms checkbox
 		 */
-		formSubmit: function () {
-			this.loader.removeClass(this.settings.loaderReadyClass);
+		acceptTermsAction: function ($checkbox, $form) {
+			let $submit = $form.find('[type="submit"]');
+
+			$submit.prop('disabled', !$checkbox.is(':checked'));
+		},
+
+		/**
+		 * Submit apply for a job
+		 * @param $form
+		 * @return bool
+		 */
+		isFormApplyJobSubmitAllowed: function ($form) {
+			let $checkbox = $form.find(this.settings.acceptTerms);
+
+			return $checkbox.length > 0 && $checkbox.is(':checked');
+		},
+
+		/**
+		 * Actions on form share submit
+		 */
+		sendAjax: function (form, callback) {
+			let loader = form.parent().find(this.settings.loader);
+
+			loader.removeClass(this.settings.loaderReadyClass);
 
 			let that = this,
-				url = this.form.attr('action');
+				url = form.attr('action');
 
-			this.form.find('[type="submit"]').prop('disabled', true);
-			this.form
-				.find('.' + that.settings.errorFieldClass)
+			form.find('[type="submit"]').prop('disabled', true);
+			form.find('.text-danger').remove();
+			form.find('.' + that.settings.errorFieldClass)
 				.removeClass(that.settings.errorFieldClass);
 
 			$.ajax({
 				type: 'POST',
 				url: url,
 				dataType: 'json',
-				data: that.form.serialize()
+				data: form.serialize()
 			})
 				.done(function (data) {
 					if (data.success) {
-						that.messagesHolder.html(that.getMessage(data.successMessage, true));
-					} else {
-						for (let i = 0; i < data.errorFields.length; i++) {
-							let field = that.form.find('[data-field="' + data.errorFields[i] + '"]');
-							field.addClass(that.settings.errorFieldClass);
-						}
-						let messages = '';
-						for (let i = 0; i < data.errors.length; i++) {
-							messages += that.getMessage(data.errors[i]);
-						}
-						that.messagesHolder.html(messages);
+						form.find('[type="text"]').prop('disabled', true);
 
-						that.form.find('[type="submit"]').prop('disabled', false);
+						if (typeof callback === 'function') {
+							callback(data);
+						}
+					} else {
+						for (let prop in data.errors) {
+							if (!data.errors.hasOwnProperty(prop)) {
+								continue;
+							}
+
+							let field = form.find('[data-field="' + prop + '"]');
+
+							field.addClass(that.settings.errorFieldClass);
+							for(let i = 0; i< data.errors[prop].length; i++) {
+								field.before(that.getMessage(data.errors[prop][i]));
+							}
+						}
+
+						form.find('[type="submit"]').prop('disabled', false);
 					}
 				})
 				.always(function () {
-					that.loader.addClass(that.settings.loaderReadyClass);
+					loader.addClass(that.settings.loaderReadyClass);
 				});
 		},
 
@@ -82,7 +136,7 @@ const PxaIntelliplanJobsTellFriend = (function () {
 		 */
 		getMessage: function (errorMessage, success) {
 			success = success || false;
-			return '<p class="'+ (success ? 'text-success' : 'text-danger') +'">' + errorMessage + '</p>';
+			return '<p class="' + (success ? 'text-success' : 'text-danger') + '">' + errorMessage + '</p>';
 		}
 	};
 
@@ -91,7 +145,7 @@ const PxaIntelliplanJobsTellFriend = (function () {
 	 */
 	return {
 		init: function (settings) {
-			let _instance = new PxaIntelliplanJobsTellFriend(settings);
+			let _instance = new PxaIntelliplanJobs(settings);
 			_instance.init();
 
 			return _instance;
@@ -100,11 +154,13 @@ const PxaIntelliplanJobsTellFriend = (function () {
 })();
 
 $(document).ready(function () {
-	PxaIntelliplanJobsTellFriend.init({
-		form: '.pxa-tell-friend',
-		loader: '.loader',
-		messagesHolder: '.messages-holder',
+	PxaIntelliplanJobs.init({
+		formTellFriend: '.pxa-tell-friend',
+		loader: '.ajax-loader',
 		loaderReadyClass: '_ready',
-		errorFieldClass: 'has-error'
+		errorFieldClass: 'has-error',
+
+		formApplyJob: 'form[name="apply-job"]',
+		acceptTerms: '.acceptTerms'
 	});
 });

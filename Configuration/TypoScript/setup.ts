@@ -50,6 +50,29 @@ plugin.tx_pxaintelliplanjobs {
 
             template = EXT:pxa_intelliplan_jobs/Resources/Private/Templates/Email/ShareJob.html
         }
+
+        applyJob {
+            termsLink = {$plugin.tx_pxaintelliplanjobs.settings.applyJob.termsLink}
+
+            fields {
+                firstColumns = first_name,email,postal_code,mobile_phone
+                secondColumn = surname,address,city,telephone
+
+                validation {
+                    first_name = required
+                    email = email
+                    postal_code = required
+                    mobile_phone = required,phone
+                    surname = required
+                    address = required
+                    city = required
+                    telephone = required
+                    agreeOnTerms = agreeCheckbox
+                }
+
+                requiredFilesFields = cv,letter
+            }
+        }
     }
 }
 
@@ -79,12 +102,6 @@ PXA_INTELLIPLAN_JOBS_AJAX {
         settings =< plugin.tx_pxaintelliplanjobs.settings
         persistence =< plugin.tx_pxaintelliplanjobs.persistence
         view =< plugin.tx_pxaintelliplanjobs.view
-
-        switchableControllerActions {
-            JobAjax {
-                1 = share
-            }
-        }
     }
 }
 
@@ -118,7 +135,7 @@ lib.pxaIntelliplanJobsBreadCrumbs {
                 10 = RECORDS
                 10 {
                     tables = tx_pxaintelliplanjobs_domain_model_job
-                    source.data = GP:tx_pxaintelliplanjobs|job
+                    source.data = GP:tx_pxaintelliplanjobs_pi1|job
                     source.intval = 1
                     conf {
                         tx_pxaintelliplanjobs_domain_model_job = TEXT

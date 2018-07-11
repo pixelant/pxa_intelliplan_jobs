@@ -44,16 +44,9 @@ class JobAjaxController extends ActionController
     protected $responseErrors = [];
 
     /**
-     * Validation fields errors
-     *
-     * @var array
-     */
-    protected $errorFields = [];
-
-    /**
      * Initialize configuration
      */
-    public function initializeAjaxLazyListAction()
+    public function initializeShareAction()
     {
         // allow to create Demand from arguments
         $allowedProperties = GeneralUtility::trimExplode(
@@ -91,11 +84,59 @@ class JobAjaxController extends ActionController
             'value',
             [
                 'success' => $isValid,
-                'errors' => array_values($this->responseErrors),
-                'errorFields' => $this->errorFields,
+                'errors' => $this->responseErrors,
                 'successMessage' => $this->translate('fe.success_sent')
             ]
         );
+    }
+
+    /**
+     * Apply for a job action
+     *
+     * @param Job $job
+     * @param bool $requireCV
+     */
+    public function applyJobAction(Job $job, bool $requireCV = false)
+    {
+        $fields = $this->request->getArgument('applyJob');
+        $isValidFields = $this->validateApplyJobFields($fields);
+        $isValidFiles = !$requireCV || $this->validateApplyJobFiles();
+
+        if ($isValidFields && $isValidFiles) {
+
+        }
+
+        $this->view->assign(
+            'value',
+            [
+                'success' => $isValidFields && $isValidFiles,
+                'errors' => $this->responseErrors,
+                'successMessage' => $this->translate('fe.success_apply_job')
+            ]
+        );
+    }
+
+    /**
+     * Check if all required files are provided
+     *
+     * @return bool
+     */
+    protected function validateApplyJobFiles(): bool
+    {
+        $isValid = true;
+        $requiredFiles = $validationRules = is_array($this->settings['applyJob']['fields']['requiredFilesFields'])
+            ? $this->settings['applyJob']['fields']['requiredFilesFields']
+            : '';
+
+        foreach (GeneralUtility::trimExplode(',', $requiredFiles, true) as $file) {
+            if (!isset($_FILES['tx_pxaintelliplanjobs_pi2']['error']['files'][$file])
+                || ($_FILES['tx_pxaintelliplanjobs_pi2']['error']['files'][$file]) !== 0) {
+                $isValid = false;
+                $this->addError($file, $this->translate('fe.error_file_required'));
+            }
+        }
+
+        return $isValid;
     }
 
     /**
@@ -122,6 +163,55 @@ class JobAjaxController extends ActionController
     }
 
     /**
+     * Validate apply job fields
+     *
+     * @param array $fields
+     * @return bool
+     */
+    protected function validateApplyJobFields(array $fields): bool
+    {
+        $isValid = true;
+        $validationRules = is_array($this->settings['applyJob']['fields']['validation'])
+            ? $this->settings['applyJob']['fields']['validation']
+            : [];
+        $missingFields = array_diff(array_keys($validationRules), array_keys($fields));
+
+        // Force empty values for missing fields
+        foreach ($missingFields as $missingField) {
+            $fields[$missingField] = '';
+        }
+
+        foreach ($fields as $field => $value) {
+            if (isset($validationRules[$field])) {
+                foreach (GeneralUtility::trimExplode(',', $validationRules[$field], true) as $rule) {
+                    switch ($rule) {
+                        case 'required':
+                            if (empty($value)) {
+                                $isValid = false;
+                                $this->addError($field, $this->translate('fe.error_field_required'));
+                            }
+                            break;
+                        case 'email':
+                            if (!GeneralUtility::validEmail($value)) {
+                                $isValid = false;
+                                $this->addError($field, $this->translate('fe.error_valid_email'));
+                            }
+                            break;
+                        case 'agreeCheckbox':
+                            if ((int)$value !== 1) {
+                                $isValid = false;
+                                $this->addError($field, $this->translate('fe.error_acceptTerms'));
+                            }
+                            break;
+                    }
+                }
+            }
+        }
+
+        return $isValid;
+    }
+
+    /**
      * Validate share job
      *
      * @param ShareJob $shareJob
@@ -139,22 +229,34 @@ class JobAjaxController extends ActionController
 
         if (empty($shareJob->getReceiverName())) {
             $valid = false;
-            $this->errorFields[] = 'receiverName';
-            $this->responseErrors['allRequired'] = $this->translate('fe.error_all_fields_required');
+            $this->addError('receiverName', $this->translate('fe.error_field_required'));
         }
         if (empty($shareJob->getSenderName())) {
             $valid = false;
-            $this->errorFields[] = 'senderName';
-            $this->responseErrors['allRequired'] = $this->translate('fe.error_all_fields_required');
+            $this->addError('senderName', $this->translate('fe.error_field_required'));
         }
 
         if (!GeneralUtility::validEmail($shareJob->getReceiverEmail())) {
             $valid = false;
-            $this->errorFields[] = 'receiverEmail';
-            $this->responseErrors['validEmail'] = $this->translate('fe.error_valid_email');
+            $this->addError('receiverEmail', $this->translate('fe.error_valid_email'));
         }
 
         return $valid;
+    }
+
+    /**
+     * Add error
+     *
+     * @param string $field
+     * @param string $message
+     */
+    protected function addError(string $field, string $message)
+    {
+        if (!is_array($this->responseErrors[$field])) {
+            $this->responseErrors[$field] = [];
+        }
+
+        $this->responseErrors[$field][] = $message;
     }
 
     /**

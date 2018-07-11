@@ -1,4 +1,4 @@
-<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" xmlns:pxa="http://typo3.org/ns/Pixelant/PxaIntelliplanJobs/ViewHelpers" data-namespace-typo3-fluid="true">
 <f:layout name="Default" />
 
 <f:section name="main">
@@ -53,14 +53,13 @@
                                     <f:form.textfield class="form-control" placeholder="{f:translate(key: 'fe.your_name')}" property="senderName"/>
                                 </div>
 
-                                <div class="messages-holder"></div>
                                 <button type="submit" class="btn btn-default"><f:translate key="fe.submit" /></button>
 
                                 <f:form.hidden property="shareUrl" value="{shareUrl}" />
                                 <f:form.hidden name="job" value="{job}" />
                             </f:form>
                             <!-- '_ready' -->
-                            <div class="loader _ready">
+                            <div class="ajax-loader _ready">
                                 <f:render partial="AjaxLoader" />
                             </div>
                         </div>
@@ -84,127 +83,39 @@
             <div class="row">
                 <div class="col-md-8 center-block">
                     <div class="panel-box">
-                        <f:form action="applyForJob">
+                        <f:form enctype="multipart/form-data" name="apply-job" action="applyJob" controller="JobAjax" pluginName="Pi2" pageType="{settings.sharePageType}">
+                            <f:form.hidden name="job" value="{job}" />
+                            <f:form.hidden name="requireCV" value="1" />
 
-                        </f:form>
-                        <form action="" _lpchecked="1">
                             <div class="panel-box__body">
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <f:for each="{0: 'first_name', 1: 'email', 2: 'postal_code', 3: 'mobile_phone'}" as="field">
-                                            <div class="form-item">
-                                                <input class="form-control" placeholder="{f:translate(key: 'placeholder.{field}')}" type="text">
-                                            </div>
-                                        </f:for>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <f:for each="{0: 'surname', 1: 'address', 2: 'city', 3: 'telephone'}" as="field">
-                                            <div class="form-item">
-                                                <input class="form-control" placeholder="{f:translate(key: 'placeholder.{field}')}" type="text">
-                                            </div>
-                                        </f:for>
-                                    </div>
-                                </div>
+                                <f:render section="applyJobFields" />
+
+                                <f:render section="uploadFile" arguments="{label: 'add_cv', name: 'cv'}"/>
+                                <f:render section="uploadFile" arguments="{label: 'add_letter', name: 'letter'}"/>
+
                                 <div class="form-additions">
-                                    <div class="row">
-                                        <div class="col-sm-6">
-                                            <p class="additions-label">
-                                                <strong>Lagg till CV</strong>
-                                            </p>
-                                        </div>
-                                        <div class="col-sm-6 _actions">
-                                            <div class="file-uploader">
-                                                <label class="btn btn-upload">
-                                                    <input type="file" class="js__file-upload">
-                                                    <span>
-                                                    <span class="action-name">
-                                                        <i class="icons icon-paperclip"></i>
-                                                        BIFOGA DOCUMENTR
-                                                    </span>
-                                                    <span class="file-uploader__name"></span>
-                                                </span>
-                                                </label>
-                                                <i class="icons icon-clear file-uploader__clear js__file-upload__clear"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-additions">
-                                    <div class="row">
-                                        <div class="col-sm-6">
-                                            <p class="additions-label">
-                                                <strong>Lagg till CV</strong>
-                                            </p>
-                                        </div>
-                                        <div class="col-sm-6 _actions">
-                                            <div class="file-uploader">
-                                                <label class="btn btn-upload">
-                                                    <input type="file" class="js__file-upload">
-                                                    <span>
-                                                    <span class="action-name">
-                                                        <i class="icons icon-paperclip"></i>
-                                                        BIFOGA DOCUMENTR
-                                                    </span>
-                                                    <span class="file-uploader__name"></span>
-                                                </span>
-                                                </label>
-                                                <i class="icons icon-clear file-uploader__clear js__file-upload__clear"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-additions">
-                                    <div class="form-additions__agreement">
-                                        <input type="checkbox">
-                                        <p>Sed ut perspiciatis, unde omnis iste natus error sit voluptatem accusantium doloremque laudantium</p>
-                                    </div>
+                                    <f:render section="agreeOnTerms" />
                                 </div>
                             </div>
-                            <div class="panel-box__footer">
-                                <div class="form-actions text-center">
-                                    <button type="submit" class="btn btn-default">SOK TJANSTEN</button>
-                                </div>
-                            </div>
-                        </form>
+
+                            <f:render section="submitButton" />
+                        </f:form>
+                        <div class="ajax-loader _ready">
+                            <f:render partial="AjaxLoader" />
+                        </div>
                     </div>
 
 
                     <div class="panel-box">
                         <div class="panel-header">
-                            <h2>Proshe pana CV?</h2>
+                            <h2><f:translate key="fe.no_cv" /></h2>
                         </div>
-                        <form action="" class="js__panel-collapsible" style="display: none;">
+                        <f:form enctype="multipart/form-data" class="js__panel-collapsible" name="apply-job" action="applyJob" controller="JobAjax" pluginName="Pi2" pageType="{settings.sharePageType}">
+                            <f:form.hidden name="job" value="{job}" />
+
                             <div class="panel-box__body">
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <div class="form-item">
-                                            <input class="form-control" placeholder="placeholder" type="text">
-                                        </div>
-                                        <div class="form-item">
-                                            <input class="form-control" placeholder="placeholder" type="text">
-                                        </div>
-                                        <div class="form-item">
-                                            <input class="form-control" placeholder="placeholder" type="text">
-                                        </div>
-                                        <div class="form-item">
-                                            <input class="form-control" placeholder="placeholder" type="text">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-item">
-                                            <input class="form-control" placeholder="placeholder" type="text">
-                                        </div>
-                                        <div class="form-item">
-                                            <input class="form-control" placeholder="placeholder" type="text">
-                                        </div>
-                                        <div class="form-item">
-                                            <input class="form-control" placeholder="placeholder" type="text">
-                                        </div>
-                                        <div class="form-item">
-                                            <input class="form-control" placeholder="placeholder" type="text">
-                                        </div>
-                                    </div>
-                                </div>
+                                <f:render section="applyJobFields" />
+
                                 <div class="form-additions">
                                     <p><strong>Sed ut perspiciatis</strong></p>
                                     <div class="radio-item">
@@ -250,19 +161,17 @@
                                         </label>
                                     </div>
                                 </div>
+
                                 <div class="form-additions">
-                                    <div class="form-additions__agreement">
-                                        <input type="checkbox">
-                                        <p>Sed ut perspiciatis, unde omnis iste natus error sit voluptatem accusantium doloremque laudantium</p>
-                                    </div>
+                                    <f:render section="agreeOnTerms" />
                                 </div>
                             </div>
-                            <div class="panel-box__footer">
-                                <div class="form-actions text-center">
-                                    <button type="submit" class="btn btn-default">SOK TJANSTEN</button>
-                                </div>
-                            </div>
-                        </form>
+
+                            <f:render section="submitButton" />
+                        </f:form>
+                        <div class="ajax-loader _ready">
+                            <f:render partial="AjaxLoader" />
+                        </div>
                     </div>
                 </div>
             </div>
@@ -272,6 +181,77 @@
     <div class="page-navigation visible-md visible-lg">
         <div class="container">
             <f:cObject typoscriptObjectPath="lib.pxaIntelliplanJobsBreadCrumbs" />
+        </div>
+    </div>
+</f:section>
+
+<f:section name="uploadFile">
+    <div class="form-additions">
+        <div class="row">
+            <div class="col-sm-6" data-field="{name}">
+                <p class="additions-label">
+                    <strong><f:translate key="fe.{label}"/></strong>
+                </p>
+            </div>
+            <div class="col-sm-6 _actions">
+                <div class="file-uploader">
+                    <label class="btn btn-upload">
+                        <f:form.upload class="js__file-upload" name="applyJobFiles[{name}]"/>
+                        <input type="file" class="js__file-upload">
+                        <span>
+                            <span class="action-name">
+                                <i class="icons icon-paperclip"></i>
+                                <f:translate key="fe.attach_document" />
+                            </span>
+                            <span class="file-uploader__name"></span>
+                        </span>
+                    </label>
+                    <i class="icons icon-clear file-uploader__clear js__file-upload__clear"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</f:section>
+
+<f:section name="agreeOnTerms">
+    <div class="form-additions__agreement" data-field="agreeOnTerms">
+        <f:form.checkbox value="1" name="applyJob[agreeOnTerms]" class="acceptTerms"/>
+        <p>
+            <f:translate key="fe.accept_terms_text" arguments="{0: '{f:render(section: \'agreeOnTermsLink\')}'}"/>
+        </p>
+    </div>
+</f:section>
+
+<f:section name="agreeOnTermsLink"><f:spaceless>
+    <f:link.typolink parameter="{settings.applyJob.termsLink}" target="_blank">
+        <span><f:translate key="fe.accept_term_link" /></span>
+    </f:link.typolink>
+</f:spaceless></f:section>
+
+
+<f:section name="applyJobFields">
+    <div class="row">
+        <div class="col-sm-6">
+            <f:for each="{settings.applyJob.fields.firstColumns -> pxa:explode()}" as="field">
+                <div class="form-item" data-field="{field}">
+                    <f:form.textfield class="form-control" placeholder="{f:translate(key: 'placeholder.{field}')}" name="applyJob[{field}]"/>
+                </div>
+            </f:for>
+        </div>
+        <div class="col-sm-6">
+            <f:for each="{settings.applyJob.fields.secondColumn -> pxa:explode()}" as="field">
+                <div class="form-item" data-field="{field}">
+                    <f:form.textfield class="form-control" placeholder="{f:translate(key: 'placeholder.{field}')}" name="applyJob[{field}]"/>
+                </div>
+            </f:for>
+        </div>
+    </div>
+</f:section>
+
+<f:section name="submitButton">
+    <div class="panel-box__footer">
+        <div class="form-actions text-center">
+            <button type="submit" class="btn btn-default" disabled><f:translate key="fe.sumit_2" /></button>
         </div>
     </div>
 </f:section>

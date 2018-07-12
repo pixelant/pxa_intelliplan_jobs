@@ -71,6 +71,8 @@ plugin.tx_pxaintelliplanjobs {
                 }
 
                 apiSupportFields = first_name,surname,mobile_phone,email,job_ad_id,comment,agreement_type,zip_code,city,birthday_year,birthday_month,birthday_day_of_month,social_number,linkedin_url
+                # Exclude some fields when doing SetPersonalInformation
+                excludeSetFields = recruit_interest,success,staffing_interest
 
                 requiredFilesFields = cv,letter
             }

@@ -163,14 +163,23 @@ class JobAjaxController extends ActionController
                     if ($response['success'] === true) {
                         $sessionId = $response['data']['intelliplan_session_id'];
 
-                        // If login was success set missing field
+                        // If login was success set missing fields
                         // First get all fields, since API required all to be set when setting fields
                         // Then override values for missing fields
                         $response = $intelliplanApi->getPersonalInformation($sessionId);
                         if ($response['success'] === true) {
                             $setFields = $response['personal_information'];
+
                             foreach ($missingFields as $missingField) {
                                 $setFields[$missingField] = $fields[$missingField];
+                            }
+                            $excludeSetFields = GeneralUtility::trimExplode(
+                                ',',
+                                $this->settings['applyJob']['fields']['excludeSetFields'],
+                                true
+                            );
+                            foreach ($excludeSetFields as $excludeSetField) {
+                                unset($setFields[$excludeSetField]);
                             }
 
                             $intelliplanApi->setPersonalInformation($sessionId, $setFields);

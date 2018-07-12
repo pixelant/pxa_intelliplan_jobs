@@ -14,6 +14,7 @@ namespace Pixelant\PxaIntelliplanJobs\Controller;
  *
  ***/
 
+use Pixelant\PxaIntelliplanJobs\Api\IntelliplanApi;
 use Pixelant\PxaIntelliplanJobs\Domain\Model\Job;
 use Pixelant\PxaIntelliplanJobs\Services\IntelliplanImportService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;

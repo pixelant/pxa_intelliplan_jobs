@@ -116,51 +116,26 @@
                             <div class="panel-box__body">
                                 <f:render section="applyJobFields" />
 
-                                <div class="form-additions">
-                                    <p><strong>Sed ut perspiciatis</strong></p>
-                                    <div class="radio-item">
-                                        <label>
-                                            <input type="radio" name="radio">
-                                            <span>Yes</span>
-                                        </label>
+                                <f:for each="{settings.applyJob.fields.noCVCheckboxes -> pxa:explode()}" as="checkbox">
+                                    <div class="form-additions">
+                                        <p><strong><f:translate key="fe.checkbox_{checkbox}" /></strong></p>
+                                        <f:if condition="{f:translate(key: 'fe.checkbox_{checkbox}_tip')}">
+                                            <p><em><f:translate key="fe.checkbox_{checkbox}_tip" /></em></p>
+                                        </f:if>
+                                        <div class="radio-item">
+                                            <label>
+                                                <f:form.radio name="{checkbox}" value="1" />
+                                                <span><f:translate key="fe.yes" /></span>
+                                            </label>
+                                        </div>
+                                        <div class="radio-item">
+                                            <label>
+                                                <f:form.radio name="{checkbox}" value="0" />
+                                                <span><f:translate key="fe.no" /></span>
+                                            </label>
+                                        </div>
                                     </div>
-                                    <div class="radio-item">
-                                        <label>
-                                            <input type="radio" name="radio">
-                                            <span>No</span>
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="form-additions">
-                                    <p><strong>Sed ut perspiciatis</strong></p>
-                                    <div class="radio-item">
-                                        <label>
-                                            <input type="radio" name="radio1">
-                                            <span>Yes</span>
-                                        </label>
-                                    </div>
-                                    <div class="radio-item">
-                                        <label>
-                                            <input type="radio" name="radio1">
-                                            <span>No</span>
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="form-additions">
-                                    <p><strong>Sed ut perspiciatis</strong></p>
-                                    <div class="radio-item">
-                                        <label>
-                                            <input type="radio" name="radio2">
-                                            <span>Yes</span>
-                                        </label>
-                                    </div>
-                                    <div class="radio-item">
-                                        <label>
-                                            <input type="radio" name="radio2">
-                                            <span>No</span>
-                                        </label>
-                                    </div>
-                                </div>
+                                </f:for>
 
                                 <div class="form-additions">
                                     <f:render section="agreeOnTerms" />

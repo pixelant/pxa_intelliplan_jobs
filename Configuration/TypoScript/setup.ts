@@ -75,6 +75,9 @@ plugin.tx_pxaintelliplanjobs {
                 excludeSetFields = recruit_interest,success,staffing_interest
 
                 requiredFilesFields = cv,letter
+
+                # If user doesn't have CV what checkboxes to render
+                noCVCheckboxes = secondary_education,driver_license,have_car,work_shifts
             }
         }
     }

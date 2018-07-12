@@ -130,6 +130,27 @@
 			<trans-unit id="fe.no_cv">
 			    <source>No resume? Application without!</source>
 			</trans-unit>
+			<trans-unit id="fe.checkbox_secondary_education">
+			    <source>Do you have full secondary education?</source>
+			</trans-unit>
+			<trans-unit id="fe.checkbox_driver_license">
+			    <source>Do you have a Swedish B driver license</source>
+			</trans-unit>
+			<trans-unit id="fe.checkbox_have_car">
+				<source>Do you have access to a car?</source>
+			</trans-unit>
+			<trans-unit id="fe.checkbox_work_shifts">
+			    <source>Can you work in shifts?</source>
+			</trans-unit>
+			<trans-unit id="fe.checkbox_work_shifts_tip">
+			    <source>Day - evening shift, night etc.</source>
+			</trans-unit>
+			<trans-unit id="fe.yes">
+			    <source>Yes</source>
+			</trans-unit>
+			<trans-unit id="fe.no">
+			    <source>No</source>
+			</trans-unit>
 			<!--FE LABELS:END-->
 
 			<!--EMAIL LABELS:START-->

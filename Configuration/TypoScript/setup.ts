@@ -58,7 +58,7 @@ plugin.tx_pxaintelliplanjobs {
                 firstColumns = first_name,email,zip_code,mobile_phone
                 secondColumn = surname,street_address,city,phone_number_home
 
-                validation {
+                validationCV {
                     first_name = required
                     email = email
                     zip_code = required
@@ -70,6 +70,14 @@ plugin.tx_pxaintelliplanjobs {
                     agreement_type = agreeCheckbox
                 }
 
+                validationNoCV < .validationCV
+                validationNoCV {
+                    secondary_education = required
+                    driver_license = required
+                    have_car = required
+                    work_shifts = required
+                }
+
                 apiSupportFields = first_name,surname,mobile_phone,email,job_ad_id,comment,agreement_type,zip_code,city,birthday_year,birthday_month,birthday_day_of_month,social_number,linkedin_url
                 # Exclude some fields when doing SetPersonalInformation
                 excludeSetFields = recruit_interest,success,staffing_interest
@@ -77,7 +85,7 @@ plugin.tx_pxaintelliplanjobs {
                 requiredFilesFields = cv,letter
 
                 # If user doesn't have CV what checkboxes to render
-                noCVCheckboxes = secondary_education,driver_license,have_car,work_shifts
+                noCvRadios = secondary_education,driver_license,have_car,work_shifts
             }
         }
     }

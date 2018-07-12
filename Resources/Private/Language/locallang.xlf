@@ -151,6 +151,12 @@
 			<trans-unit id="fe.no">
 			    <source>No</source>
 			</trans-unit>
+			<trans-unit id="fe.question">
+			    <source>Question</source>
+			</trans-unit>
+			<trans-unit id="fe.answer">
+			    <source>Answer</source>
+			</trans-unit>
 			<!--FE LABELS:END-->
 
 			<!--EMAIL LABELS:START-->

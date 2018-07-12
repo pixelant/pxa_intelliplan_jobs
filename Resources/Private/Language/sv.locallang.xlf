@@ -128,10 +128,16 @@
 				<target>Dag - kväll skift, natt etc.</target>
 			</trans-unit>
 			<trans-unit id="fe.yes">
-				<target>Yes</target>
+				<target>Ja</target>
 			</trans-unit>
 			<trans-unit id="fe.no">
-				<target>No</target>
+				<target>Nej</target>
+			</trans-unit>
+			<trans-unit id="fe.question">
+				<target>Fråga</target>
+			</trans-unit>
+			<trans-unit id="fe.answer">
+				<target>Svar</target>
 			</trans-unit>
 			<!--FE LABELS:END-->
 		</body>

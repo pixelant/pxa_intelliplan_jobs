@@ -107,7 +107,13 @@ class JobAjaxController extends ActionController
     public function applyJobAction(Job $job, bool $requireCV = false)
     {
         $fields = $this->request->getArgument('applyJob');
-        $isValidFields = $this->validateApplyJobFields($fields);
+        // Is this form with CV or not
+        $validationType = $requireCV ? 'validationCV' : 'validationNoCV';
+        $validationRules = is_array($this->settings['applyJob']['fields'][$validationType])
+            ? $this->settings['applyJob']['fields'][$validationType]
+            : [];
+
+        $isValidFields = $this->validateApplyJobFields($fields, $validationRules);
         $isValidFiles = !$requireCV || $this->validateApplyJobFiles();
         $apiSuccess = false;
 
@@ -123,6 +129,11 @@ class JobAjaxController extends ActionController
                         'path' => $uploadFiles['tmp_name']['applyJobFiles'][$file]
                     ];
                 }
+            }
+
+            if (!$requireCV) {
+                // If CV is not required, create comment field from radio buttons data
+                $fields['comment'] = $this->generateCommentFieldAndExcludeItFromFields($fields);
             }
 
             $intelliplanApi = GeneralUtility::makeInstance(IntelliplanApi::class);
@@ -247,14 +258,12 @@ class JobAjaxController extends ActionController
      * Validate apply job fields
      *
      * @param array $fields
+     * @param array $validationRules
      * @return bool
      */
-    protected function validateApplyJobFields(array $fields): bool
+    protected function validateApplyJobFields(array $fields, array $validationRules): bool
     {
         $isValid = true;
-        $validationRules = is_array($this->settings['applyJob']['fields']['validation'])
-            ? $this->settings['applyJob']['fields']['validation']
-            : [];
         $missingFields = array_diff(array_keys($validationRules), array_keys($fields));
 
         // Force empty values for missing fields
@@ -345,6 +354,37 @@ class JobAjaxController extends ActionController
         }
 
         $this->responseErrors[$field][] = $message;
+    }
+
+    /**
+     * Generate comment field from radio buttons and exclude it from all fields
+     *
+     * @param array &$fields
+     * @return array
+     */
+    protected function generateCommentFieldAndExcludeItFromFields(array &$fields): string
+    {
+        $radios = GeneralUtility::trimExplode(',', $this->settings['applyJob']['fields']['noCvRadios'] ?? '', true);
+        $comment = '';
+
+        for ($i = 1; $i <= count($radios); $i++) {
+            $radio = $radios[$i - 1];
+            if (!isset($fields[$radio])) {
+                continue;
+            }
+            $comment .= sprintf(
+                '%d. %s: "%s"' . "\n" . '%s: "%s"' . "\n",
+                $i,
+                $this->translate('fe.question'),
+                $this->translate('fe.checkbox_' . $radio),
+                $this->translate('fe.answer'),
+                $fields[$radio]
+            );
+
+            unset($fields[$radio]);
+        }
+
+        return $comment;
     }
 
     /**

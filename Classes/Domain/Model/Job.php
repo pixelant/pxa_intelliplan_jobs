@@ -30,6 +30,12 @@ class Job extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $categoryTypo3 = null;
 
     /**
+     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Pixelant\PxaIntelliplanJobs\Domain\Model\ApplyApplication>
+     * @cascade remove
+     */
+    protected $applyApplications = null;
+
+    /**
      * title
      *
      * @var string
@@ -309,6 +315,7 @@ class Job extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected function initStorageObjects()
     {
         $this->contentElements = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+        $this->applyApplications = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
     }
 
     /**
@@ -1158,5 +1165,43 @@ class Job extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function setCrdate(\DateTime $crdate)
     {
         $this->crdate = $crdate;
+    }
+
+    /**
+     * Adds application
+     *
+     * @param \Pixelant\PxaIntelliplanJobs\Domain\Model\ApplyApplication $applyApplication
+     * @return void
+     */
+    public function addApplyApplication(\Pixelant\PxaIntelliplanJobs\Domain\Model\ApplyApplication $applyApplication)
+    {
+        $this->applyApplications->attach($applyApplication);
+    }
+
+    /**
+     * Removes application
+     *
+     * @param \Pixelant\PxaIntelliplanJobs\Domain\Model\ApplyApplication $applyApplication The  to be removed
+     * @return void
+     */
+    public function removeApplyApplication(\Pixelant\PxaIntelliplanJobs\Domain\Model\ApplyApplication $applyApplication)
+    {
+        $this->applyApplications->detach($applyApplication);
+    }
+
+    /**
+     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage
+     */
+    public function getApplyApplications(): \TYPO3\CMS\Extbase\Persistence\ObjectStorage
+    {
+        return $this->applyApplications;
+    }
+
+    /**
+     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage $applyApplications
+     */
+    public function setApplyApplications(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $applyApplications)
+    {
+        $this->applyApplications = $applyApplications;
     }
 }

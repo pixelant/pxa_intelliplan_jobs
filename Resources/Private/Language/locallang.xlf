@@ -49,6 +49,12 @@
 			<trans-unit id="fe.error_file_required">
 				<source>This file is required to upload</source>
 			</trans-unit>
+			<trans-unit id="fe.error_api_apply_job_7">
+			    <source>Candidate already applied for this job ad.</source>
+			</trans-unit>
+			<trans-unit id="fe.error_api_apply_job_unknown">
+			    <source>Something went wrong while trying to apply for a job</source>
+			</trans-unit>
 			<trans-unit id="fe.success_sent">
 				<source>Email was sent</source>
 			</trans-unit>
@@ -88,19 +94,19 @@
 			<trans-unit id="placeholder.email">
 			    <source>Email</source>
 			</trans-unit>
-			<trans-unit id="placeholder.address">
+			<trans-unit id="placeholder.street_address">
 			    <source>Address</source>
 			</trans-unit>
 			<trans-unit id="placeholder.city">
 			    <source>City</source>
 			</trans-unit>
-			<trans-unit id="placeholder.postal_code">
-			    <source>Postal code</source>
+			<trans-unit id="placeholder.zip_code">
+			    <source>Zip code</source>
 			</trans-unit>
 			<trans-unit id="placeholder.mobile_phone">
 			    <source>Mobile phone</source>
 			</trans-unit>
-			<trans-unit id="placeholder.telephone">
+			<trans-unit id="placeholder.phone_number_home">
 			    <source>Telephone</source>
 			</trans-unit>
 			<trans-unit id="fe.add_cv">

@@ -41,6 +41,8 @@ const PxaIntelliplanJobs = (function () {
 						$checkbox.on('change', function () {
 							that.acceptTermsAction($checkbox, $form);
 						});
+						// Check it on init
+						that.acceptTermsAction($checkbox, $form);
 					}
 				});
 
@@ -86,7 +88,9 @@ const PxaIntelliplanJobs = (function () {
 			loader.removeClass(this.settings.loaderReadyClass);
 
 			let that = this,
-				url = form.attr('action');
+				url = form.attr('action'),
+				formData = new FormData(form[0]);
+			console.log(form[0]);
 
 			form.find('[type="submit"]').prop('disabled', true);
 			form.find('.text-danger').remove();
@@ -97,7 +101,11 @@ const PxaIntelliplanJobs = (function () {
 				type: 'POST',
 				url: url,
 				dataType: 'json',
-				data: form.serialize()
+				data: formData,
+				enctype: 'multipart/form-data',
+				processData: false,  // Important!
+				contentType: false,
+				cache: false
 			})
 				.done(function (data) {
 					if (data.success) {

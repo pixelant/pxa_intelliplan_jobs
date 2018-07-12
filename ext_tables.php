@@ -7,6 +7,14 @@ defined('TYPO3_MODE') || die('Access denied.');
 );
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages('tx_pxaintelliplanjobs_domain_model_job');
 
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr(
+    'tx_pxaintelliplanjobs_domain_model_applyapplication',
+    'EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_csh_tx_pxaintelliplanjobs_domain_model_applyapplication.xlf'
+);
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages(
+    'tx_pxaintelliplanjobs_domain_model_applyapplication'
+);
+
 call_user_func(function () {
     $icons = [
         'ext-pxa-intelliplan-jobs-wizard-icon' => 'job_wizard.svg',

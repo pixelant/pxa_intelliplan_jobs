@@ -14,6 +14,8 @@ namespace Pixelant\PxaIntelliplanJobs\Controller;
  *
  ***/
 
+use Pixelant\PxaIntelliplanJobs\Api\IntelliplanApi;
+use Pixelant\PxaIntelliplanJobs\Domain\Model\ApplyApplication;
 use Pixelant\PxaIntelliplanJobs\Domain\Model\DTO\ShareJob;
 use Pixelant\PxaIntelliplanJobs\Domain\Model\Job;
 use TYPO3\CMS\Core\Mail\MailMessage;
@@ -35,6 +37,12 @@ class JobAjaxController extends ActionController
      * @var string
      */
     protected $defaultViewObjectName = JsonView::class;
+
+    /**
+     * @var \Pixelant\PxaIntelliplanJobs\Domain\Repository\JobRepository
+     * @inject
+     */
+    protected $jobRepository = null;
 
     /**
      * Errors
@@ -101,15 +109,81 @@ class JobAjaxController extends ActionController
         $fields = $this->request->getArgument('applyJob');
         $isValidFields = $this->validateApplyJobFields($fields);
         $isValidFiles = !$requireCV || $this->validateApplyJobFiles();
+        $apiSuccess = false;
 
         if ($isValidFields && $isValidFiles) {
+            // Path to name
+            $files = [];
+            $uploadFiles = $_FILES['tx_pxaintelliplanjobs_pi2'];
 
+            foreach ($uploadFiles['error']['applyJobFiles'] ?? [] as $file => $error) {
+                if ($error === 0) {
+                    $files[$file] = [
+                        'name' => $uploadFiles['name']['applyJobFiles'][$file],
+                        'path' => $uploadFiles['tmp_name']['applyJobFiles'][$file]
+                    ];
+                }
+            }
+
+            $intelliplanApi = GeneralUtility::makeInstance(IntelliplanApi::class);
+            $response = $intelliplanApi->applyForJob($job, $fields, $files);
+
+            // Assume we succeed if AplyForJob gone well
+            $apiSuccess = $response['success'];
+
+            if ($response['success'] === false) {
+                $errorKey = $response['errorCode'] == 7
+                    ? 'fe.error_api_apply_job_7'
+                    : 'fe.error_api_apply_job_unknown';
+
+                $this->addError('submit', $this->translate($errorKey));
+            } else {
+                /** @var ApplyApplication $applyJob */
+                $applyJob = GeneralUtility::makeInstance(ApplyApplication::class);
+                $applyJob->setAccountTicket($response['account_ticket']);
+                $applyJob->setEmail($fields['email']);
+
+                $job->addApplyApplication($applyJob);
+
+                $this->jobRepository->update($job);
+
+                // Now check what fields are supported by api Jobs/ApplyForJob
+                // and all missing fields we need to set using SetPersonalInfromation api call
+                $supportedFields = GeneralUtility::trimExplode(
+                    ',',
+                    $this->settings['applyJob']['fields']['apiSupportFields'],
+                    true
+                );
+                $missingFields = array_diff(array_keys($fields), $supportedFields);
+
+                // If any fields we need to add using SetPersonalInformation
+                if (!empty($missingFields)) {
+                    // First login using ticket
+                    $response = $intelliplanApi->logonUsingTicket($applyJob->getAccountTicket());
+                    if ($response['success'] === true) {
+                        $sessionId = $response['data']['intelliplan_session_id'];
+
+                        // If login was success set missing field
+                        // First get all fields, since API required all to be set when setting fields
+                        // Then override values for missing fields
+                        $response = $intelliplanApi->getPersonalInformation($sessionId);
+                        if ($response['success'] === true) {
+                            $setFields = $response['personal_information'];
+                            foreach ($missingFields as $missingField) {
+                                $setFields[$missingField] = $fields[$missingField];
+                            }
+
+                            $intelliplanApi->setPersonalInformation($sessionId, $setFields);
+                        }
+                    }
+                }
+            }
         }
 
         $this->view->assign(
             'value',
             [
-                'success' => $isValidFields && $isValidFiles,
+                'success' => $isValidFields && $isValidFiles && $apiSuccess,
                 'errors' => $this->responseErrors,
                 'successMessage' => $this->translate('fe.success_apply_job')
             ]
@@ -124,13 +198,11 @@ class JobAjaxController extends ActionController
     protected function validateApplyJobFiles(): bool
     {
         $isValid = true;
-        $requiredFiles = $validationRules = is_array($this->settings['applyJob']['fields']['requiredFilesFields'])
-            ? $this->settings['applyJob']['fields']['requiredFilesFields']
-            : '';
+        $requiredFiles = $this->settings['applyJob']['fields']['requiredFilesFields'] ?? '';
 
         foreach (GeneralUtility::trimExplode(',', $requiredFiles, true) as $file) {
-            if (!isset($_FILES['tx_pxaintelliplanjobs_pi2']['error']['files'][$file])
-                || ($_FILES['tx_pxaintelliplanjobs_pi2']['error']['files'][$file]) !== 0) {
+            if (!isset($_FILES['tx_pxaintelliplanjobs_pi2']['error']['applyJobFiles'][$file])
+                || ($_FILES['tx_pxaintelliplanjobs_pi2']['error']['applyJobFiles'][$file]) !== 0) {
                 $isValid = false;
                 $this->addError($file, $this->translate('fe.error_file_required'));
             }
@@ -198,7 +270,7 @@ class JobAjaxController extends ActionController
                             }
                             break;
                         case 'agreeCheckbox':
-                            if ((int)$value !== 1) {
+                            if ((int)$value === 0) {
                                 $isValid = false;
                                 $this->addError($field, $this->translate('fe.error_acceptTerms'));
                             }

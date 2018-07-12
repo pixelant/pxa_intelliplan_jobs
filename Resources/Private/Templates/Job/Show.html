@@ -214,8 +214,8 @@
 </f:section>
 
 <f:section name="agreeOnTerms">
-    <div class="form-additions__agreement" data-field="agreeOnTerms">
-        <f:form.checkbox value="1" name="applyJob[agreeOnTerms]" class="acceptTerms"/>
+    <div class="form-additions__agreement" data-field="agreement_type">
+        <f:form.checkbox value="1" name="applyJob[agreement_type]" class="acceptTerms"/>
         <p>
             <f:translate key="fe.accept_terms_text" arguments="{0: '{f:render(section: \'agreeOnTermsLink\')}'}"/>
         </p>
@@ -250,7 +250,7 @@
 
 <f:section name="submitButton">
     <div class="panel-box__footer">
-        <div class="form-actions text-center">
+        <div class="form-actions text-center" data-field="submit">
             <button type="submit" class="btn btn-default" disabled><f:translate key="fe.sumit_2" /></button>
         </div>
     </div>

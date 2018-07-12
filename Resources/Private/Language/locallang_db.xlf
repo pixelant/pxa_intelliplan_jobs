@@ -123,6 +123,21 @@
 			<trans-unit id="tx_pxaintelliplanjobs_domain_model_job.content_elements">
 				<source>Content Elements</source>
 			</trans-unit>
+			<trans-unit id="tx_pxaintelliplanjobs_domain_model_job.apply_applications">
+			    <source>Apply applications</source>
+			</trans-unit>
+			<trans-unit id="tab.apply_for_job">
+			    <source>Applied for job</source>
+			</trans-unit>
+			<trans-unit id="tx_pxaintelliplanjobs_domain_model_applyapplication">
+				<source>Apply Application</source>
+			</trans-unit>
+			<trans-unit id="tx_pxaintelliplanjobs_domain_model_applyapplication.account_ticket">
+				<source>Account Ticket</source>
+			</trans-unit>
+			<trans-unit id="tx_pxaintelliplanjobs_domain_model_applyapplication.email">
+				<source>Email</source>
+			</trans-unit>
 
 			<!--TCA:START-->
 			<trans-unit id="tca.category_tab">

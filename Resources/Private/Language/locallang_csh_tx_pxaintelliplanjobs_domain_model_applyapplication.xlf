@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2018-07-12T11:18:01Z" product-name="pxa_intelliplan_jobs">
+		<header/>
+		<body>
+			<trans-unit id="account_ticket.description">
+				<source>Account ticket API</source>
+			</trans-unit>
+			<trans-unit id="email.description">
+				<source>Email of application</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

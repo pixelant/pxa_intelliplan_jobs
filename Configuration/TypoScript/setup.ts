@@ -55,20 +55,22 @@ plugin.tx_pxaintelliplanjobs {
             termsLink = {$plugin.tx_pxaintelliplanjobs.settings.applyJob.termsLink}
 
             fields {
-                firstColumns = first_name,email,postal_code,mobile_phone
-                secondColumn = surname,address,city,telephone
+                firstColumns = first_name,email,zip_code,mobile_phone
+                secondColumn = surname,street_address,city,phone_number_home
 
                 validation {
                     first_name = required
                     email = email
-                    postal_code = required
+                    zip_code = required
                     mobile_phone = required,phone
                     surname = required
-                    address = required
+                    street_address = required
                     city = required
-                    telephone = required
-                    agreeOnTerms = agreeCheckbox
+                    phone_number_home = required
+                    agreement_type = agreeCheckbox
                 }
+
+                apiSupportFields = first_name,surname,mobile_phone,email,job_ad_id,comment,agreement_type,zip_code,city,birthday_year,birthday_month,birthday_day_of_month,social_number,linkedin_url
 
                 requiredFilesFields = cv,letter
             }

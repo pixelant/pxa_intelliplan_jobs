@@ -55,6 +55,9 @@
 			<trans-unit id="fe.error_api_apply_job_unknown">
 			    <source>Something went wrong while trying to apply for a job</source>
 			</trans-unit>
+			<trans-unit id="fe.error_valid_phone">
+			    <source>Invalid number format</source>
+			</trans-unit>
 			<trans-unit id="fe.success_sent">
 				<source>Email was sent</source>
 			</trans-unit>

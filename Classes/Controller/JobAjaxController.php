@@ -269,6 +269,13 @@ class JobAjaxController extends ActionController
                                 $this->addError($field, $this->translate('fe.error_valid_email'));
                             }
                             break;
+                        case 'phone':
+                            $pattern = '/^[0-9\-\(\)\/\+\s]*$/';
+                            if (!preg_match($pattern, $value)) {
+                                $isValid = false;
+                                $this->addError($field, $this->translate('fe.error_valid_phone'));
+                            }
+                            break;
                         case 'agreeCheckbox':
                             if ((int)$value === 0) {
                                 $isValid = false;

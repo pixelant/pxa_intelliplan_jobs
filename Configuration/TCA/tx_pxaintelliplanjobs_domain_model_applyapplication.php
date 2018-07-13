@@ -1,7 +1,7 @@
 <?php
 return [
     'ctrl' => [
-        'title'	=> 'LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:tx_pxapixelant_domain_model_applyapplication',
+        'title'	=> 'LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:tx_pxaintelliplanjobs_domain_model_applyapplication',
         'label' => 'email',
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',

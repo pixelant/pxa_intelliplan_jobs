@@ -46,9 +46,6 @@ abstract class AbstractImporter implements ImporterInterface
      */
     protected function getDataHandler(): DataHandler
     {
-        $dataHandler = GeneralUtility::makeInstance(DataHandler::class);
-        $dataHandler->admin = true;
-
-        return $dataHandler;
+        return GeneralUtility::makeInstance(DataHandler::class);
     }
 }

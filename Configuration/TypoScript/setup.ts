@@ -10,24 +10,6 @@ plugin.tx_pxaintelliplanjobs {
 
     persistence {
         storagePid = {$plugin.tx_pxaintelliplanjobs.persistence.storagePid}
-
-        classes {
-            Pixelant\PxaIntelliplanJobs\Domain\Model\Category {
-                mapping {
-                    tableName = sys_category
-
-                    columns {
-                        tx_pxaintelliplanjobs_import_id.mapOnProperty = importId
-                    }
-                }
-            }
-
-            Pixelant\PxaIntelliplanJobs\Domain\Model\ContentElement {
-                mapping {
-                    tableName = tt_content
-                }
-            }
-        }
     }
 
     features {

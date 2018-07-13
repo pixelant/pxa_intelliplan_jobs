@@ -23,12 +23,14 @@ class ImportJobsAndDataTask extends AbstractTask
     /**
      * Importer
      *
-     * @return bool|void
+     * @return bool
      */
-    public function execute()
+    public function execute(): bool
     {
         $importService = GeneralUtility::makeInstance(IntelliplanImportService::class, $this->pid);
         $importService->run();
+
+        return true;
     }
 
     /**

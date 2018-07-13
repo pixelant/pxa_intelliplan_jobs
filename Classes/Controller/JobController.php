@@ -30,12 +30,6 @@ class JobController extends ActionController
     protected $jobRepository = null;
 
     /**
-     * @var \TYPO3\CMS\Extbase\Domain\Repository\CategoryRepository
-     * @inject
-     */
-    protected $categoryRepository = null;
-
-    /**
      * action list
      *
      * @return void

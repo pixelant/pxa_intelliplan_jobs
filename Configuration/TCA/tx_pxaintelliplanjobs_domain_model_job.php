@@ -108,7 +108,6 @@ return [
             ],
         ],
         'title' => [
-	        'exclude' => true,
 	        'label' => 'LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:tx_pxaintelliplanjobs_domain_model_job.title',
 	        'config' => [
 			    'type' => 'input',
@@ -117,7 +116,6 @@ return [
 			],
 	    ],
 	    'company' => [
-	        'exclude' => true,
 	        'label' => 'LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:tx_pxaintelliplanjobs_domain_model_job.company',
 	        'config' => [
 			    'type' => 'input',
@@ -126,7 +124,6 @@ return [
 			],
 	    ],
 	    'description' => [
-	        'exclude' => true,
 	        'label' => 'LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:tx_pxaintelliplanjobs_domain_model_job.description',
 	        'config' => [
 			    'type' => 'text',
@@ -137,7 +134,6 @@ return [
 	        'defaultExtras' => 'richtext:rte_transform[mode=ts_css]'
 	    ],
 	    'pub_date' => [
-	        'exclude' => true,
 	        'label' => 'LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:tx_pxaintelliplanjobs_domain_model_job.pub_date',
 	        'config' => [
 			    'type' => 'input',
@@ -147,7 +143,6 @@ return [
 			],
 	    ],
 	    'category' => [
-	        'exclude' => true,
 	        'label' => 'LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:tx_pxaintelliplanjobs_domain_model_job.category',
 	        'config' => [
 			    'type' => 'input',
@@ -156,7 +151,6 @@ return [
 			],
 	    ],
 	    'id' => [
-	        'exclude' => true,
 	        'label' => 'LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:tx_pxaintelliplanjobs_domain_model_job.id',
 	        'config' => [
 			    'type' => 'input',
@@ -165,7 +159,6 @@ return [
 			]
 	    ],
 	    'number_of_positions_to_fill' => [
-	        'exclude' => true,
 	        'label' => 'LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:tx_pxaintelliplanjobs_domain_model_job.number_of_positions_to_fill',
 	        'config' => [
 			    'type' => 'input',
@@ -174,7 +167,6 @@ return [
 			]
 	    ],
         'type' => [
-            'exclude' => true,
             'label' => 'LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:tx_pxaintelliplanjobs_domain_model_job.type',
             'config' => [
                 'type' => 'input',
@@ -183,7 +175,6 @@ return [
             ],
         ],
 	    'job_position_title' => [
-	        'exclude' => true,
 	        'label' => 'LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:tx_pxaintelliplanjobs_domain_model_job.job_position_title',
 	        'config' => [
 			    'type' => 'input',
@@ -192,7 +183,6 @@ return [
 			],
 	    ],
 	    'job_position_title_id' => [
-	        'exclude' => true,
 	        'label' => 'LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:tx_pxaintelliplanjobs_domain_model_job.job_position_title_id',
 	        'config' => [
 			    'type' => 'input',
@@ -201,7 +191,6 @@ return [
 			]
 	    ],
 	    'job_position_category_id' => [
-	        'exclude' => true,
 	        'label' => 'LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:tx_pxaintelliplanjobs_domain_model_job.job_position_category_id',
 	        'config' => [
 			    'type' => 'input',
@@ -210,7 +199,6 @@ return [
 			]
 	    ],
 	    'job_location' => [
-	        'exclude' => true,
 	        'label' => 'LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:tx_pxaintelliplanjobs_domain_model_job.job_location',
 	        'config' => [
 			    'type' => 'input',
@@ -219,7 +207,6 @@ return [
 			],
 	    ],
 	    'job_location_id' => [
-	        'exclude' => true,
 	        'label' => 'LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:tx_pxaintelliplanjobs_domain_model_job.job_location_id',
 	        'config' => [
 			    'type' => 'input',
@@ -228,7 +215,6 @@ return [
 			]
 	    ],
 	    'job_occupation' => [
-	        'exclude' => true,
 	        'label' => 'LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:tx_pxaintelliplanjobs_domain_model_job.job_occupation',
 	        'config' => [
 			    'type' => 'input',
@@ -237,7 +223,6 @@ return [
 			],
 	    ],
 	    'job_occupation_id' => [
-	        'exclude' => true,
 	        'label' => 'LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:tx_pxaintelliplanjobs_domain_model_job.job_occupation_id',
 	        'config' => [
 			    'type' => 'input',
@@ -246,7 +231,6 @@ return [
 			]
 	    ],
 	    'job_category' => [
-	        'exclude' => true,
 	        'label' => 'LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:tx_pxaintelliplanjobs_domain_model_job.job_category',
 	        'config' => [
 			    'type' => 'input',
@@ -255,7 +239,6 @@ return [
 			],
 	    ],
 	    'job_category_id' => [
-	        'exclude' => true,
 	        'label' => 'LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:tx_pxaintelliplanjobs_domain_model_job.job_category_id',
 	        'config' => [
 			    'type' => 'input',
@@ -264,7 +247,6 @@ return [
 			]
 	    ],
 	    'service_category' => [
-	        'exclude' => true,
 	        'label' => 'LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:tx_pxaintelliplanjobs_domain_model_job.service_category',
 	        'config' => [
 			    'type' => 'input',
@@ -273,7 +255,6 @@ return [
 			],
 	    ],
 	    'service' => [
-	        'exclude' => true,
 	        'label' => 'LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:tx_pxaintelliplanjobs_domain_model_job.service',
 	        'config' => [
 			    'type' => 'input',
@@ -282,7 +263,6 @@ return [
 			],
 	    ],
 	    'country' => [
-	        'exclude' => true,
 	        'label' => 'LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:tx_pxaintelliplanjobs_domain_model_job.country',
 	        'config' => [
 			    'type' => 'input',
@@ -291,7 +271,6 @@ return [
 			],
 	    ],
 	    'country_id' => [
-	        'exclude' => true,
 	        'label' => 'LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:tx_pxaintelliplanjobs_domain_model_job.country_id',
 	        'config' => [
 			    'type' => 'input',
@@ -300,7 +279,6 @@ return [
 			],
 	    ],
 	    'state' => [
-	        'exclude' => true,
 	        'label' => 'LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:tx_pxaintelliplanjobs_domain_model_job.state',
 	        'config' => [
 			    'type' => 'input',
@@ -309,7 +287,6 @@ return [
 			],
 	    ],
 	    'state_id' => [
-	        'exclude' => true,
 	        'label' => 'LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:tx_pxaintelliplanjobs_domain_model_job.state_id',
 	        'config' => [
 			    'type' => 'input',
@@ -318,7 +295,6 @@ return [
 			]
 	    ],
 	    'municipality' => [
-	        'exclude' => true,
 	        'label' => 'LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:tx_pxaintelliplanjobs_domain_model_job.municipality',
 	        'config' => [
 			    'type' => 'input',
@@ -327,7 +303,6 @@ return [
 			],
 	    ],
 	    'municipality_id' => [
-	        'exclude' => true,
 	        'label' => 'LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:tx_pxaintelliplanjobs_domain_model_job.municipality_id',
 	        'config' => [
 			    'type' => 'input',
@@ -336,7 +311,6 @@ return [
 			]
 	    ],
 	    'company_logo_url' => [
-	        'exclude' => true,
 	        'label' => 'LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:tx_pxaintelliplanjobs_domain_model_job.company_logo_url',
 	        'config' => [
 			    'type' => 'input',
@@ -345,7 +319,6 @@ return [
 			],
 	    ],
 	    'employment_extent' => [
-	        'exclude' => true,
 	        'label' => 'LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:tx_pxaintelliplanjobs_domain_model_job.employment_extent',
 	        'config' => [
 			    'type' => 'input',
@@ -354,7 +327,6 @@ return [
 			],
 	    ],
 	    'employment_extent_id' => [
-	        'exclude' => true,
 	        'label' => 'LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:tx_pxaintelliplanjobs_domain_model_job.employment_extent_id',
 	        'config' => [
 			    'type' => 'input',
@@ -363,7 +335,6 @@ return [
 			]
 	    ],
         'employment_type' => [
-            'exclude' => true,
             'label' => 'LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:tx_pxaintelliplanjobs_domain_model_job.employment_type',
             'config' => [
                 'type' => 'input',
@@ -372,7 +343,6 @@ return [
             ],
         ],
         'employment_type_id' => [
-            'exclude' => true,
             'label' => 'LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:tx_pxaintelliplanjobs_domain_model_job.employment_type_id',
             'config' => [
                 'type' => 'input',
@@ -381,7 +351,6 @@ return [
             ]
         ],
 	    'job_level' => [
-	        'exclude' => true,
 	        'label' => 'LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:tx_pxaintelliplanjobs_domain_model_job.job_level',
 	        'config' => [
 			    'type' => 'input',
@@ -390,7 +359,6 @@ return [
 			],
 	    ],
 	    'job_level_id' => [
-	        'exclude' => true,
 	        'label' => 'LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:tx_pxaintelliplanjobs_domain_model_job.job_level_id',
 	        'config' => [
 			    'type' => 'input',
@@ -399,7 +367,6 @@ return [
 			]
 	    ],
 	    'contact1name' => [
-	        'exclude' => true,
 	        'label' => 'LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:tx_pxaintelliplanjobs_domain_model_job.contact1name',
 	        'config' => [
 			    'type' => 'input',
@@ -408,7 +375,6 @@ return [
 			],
 	    ],
 	    'contact1email' => [
-	        'exclude' => true,
 	        'label' => 'LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:tx_pxaintelliplanjobs_domain_model_job.contact1email',
 	        'config' => [
 			    'type' => 'input',
@@ -417,7 +383,6 @@ return [
 			],
 	    ],
 	    'pub_date_to' => [
-	        'exclude' => true,
 	        'label' => 'LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:tx_pxaintelliplanjobs_domain_model_job.pub_date_to',
 	        'config' => [
 			    'type' => 'input',
@@ -427,7 +392,6 @@ return [
 			],
 	    ],
 	    'last_updated' => [
-	        'exclude' => true,
 	        'label' => 'LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:tx_pxaintelliplanjobs_domain_model_job.last_updated',
 	        'config' => [
 			    'type' => 'input',
@@ -437,7 +401,6 @@ return [
 			],
 	    ],
 	    'content_elements' => [
-	        'exclude' => true,
 	        'label' => 'LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:tx_pxaintelliplanjobs_domain_model_job.content_elements',
 	        'config' => [
                 'type' => 'group',
@@ -448,7 +411,6 @@ return [
 			],
 	    ],
         'apply_applications' => [
-            'exclude' => 1,
             'label' => 'LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:tx_pxaintelliplanjobs_domain_model_job.apply_applications',
             'config' => [
                 'type' => 'inline',

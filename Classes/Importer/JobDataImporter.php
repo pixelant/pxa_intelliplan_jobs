@@ -167,7 +167,7 @@ class JobDataImporter extends AbstractImporter
                 /** @var Category $category */
                 $category = $this->categoryRepository->findOneByTitle($value);
                 if ($category === null) {
-                    throw new CategoryNotFoundException('Category "' . $category . '" not found while importing job', 1531209414046);
+                    throw new CategoryNotFoundException('Category "' . $value . '" not found while importing job', 1531209414046);
                 }
 
                 // Set id to categories

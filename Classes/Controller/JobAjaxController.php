@@ -349,7 +349,7 @@ class JobAjaxController extends ActionController
      */
     protected function addError(string $field, string $message)
     {
-        if (!is_array($this->responseErrors[$field])) {
+        if (!isset($this->responseErrors[$field])) {
             $this->responseErrors[$field] = [];
         }
 

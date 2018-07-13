@@ -124,7 +124,7 @@ const PxaIntelliplanJobs = (function () {
 
 							field.addClass(that.settings.errorFieldClass);
 							for(let i = 0; i< data.errors[prop].length; i++) {
-								field.before(that.getMessage(data.errors[prop][i]));
+								field.prepend(that.getMessage(data.errors[prop][i]));
 							}
 						}
 

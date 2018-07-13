@@ -35,6 +35,6 @@ class ExplodeViewHelper extends AbstractViewHelper
 
         $value = $arguments['value'] ?: $renderChildrenClosure();
 
-        return GeneralUtility::trimExplode($delimiter, $value);
+        return GeneralUtility::trimExplode($delimiter, $value, true);
     }
 }

@@ -93,6 +93,12 @@
                                 <f:render section="uploadFile" arguments="{label: 'add_cv', name: 'cv'}"/>
                                 <f:render section="uploadFile" arguments="{label: 'add_letter', name: 'letter'}"/>
 
+                                <div id="pxa-additional-file-template" class="hidden" data-label="{f:translate(key:'fe.additional_file')} ###COUNTER###" data-name="file_###COUNTER###">
+                                    <f:render section="uploadFile" arguments="{label: 'additional_file', name: 'file_default'}"/>
+                                </div>
+
+                                <f:render section="addAdditionalFile" />
+
                                 <div class="form-additions">
                                     <f:render section="agreeOnTerms" />
                                 </div>
@@ -165,7 +171,7 @@
         <div class="row">
             <div class="col-sm-6">
                 <p class="additions-label">
-                    <strong><f:translate key="fe.{label}"/></strong>
+                    <strong data-file-label="1"><f:translate key="fe.{label}"/></strong>
                 </p>
                 <span data-field="{name}"></span>
             </div>
@@ -184,6 +190,22 @@
                     </label>
                     <i class="icons icon-clear file-uploader__clear js__file-upload__clear"></i>
                 </div>
+            </div>
+        </div>
+    </div>
+</f:section>
+
+<f:section name="addAdditionalFile">
+    <div class="form-additions">
+        <div class="row">
+            <div class="col-sm-6">
+                <a href="javascript: {}" data-add-document="1">
+                    <i class="icons icon-plus"></i>
+                    <span><f:translate key="fe.add_documents" /></span>
+                </a>
+            </div>
+            <div class="col-sm-5 col-sm-offset-1">
+                <p><f:translate key="fe.add_documents_tip" /></p>
             </div>
         </div>
     </div>

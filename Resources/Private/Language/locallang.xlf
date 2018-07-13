@@ -157,6 +157,15 @@
 			<trans-unit id="fe.answer">
 			    <source>Answer</source>
 			</trans-unit>
+			<trans-unit id="fe.add_documents">
+			    <source>Add additional documents</source>
+			</trans-unit>
+			<trans-unit id="fe.add_documents_tip">
+				<source>Ex. driver's license, diploma, certificate of study</source>
+			</trans-unit>
+			<trans-unit id="fe.additional_file">
+			    <source>Additional document</source>
+			</trans-unit>
 			<!--FE LABELS:END-->
 
 			<!--EMAIL LABELS:START-->

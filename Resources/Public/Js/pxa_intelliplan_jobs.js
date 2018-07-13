@@ -8,6 +8,10 @@ const PxaIntelliplanJobs = (function () {
 	function PxaIntelliplanJobs(settings) {
 		this.formTellFriend = $(settings.formTellFriend);
 		this.formApplyJob = $(settings.formApplyJob);
+		this.addAdditionalFileButton = $(settings.addAdditionalFileButton);
+		this.additionalFileTemplate = $(settings.additionalFileTemplate);
+		this.additionalFileLastItem = null;
+		this.additonalFilesCounter = 0;
 		this.settings = settings;
 	}
 
@@ -57,6 +61,59 @@ const PxaIntelliplanJobs = (function () {
 					}
 				});
 			}
+
+			if (this.addAdditionalFileButton.length > 0) {
+				this.addAdditionalFileButton.on('click', function (e) {
+					e.preventDefault();
+
+					that.addAdditionalFile();
+				});
+			}
+		},
+
+		/**
+		 * Add more files upload to form
+		 */
+		addAdditionalFile: function () {
+			if (this.additonalFilesCounter === 0) {
+				// Just make visible template
+				this.additionalFileTemplate.removeClass('hidden');
+				this.additionalFileLastItem = this.additionalFileTemplate;
+				this.setNewFileNameForAdditionalFile(this.additionalFileTemplate);
+			} else {
+				let additionalFile = this.additionalFileTemplate.clone();
+				let label = additionalFile.data('label').replace(
+					this.settings.additionalFilesCounterPlaceHolder,
+					this.additonalFilesCounter + 1
+				);
+				let name = additionalFile.data('name').replace(
+					this.settings.additionalFilesCounterPlaceHolder,
+					this.additonalFilesCounter
+				);
+
+				this.setNewFileNameForAdditionalFile(additionalFile);
+
+				this.additionalFileLastItem.after(additionalFile);
+				this.additionalFileLastItem = additionalFile;
+			}
+
+			this.additonalFilesCounter++;
+		},
+
+		/**
+		 * Set name of input for additional files
+		 * @param fileElement
+		 * @return {*}
+		 */
+		setNewFileNameForAdditionalFile: function(fileElement) {
+			let name = fileElement.data('name').replace(
+				this.settings.additionalFilesCounterPlaceHolder,
+				this.additonalFilesCounter
+			);
+			let inputFile = fileElement.find('input'),
+				newName = inputFile.attr('name').replace(this.settings.additionalDefaultFileName, name);
+
+			inputFile.attr('name', newName);
 		},
 
 		/**
@@ -123,7 +180,7 @@ const PxaIntelliplanJobs = (function () {
 							let field = form.find('[data-field="' + prop + '"]');
 
 							field.addClass(that.settings.errorFieldClass);
-							for(let i = 0; i< data.errors[prop].length; i++) {
+							for (let i = 0; i < data.errors[prop].length; i++) {
 								field.prepend(that.getMessage(data.errors[prop][i]));
 							}
 						}
@@ -169,6 +226,12 @@ $(document).ready(function () {
 		errorFieldClass: 'has-error',
 
 		formApplyJob: 'form[name="apply-job"]',
-		acceptTerms: '.acceptTerms'
+		acceptTerms: '.acceptTerms',
+
+		addAdditionalFileButton: '[data-add-document="1"]',
+		additionalFileTemplate: '#pxa-additional-file-template',
+		additionalFilesCounterPlaceHolder: '###COUNTER###',
+		fileLabelWrapper: '[data-file-label="1"]',
+		additionalDefaultFileName: 'file_default'
 	});
 });

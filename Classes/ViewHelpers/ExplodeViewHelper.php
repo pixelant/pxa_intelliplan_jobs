@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Pixelant\PxaIntelliplanJobs\ViewHelpers;
 
-
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
 use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
@@ -38,5 +37,4 @@ class ExplodeViewHelper extends AbstractViewHelper
 
         return GeneralUtility::trimExplode($delimiter, $value);
     }
-
 }

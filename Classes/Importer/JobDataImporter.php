@@ -97,7 +97,9 @@ class JobDataImporter extends AbstractImporter
                                 $updateJobData['category'] = $importValue;
                                 $updateJobData['category_typo3'] = $newCategory->getUid();
                             } else {
+                                // @codingStandardsIgnoreStart
                                 throw new CategoryNotFoundException('Category "' . $importValue . '" not found while importing job', 1531211636899);
+                                // @codingStandardsIgnoreEnd
                             }
                         }
                     } else {
@@ -167,7 +169,9 @@ class JobDataImporter extends AbstractImporter
                 /** @var Category $category */
                 $category = $this->categoryRepository->findOneByTitle($value);
                 if ($category === null) {
+                    // @codingStandardsIgnoreStart
                     throw new CategoryNotFoundException('Category "' . $value . '" not found while importing job', 1531209414046);
+                    // @codingStandardsIgnoreEnd
                 }
 
                 // Set id to categories

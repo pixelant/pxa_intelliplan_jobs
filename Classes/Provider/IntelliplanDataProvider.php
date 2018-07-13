@@ -51,7 +51,10 @@ class IntelliplanDataProvider implements SingletonInterface
             case self::JOBS_IMPORTER:
                 return $this->getJobsData();
             default:
-                throw new ImporterNotSupportedException('Importer with type "' . $type . '" not supported.', 1530868260960);
+                throw new ImporterNotSupportedException(
+                    'Importer with type "' . $type . '" not supported.',
+                    1530868260960
+                );
         }
     }
 

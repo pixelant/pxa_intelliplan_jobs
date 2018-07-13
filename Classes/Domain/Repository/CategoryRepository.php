@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 namespace Pixelant\PxaIntelliplanJobs\Domain\Repository;
+
 use Pixelant\PxaIntelliplanJobs\Domain\Model\Category;
 
 /**

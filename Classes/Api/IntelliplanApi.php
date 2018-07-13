@@ -167,7 +167,9 @@ class IntelliplanApi
     {
         switch ($callType) {
             case 'JobAdsListFeed':
+                // @codingStandardsIgnoreStart
                 return 'https://cv-speedgroup-se.app.intelliplan.eu/JobAdGlobePages/Feed.aspx?pid=AA31EA47-FDA6-42F3-BD9F-E42186E5A960&version=2';
+            // @codingStandardsIgnoreEnd
             default:
                 return sprintf(
                     $this->baseApiUrl,

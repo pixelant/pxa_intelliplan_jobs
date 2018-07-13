@@ -2,6 +2,7 @@
 
 namespace Pixelant\PxaIntelliplanJobs\Domain\Model;
 
+use Pixelant\PxaIntelliplanJobs\Domain\Model\ContentElement;
 use TYPO3\CMS\Core\Charset\CharsetConverter;
 use TYPO3\CMS\Extbase\Domain\Model\Category;
 
@@ -363,10 +364,10 @@ class Job extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Adds a
      *
-     * @param \Pixelant\PxaIntelliplanJobs\Domain\Model\ContentElement $contentElement
+     * @param ContentElement $contentElement
      * @return void
      */
-    public function addContentElement(\Pixelant\PxaIntelliplanJobs\Domain\Model\ContentElement $contentElement)
+    public function addContentElement(ContentElement $contentElement)
     {
         $this->contentElements->attach($contentElement);
     }
@@ -374,10 +375,10 @@ class Job extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Removes a
      *
-     * @param \Pixelant\PxaIntelliplanJobs\Domain\Model\ContentElement $contentElementToRemove The  to be removed
+     * @param ContentElement $contentElementToRemove The  to be removed
      * @return void
      */
-    public function removeContentElement(\Pixelant\PxaIntelliplanJobs\Domain\Model\ContentElement $contentElementToRemove)
+    public function removeContentElement(ContentElement $contentElementToRemove)
     {
         $this->contentElements->detach($contentElementToRemove);
     }

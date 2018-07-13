@@ -30,12 +30,14 @@ class ImportJobsAndDataTaskAdditionalFieldProvider implements AdditionalFieldPro
         }
 
         $additionalFields = [
+            // @codingStandardsIgnoreStart
             'pid' => [
                 'code' => '<input type="text" name="tx_scheduler[pxa_intelliplan_jobs_pid]" value="' . ((int)$taskInfo['pid'] ?: '') . '" />',
                 'label' => 'LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:importJobsAndDataTask.pid',
                 'cshKey' => '',
                 'cshLabel' => ''
             ]
+            // @codingStandardsIgnoreEnd
         ];
 
         return $additionalFields;
@@ -59,7 +61,11 @@ class ImportJobsAndDataTaskAdditionalFieldProvider implements AdditionalFieldPro
             $languageService = $GLOBALS['LANG'];
 
             $schedulerModule->addMessage(
-                $languageService->sL('LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:importJobsAndDataTask.pidRequired'),
+                $languageService->sL(
+                    // @codingStandardsIgnoreStart
+                    'LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:importJobsAndDataTask.pidRequired'
+                // @codingStandardsIgnoreEnd
+                ),
                 FlashMessage::ERROR
             );
         }

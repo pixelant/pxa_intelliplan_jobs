@@ -51,6 +51,11 @@ class ImportJobsAndDataTask extends AbstractTask
         $this->pid = $pid;
     }
 
+    /**
+     * Additional information
+     *
+     * @return string
+     */
     public function getAdditionalInformation()
     {
         /** @var LanguageService $lang */

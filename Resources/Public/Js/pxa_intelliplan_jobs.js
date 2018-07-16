@@ -266,10 +266,7 @@ const PxaIntelliplanJobs = (function () {
 
 			$('html, body').animate({
 				scrollTop: $(hash).offset().top + scrollFix
-			}, 800, function(){
-				// Add hash (#) to URL when done scrolling (default click behavior)
-				window.location.hash = hash;
-			});
+			}, 800);
 		}
 	};
 

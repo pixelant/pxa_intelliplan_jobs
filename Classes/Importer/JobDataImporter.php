@@ -104,6 +104,9 @@ class JobDataImporter extends AbstractImporter
                         }
                     } else {
                         $currentValue = ObjectAccess::getProperty($job, $importField);
+                        if ($importField === 'description') {
+                            $importValue = $this->processDescriptionField($importValue);
+                        }
 
                         if (is_int($currentValue) && $currentValue !== (int)$importValue) {
                             $updateJobData[$dbField] = (int)$importValue;
@@ -147,6 +150,16 @@ class JobDataImporter extends AbstractImporter
     }
 
     /**
+     * Type of job importer
+     *
+     * @return int
+     */
+    public function getImporterType(): int
+    {
+        return IntelliplanDataProvider::JOBS_IMPORTER;
+    }
+
+    /**
      * Get value for import field
      *
      * @param string $importField
@@ -162,6 +175,9 @@ class JobDataImporter extends AbstractImporter
             case 'lastUpdated':
             case 'pubDate':
                 $value = strtotime($data[strtolower($importField)]);
+                break;
+            case 'description':
+                $value = $this->processDescriptionField($data[strtolower($importField)]);
                 break;
             case 'category':
                 $value = $data[strtolower($importField)];
@@ -187,12 +203,37 @@ class JobDataImporter extends AbstractImporter
     }
 
     /**
-     * Type of job importer
+     * Prepare description field before for RTE for saving
      *
-     * @return int
+     * @param string $description
+     * @return string
      */
-    public function getImporterType(): int
+    protected function processDescriptionField(string $description): string
     {
-        return IntelliplanDataProvider::JOBS_IMPORTER;
+        $descriptionParts = explode("\n", $description);
+        $result = [];
+
+        $line = 0;
+        foreach ($descriptionParts as $i => $descriptionPart) {
+            if (!isset($result[$line])) {
+                $result[$line] = '';
+            }
+
+            if (!empty($descriptionPart)) {
+                $result[$line] .= ((empty($result[$line]) ? '' : '<br />') . $descriptionPart);
+            } else {
+                if ($descriptionParts[$i - 1] === '') {
+                    $result[$line - 1] .= '<br />';
+                } elseif (isset($descriptionParts[$i + 1])) {
+                    $line++;
+                }
+            }
+        }
+
+        if ($result[count($result) - 1] === '') {
+            unset($result[count($result) - 1]);
+        }
+
+        return '<p>' . implode('</p><p>', $result) . '</p>';
     }
 }

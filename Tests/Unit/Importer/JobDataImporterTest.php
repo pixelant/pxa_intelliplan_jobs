@@ -101,4 +101,25 @@ class JobDataImporterTest extends UnitTestCase
             $this->subject->_callRef('setImportFieldValue', $field, $data, $result);
         }
     }
+
+    /**
+     * @test
+     */
+    public function processDescriptionFieldConvertStringToRTEString()
+    {
+        $text  = <<<EOF
+<strong>Header</strong> text test.
+New line go here
+
+
+More text which should be wrapped in p tag.
+<br /><br /><br />
+
+Third line of text
+<br />
+EOF;
+        $textExpect = '<p><strong>Header</strong> text test.<br />New line go here<br /></p><p>More text which should be wrapped in p tag.<br /><br /><br /><br /></p><p>Third line of text<br /><br /></p>';
+
+        $this->assertEquals($textExpect, $this->subject->_call('processDescriptionField', $text));
+    }
 }

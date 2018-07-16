@@ -22,6 +22,7 @@ plugin.tx_pxaintelliplanjobs {
 
     settings {
         dateFormat = {$plugin.tx_pxaintelliplanjobs.settings.dateFormat}
+        dateFormatHeader = {$plugin.tx_pxaintelliplanjobs.settings.dateFormatHeader}
         showShareForm = {$plugin.tx_pxaintelliplanjobs.settings.showShareForm}
 
         sharePageType = 7087989

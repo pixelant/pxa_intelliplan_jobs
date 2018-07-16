@@ -179,6 +179,9 @@
 			<trans-unit id="ts.dateFormat">
 			    <source>Date format</source>
 			</trans-unit>
+			<trans-unit id="ts.dateFormatHeader">
+			    <source>Date format for header single view</source>
+			</trans-unit>
 			<trans-unit id="ts.showShareForm">
 			    <source>Show share form on job single view</source>
 			</trans-unit>

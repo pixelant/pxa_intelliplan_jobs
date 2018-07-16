@@ -12,6 +12,7 @@ const PxaIntelliplanJobs = (function () {
 		this.additionalFileTemplate = $(settings.additionalFileTemplate);
 		this.additionalFileLastItem = null;
 		this.additonalFilesCounter = 0;
+		this.scrollButton = $(settings.scrollButton);
 		this.settings = settings;
 	}
 
@@ -73,6 +74,13 @@ const PxaIntelliplanJobs = (function () {
 					that.addAdditionalFile();
 				});
 			}
+
+			// Scroll to apply to job form
+			this.scrollButton.on('click', function (e) {
+				e.preventDefault();
+
+				that.scrollToSmooth($(this).data('scroll-to'), $(this).data('scroll-fix'));
+			});
 		},
 
 		/**
@@ -239,6 +247,29 @@ const PxaIntelliplanJobs = (function () {
 		getMessage: function (errorMessage, success) {
 			success = success || false;
 			return '<p class="' + (success ? 'text-success' : 'text-danger') + '">' + errorMessage + '</p>';
+		},
+
+		/**
+		 * Scroll method
+		 *
+		 * @param target
+		 * @param scrollFix
+		 */
+		scrollToSmooth: function (target, scrollFix) {
+			let hash = target;
+			target = $(target);
+
+			let scrollFixParts = scrollFix.split('|'), // First value is for tables, second desktop;
+				isDesktop = window.outerWidth >= 992;
+
+			scrollFix = parseInt(isDesktop ? scrollFixParts[1] : scrollFixParts[0]);
+
+			$('html, body').animate({
+				scrollTop: $(hash).offset().top + scrollFix
+			}, 800, function(){
+				// Add hash (#) to URL when done scrolling (default click behavior)
+				window.location.hash = hash;
+			});
 		}
 	};
 
@@ -270,6 +301,8 @@ $(document).ready(function () {
 		additionalFilesCounterPlaceHolder: '###COUNTER###',
 		fileLabelWrapper: '[data-file-label="1"]',
 		fileUploadInput: '.js__file-upload',
-		fileUploadClear: '.js__file-upload__clear'
+		fileUploadClear: '.js__file-upload__clear',
+
+		scrollButton: '[data-job-scroll="1"]'
 	});
 });

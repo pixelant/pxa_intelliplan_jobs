@@ -19,6 +19,9 @@ plugin.tx_pxaintelliplanjobs {
 plugin.tx_pxaintelliplanjobs {
     # customsubcategory=pxaintelliplanjobs=Main settings
     settings {
+        # cat=plugin.tx_pxaintelliplanjobs/pxaintelliplanjobs/010; type=string; label=LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:ts.dateFormatHeader
+        dateFormatHeader = %d %a
+
         # cat=plugin.tx_pxaintelliplanjobs/pxaintelliplanjobs/020; type=string; label=LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:ts.dateFormat
         dateFormat = Y-m-d
 

@@ -146,6 +146,8 @@ class JobDataImporter extends AbstractImporter
             $dataHandler = $this->getDataHandler();
             $dataHandler->start($jobDataToTypo3, []);
             $dataHandler->process_datamap();
+
+            $this->requireClearCache = true;
         }
     }
 

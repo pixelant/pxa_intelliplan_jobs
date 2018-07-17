@@ -23,14 +23,19 @@ class ImportJobsAndDataTask extends AbstractTask
     protected $pid = 0;
 
     /**
+     * @var string
+     */
+    protected $clearCache = '';
+
+    /**
      * Importer
      *
      * @return bool
      */
     public function execute(): bool
     {
-        $importService = GeneralUtility::makeInstance(IntelliplanImportService::class, $this->pid);
-        $importService->run();
+        $importService = GeneralUtility::makeInstance(IntelliplanImportService::class);
+        $importService->run($this->pid, $this->clearCache);
 
         return true;
     }
@@ -52,6 +57,22 @@ class ImportJobsAndDataTask extends AbstractTask
     }
 
     /**
+     * @return string
+     */
+    public function getClearCache(): string
+    {
+        return $this->clearCache;
+    }
+
+    /**
+     * @param string $clearCache
+     */
+    public function setClearCache(string $clearCache)
+    {
+        $this->clearCache = $clearCache;
+    }
+
+    /**
      * Additional information
      *
      * @return string
@@ -60,16 +81,21 @@ class ImportJobsAndDataTask extends AbstractTask
     {
         /** @var LanguageService $lang */
         $lang = $GLOBALS['LANG'];
+        $ll = 'LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:';
 
         $page = BackendUtility::getRecord('pages', $this->getPid(), 'title');
 
         return sprintf(
-            '%s: %s[%d]',
+            '%s: %s[%d], %s: "%s"',
             $lang->sL(
-                'LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:importJobsAndDataTask.pid'
+                $ll . 'importJobsAndDataTask.pid'
             ),
             $page['title'],
-            $this->getPid()
+            $this->getPid(),
+            $lang->sL(
+                $ll . 'importJobsAndDataTask.clearCache'
+            ),
+            $this->getClearCache()
         );
     }
 }

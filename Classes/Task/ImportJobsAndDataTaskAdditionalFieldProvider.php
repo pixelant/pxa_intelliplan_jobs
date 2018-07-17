@@ -23,16 +23,24 @@ class ImportJobsAndDataTaskAdditionalFieldProvider implements AdditionalFieldPro
     {
         if ($schedulerModule->CMD == 'add') {
             $taskInfo['pid'] = 0;
+            $taskInfo['clearCache'] = '';
         }
 
         if ($schedulerModule->CMD == 'edit') {
             $taskInfo['pid'] = $task->getPid();
+            $taskInfo['clearCache'] = $task->getClearCache();
         }
 
         $additionalFields = [
             // @codingStandardsIgnoreStart
             'pid' => [
                 'code' => '<input type="text" name="tx_scheduler[pxa_intelliplan_jobs_pid]" value="' . ((int)$taskInfo['pid'] ?: '') . '" />',
+                'label' => 'LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:importJobsAndDataTask.pid',
+                'cshKey' => '',
+                'cshLabel' => ''
+            ],
+            'clearCache' => [
+                'code' => '<input type="text" name="tx_scheduler[pxa_intelliplan_jobs_clear_cache]" value="' . htmlspecialchars($taskInfo['clearCache']) . '" />',
                 'label' => 'LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:importJobsAndDataTask.pid',
                 'cshKey' => '',
                 'cshLabel' => ''
@@ -84,5 +92,6 @@ class ImportJobsAndDataTaskAdditionalFieldProvider implements AdditionalFieldPro
         AbstractTask $task
     ) {
         $task->setPid((int)$submittedData['pxa_intelliplan_jobs_pid']);
+        $task->setClearCache((string)$submittedData['pxa_intelliplan_jobs_clear_cache']);
     }
 }

@@ -233,6 +233,9 @@
 			<trans-unit id="importJobsAndDataTask.pidRequired">
 			    <source>Storage is required</source>
 			</trans-unit>
+			<trans-unit id="importJobsAndDataTask.clearCache">
+			    <source>Clear cache comma-separated values(uids of pages or cache tag)</source>
+			</trans-unit>
 			<!--TASK:END-->
 		</body>
 	</file>

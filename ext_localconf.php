@@ -11,7 +11,6 @@ call_user_func(
             ],
             // non-cacheable actions
             [
-                'Job' => 'list'
             ]
         );
 

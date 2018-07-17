@@ -31,6 +31,13 @@ abstract class AbstractImporter implements ImporterInterface
     protected $categoryRepository = null;
 
     /**
+     * Flag if importer require a clear cache
+     *
+     * @var bool
+     */
+    protected $requireClearCache = false;
+
+    /**
      * Initialize
      */
     public function __construct()
@@ -39,6 +46,14 @@ abstract class AbstractImporter implements ImporterInterface
 
         $this->jobRepository = $this->objectManager->get(JobRepository::class);
         $this->categoryRepository = $this->objectManager->get(CategoryRepository::class);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isRequireClearCache(): bool
+    {
+        return $this->requireClearCache;
     }
 
     /**

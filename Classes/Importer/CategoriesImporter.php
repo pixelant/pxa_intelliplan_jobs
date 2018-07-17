@@ -50,6 +50,8 @@ class CategoriesImporter extends AbstractImporter
             $dataHandler = $this->getDataHandler();
             $dataHandler->start($data, []);
             $dataHandler->process_datamap();
+
+            $this->requireClearCache = true;
         }
     }
 

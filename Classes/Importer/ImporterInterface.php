@@ -22,4 +22,11 @@ interface ImporterInterface
      * @return int
      */
     public function getImporterType(): int;
+
+    /**
+     * Check if importer require a clear cache
+     *
+     * @return bool
+     */
+    public function isRequireClearCache(): bool;
 }

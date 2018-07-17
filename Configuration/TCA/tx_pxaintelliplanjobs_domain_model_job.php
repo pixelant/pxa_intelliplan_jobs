@@ -20,10 +20,10 @@ return [
         'iconfile' => 'EXT:pxa_intelliplan_jobs/Resources/Public/Icons/job.svg'
     ],
     'interface' => [
-        'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, title, company, description, pub_date, category, id, number_of_positions_to_fill, type, job_position_title, job_position_title_id, job_position_category_id, job_location, job_location_id, job_occupation, job_occupation_id, job_category, job_category_id, service_category, service, country, country_id, state, state_id, municipality, municipality_id, company_logo_url, employment_extent, employment_extent_id, employment_type, employment_type_id, job_level, job_level_id, contact1name, contact1email, pub_date_to, last_updated, content_elements, apply_applications',
+        'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, title, company, description, pub_date, category, id, number_of_positions_to_fill, type, job_position_title, job_position_title_id, job_position_category_id, job_location, job_location_id, job_occupation, job_occupation_id, job_category, job_category_id, service_category, service, country, country_id, state, state_id, municipality, municipality_id, company_logo_url, employment_extent, employment_extent_id, employment_type, employment_type_id, job_level, job_level_id, contact1name, contact1email, pub_date_to, last_updated, content_elements, apply_applications, top_images, bottom_images',
     ],
     'types' => [
-        '1' => ['showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, title, company, description, pub_date, category, id, number_of_positions_to_fill, type, job_position_title, job_position_title_id, job_position_category_id, job_location, job_location_id, job_occupation, job_occupation_id, job_category, job_category_id, service_category, service, country, country_id, state, state_id, municipality, municipality_id, company_logo_url, employment_extent, employment_extent_id, employment_type, employment_type_id, job_level, job_level_id, contact1name, contact1email, pub_date_to, last_updated, content_elements, --div--;LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:tab.apply_for_job, apply_applications, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime'],
+        '1' => ['showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, title, company, description, pub_date, category, id, number_of_positions_to_fill, type, job_position_title, job_position_title_id, job_position_category_id, job_location, job_location_id, job_occupation, job_occupation_id, job_category, job_category_id, service_category, service, country, country_id, state, state_id, municipality, municipality_id, company_logo_url, employment_extent, employment_extent_id, employment_type, employment_type_id, job_level, job_level_id, contact1name, contact1email, pub_date_to, last_updated, --div--;LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:tab.additional_fields, top_images, bottom_images, content_elements, --div--;LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:tab.apply_for_job, apply_applications, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime'],
     ],
     'columns' => [
         'sys_language_uid' => [
@@ -422,6 +422,82 @@ return [
                     'expandSingle' => 1,
                 ],
             ],
+        ],
+        'top_images' => [
+            'label' => 'LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:tx_pxaintelliplanjobs_domain_model_job.top_images',
+            'config' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::getFileFieldTCAConfig(
+                'top_images',
+                [
+                    'appearance' => [
+                        'createNewRelationLinkTitle' =>
+                            'LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:images.addFileReference',
+                        'showPossibleLocalizationRecords' => false,
+                        'showRemovedLocalizationRecords' => true,
+                        'showAllLocalizationLink' => false,
+                        'showSynchronizationLink' => false
+                    ],
+                    'foreign_match_fields' => [
+                        'fieldname' => 'top_images',
+                        'tablenames' => 'tx_pxaintelliplanjobs_domain_model_job',
+                        'table_local' => 'sys_file',
+                    ],
+                    'foreign_types' => [
+                        '0' => [
+                            'showitem' => '
+                            --palette--;LLL:EXT:lang/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
+                            --palette--;;filePalette'
+                        ],
+                        \TYPO3\CMS\Core\Resource\File::FILETYPE_IMAGE => [
+                            'showitem' => '
+                            --palette--;LLL:EXT:lang/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
+                            --palette--;;filePalette'
+                        ]
+                    ],
+                    'behaviour' => [
+                        'allowLanguageSynchronization' => true,
+                        'localizeChildrenAtParentLocalization' => true,
+                    ],
+                ],
+                $GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext']
+            ),
+        ],
+        'bottom_images' => [
+            'label' => 'LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:tx_pxaintelliplanjobs_domain_model_job.bottom_images',
+            'config' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::getFileFieldTCAConfig(
+                'bottom_images',
+                [
+                    'appearance' => [
+                        'createNewRelationLinkTitle' =>
+                            'LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:images.addFileReference',
+                        'showPossibleLocalizationRecords' => false,
+                        'showRemovedLocalizationRecords' => true,
+                        'showAllLocalizationLink' => false,
+                        'showSynchronizationLink' => false
+                    ],
+                    'foreign_match_fields' => [
+                        'fieldname' => 'bottom_images',
+                        'tablenames' => 'tx_pxaintelliplanjobs_domain_model_job',
+                        'table_local' => 'sys_file',
+                    ],
+                    'foreign_types' => [
+                        '0' => [
+                            'showitem' => '
+                            --palette--;LLL:EXT:lang/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
+                            --palette--;;filePalette'
+                        ],
+                        \TYPO3\CMS\Core\Resource\File::FILETYPE_IMAGE => [
+                            'showitem' => '
+                            --palette--;LLL:EXT:lang/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
+                            --palette--;;filePalette'
+                        ]
+                    ],
+                    'behaviour' => [
+                        'allowLanguageSynchronization' => true,
+                        'localizeChildrenAtParentLocalization' => true,
+                    ],
+                ],
+                $GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext']
+            ),
         ],
         'crdate' => [
             'config' => [

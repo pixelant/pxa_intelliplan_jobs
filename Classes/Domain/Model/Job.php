@@ -297,6 +297,16 @@ class Job extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $lastUpdated = null;
 
     /**
+     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\FileReference>
+     */
+    protected $topImages = null;
+
+    /**
+     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\FileReference>
+     */
+    protected $bottomImages = null;
+
+    /**
      * __construct
      */
     public function __construct()
@@ -317,6 +327,8 @@ class Job extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         $this->contentElements = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
         $this->applyApplications = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+        $this->topImages = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+        $this->bottomImages = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
     }
 
     /**
@@ -1204,5 +1216,37 @@ class Job extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function setApplyApplications(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $applyApplications)
     {
         $this->applyApplications = $applyApplications;
+    }
+
+    /**
+     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage
+     */
+    public function getTopImages(): \TYPO3\CMS\Extbase\Persistence\ObjectStorage
+    {
+        return $this->topImages;
+    }
+
+    /**
+     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage $topImages
+     */
+    public function setTopImages(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $topImages)
+    {
+        $this->topImages = $topImages;
+    }
+
+    /**
+     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage
+     */
+    public function getBottomImages(): \TYPO3\CMS\Extbase\Persistence\ObjectStorage
+    {
+        return $this->bottomImages;
+    }
+
+    /**
+     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage $bottomImages
+     */
+    public function setBottomImages(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $bottomImages)
+    {
+        $this->bottomImages = $bottomImages;
     }
 }

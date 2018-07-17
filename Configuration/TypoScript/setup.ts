@@ -71,6 +71,13 @@ plugin.tx_pxaintelliplanjobs {
                 noCvRadios = secondary_education,driver_license,have_car,work_shifts
             }
         }
+
+        singleView {
+            image {
+                width = {$plugin.tx_pxaintelliplanjobs.settings.singleView.image.width}
+                height = {$plugin.tx_pxaintelliplanjobs.settings.singleView.image.height}
+            }
+        }
     }
 }
 

@@ -85,7 +85,13 @@
                 </f:if>
             </div>
             <div class="col-md-9">
+                <f:if condition="{job.topImages}">
+                    <f:render section="additonalImages" arguments="{job: job, images: job.topImages}" />
+                </f:if>
                 <f:format.html>{job.description}</f:format.html>
+                <f:if condition="{job.bottomImages}">
+                    <f:render section="additonalImages" arguments="{job: job, images: job.bottomImages}" />
+                </f:if>
             </div>
         </div>
     </div>
@@ -182,6 +188,31 @@
             <f:cObject typoscriptObjectPath="lib.pxaIntelliplanJobsBreadCrumbs" />
         </div>
     </div>
+</f:section>
+
+<f:section name="additonalImages">
+    <f:for each="{images}" as="image">
+        <f:if condition="{image.originalResource.properties.link}">
+            <f:then>
+                <f:link.typolink parameter="{image.originalResource.properties.link}">
+                    <f:image image="{image}"
+                             width="{settings.singleView.image.width}"
+                             height="{settings.singleView.image.height}"
+                             title="{f:if(condition: image.originalResource.properties.title, then: image.originalResource.properties.title, else: job.title)}"
+                             alt="{f:if(condition: image.originalResource.properties.title, then: image.originalResource.properties.title, else: job.title)}"
+                    />
+                </f:link.typolink>
+            </f:then>
+            <f:else>
+                <f:image image="{image}"
+                         width="{settings.singleView.image.width}"
+                         height="{settings.singleView.image.height}"
+                         title="{f:if(condition: image.originalResource.properties.title, then: image.originalResource.properties.title, else: job.title)}"
+                         alt="{f:if(condition: image.originalResource.properties.title, then: image.originalResource.properties.title, else: job.title)}"
+                />
+            </f:else>
+        </f:if>
+    </f:for>
 </f:section>
 
 <f:section name="uploadFile">

@@ -591,4 +591,28 @@ class JobTest extends UnitTestCase
 
         $this->assertSame($value, $this->subject->getLastUpdated());
     }
+
+    /**
+     * @test
+     */
+    public function topImagesCanSet()
+    {
+        $value = new ObjectStorage();
+
+        $this->subject->setTopImages($value);
+
+        $this->assertSame($value, $this->subject->getTopImages());
+    }
+
+    /**
+     * @test
+     */
+    public function bottomImagesCanSet()
+    {
+        $value = new ObjectStorage();
+
+        $this->subject->setBottomImages($value);
+
+        $this->assertSame($value, $this->subject->getBottomImages());
+    }
 }

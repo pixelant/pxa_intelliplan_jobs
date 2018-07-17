@@ -126,6 +126,15 @@
 			<trans-unit id="tx_pxaintelliplanjobs_domain_model_job.apply_applications">
 			    <source>Apply applications</source>
 			</trans-unit>
+			<trans-unit id="tx_pxaintelliplanjobs_domain_model_job.bottom_images">
+			    <source>Images before description text</source>
+			</trans-unit>
+			<trans-unit id="tx_pxaintelliplanjobs_domain_model_job.top_images">
+			    <source>Images above description text</source>
+			</trans-unit>
+			<trans-unit id="tab.additional_fields">
+				<source>Additional fields</source>
+			</trans-unit>
 			<trans-unit id="tab.apply_for_job">
 			    <source>Applied for job</source>
 			</trans-unit>
@@ -190,6 +199,12 @@
 			</trans-unit>
 			<trans-unit id="ts.termsLink">
 			    <source>Accept terms link (Typolink format)</source>
+			</trans-unit>
+			<trans-unit id="ts.singleView.image.width">
+			    <source>Image width (additional images on single view)</source>
+			</trans-unit>
+			<trans-unit id="ts.singleView.image.height">
+				<source>Image height (additional images on single view)</source>
 			</trans-unit>
 			<!--Typoscript constant editor:END-->
 

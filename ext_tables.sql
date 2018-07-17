@@ -44,6 +44,8 @@ CREATE TABLE tx_pxaintelliplanjobs_domain_model_job (
 	last_updated int(11) DEFAULT '0' NOT NULL,
 	content_elements int(11) unsigned DEFAULT '0' NOT NULL,
 	apply_applications int(11) unsigned DEFAULT '0' NOT NULL,
+	top_images int(11) unsigned DEFAULT '0',
+	bottom_images int(11) unsigned DEFAULT '0',
 
 	tstamp int(11) unsigned DEFAULT '0' NOT NULL,
 	crdate int(11) unsigned DEFAULT '0' NOT NULL,

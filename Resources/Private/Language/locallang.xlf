@@ -50,13 +50,13 @@
 				<source>This file is required to upload</source>
 			</trans-unit>
 			<trans-unit id="fe.error_api_apply_job_7">
-			    <source>Candidate already applied for this job ad.</source>
+			    <source>Candidate already applied for this job ad</source>
 			</trans-unit>
 			<trans-unit id="fe.error_api_apply_job_unknown">
 			    <source>Something went wrong while trying to apply for a job</source>
 			</trans-unit>
 			<trans-unit id="fe.error_valid_phone">
-			    <source>Invalid number format</source>
+			    <source>Invalid format number</source>
 			</trans-unit>
 			<trans-unit id="fe.success_sent">
 				<source>Email was sent</source>

@@ -148,6 +148,30 @@
 			<trans-unit id="fe.additional_file">
 				<target>Ytterligare dokument</target>
 			</trans-unit>
+			<trans-unit id="fe.error_field_required">
+				<target>Obligatoriskt fält</target>
+			</trans-unit>
+			<trans-unit id="fe.error_valid_email">
+				<target>E-postadressen är inte giltig </target>
+			</trans-unit>
+			<trans-unit id="fe.error_acceptTerms">
+				<target>Du behöver godkänna villkoren</target>
+			</trans-unit>
+			<trans-unit id="fe.error_file_required">
+				<target>Denna fil är obligatorisk att ladda upp </target>
+			</trans-unit>
+			<trans-unit id="fe.error_api_apply_job_7">
+				<target>CDen sökande har redan sökt denna tjänst </target>
+			</trans-unit>
+			<trans-unit id="fe.error_api_apply_job_unknown">
+				<target>Något gick fel med ansökningen till detta jobb </target>
+			</trans-unit>
+			<trans-unit id="fe.error_valid_phone">
+				<target>Ogiltigt nummerformat </target>
+			</trans-unit>
+			<trans-unit id="fe.success_sent">
+				<target>E-postmeddelandet har skickatsJobbansökan har skickats</target>
+			</trans-unit>
 			<!--FE LABELS:END-->
 		</body>
 	</file>

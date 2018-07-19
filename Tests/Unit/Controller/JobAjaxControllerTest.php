@@ -23,7 +23,7 @@ class JobAjaxControllerTest extends UnitTestCase
         parent::setUp();
         $this->subject = $this->getAccessibleMock(
             JobAjaxController::class,
-            ['translate'],
+            ['translate', 'uploadToTempFile', 'writeToTempFile'],
             [],
             '',
             false
@@ -33,13 +33,15 @@ class JobAjaxControllerTest extends UnitTestCase
     protected function tearDown()
     {
         parent::tearDown();
+        // Reset files, because those doesn't exist
+        $this->subject->_set('uploadFiles', []);
         unset($this->subject);
     }
 
     /**
      * @test
      */
-    public function radioFieldsWillBeExcludedAfterCommentGeneration()
+    public function radioFieldsWillBeExcludedAfterCvTextFieldGeneration()
     {
         $settings['applyJob']['fields']['noCvRadios'] = 'radio1,radio2';
         $fields = [
@@ -51,7 +53,7 @@ class JobAjaxControllerTest extends UnitTestCase
 
         $this->subject->_set('settings', $settings);
 
-        $this->subject->_callRef('generateCommentFieldAndExcludeItFromFields', $fields);
+        $this->subject->_callRef('generateTextFileFromNotSupportedFields', $fields);
 
         $this->assertEquals($fieldsExpect, $fields);
     }
@@ -134,6 +136,7 @@ class JobAjaxControllerTest extends UnitTestCase
     public function validateApplyJobFilesFailsIfNotAllRequiredFilesUploaded()
     {
         $settings['applyJob']['fields']['requiredFilesFields'] = 'cv,letter';
+        $settings['applyJob']['fields']['allowedFileTypes'] = 'doc,docx';
         $this->subject->_set('settings', $settings);
 
         $_FILES_BACKUP = $_FILES;
@@ -144,6 +147,18 @@ class JobAjaxControllerTest extends UnitTestCase
                     'applyJobFiles' => [
                         'cv' => 4,
                         'letter' => 0
+                    ]
+                ],
+                'name' => [
+                    'applyJobFiles' => [
+                        'cv' => 'cv.doc',
+                        'letter' => 'cv.docx'
+                    ]
+                ],
+                'tmp_name' => [
+                    'applyJobFiles' => [
+                        'cv' => '',
+                        'letter' => '/tmp/php/blabla'
                     ]
                 ]
             ]
@@ -157,9 +172,11 @@ class JobAjaxControllerTest extends UnitTestCase
     /**
      * @test
      */
-    public function validateApplyJobPassIfAllRequiredFilesUploaded()
+    public function validateApplyJobPassIfAllRequiredFilesUploadedAndAllAllowed()
     {
         $settings['applyJob']['fields']['requiredFilesFields'] = 'cv,letter';
+        $settings['applyJob']['fields']['allowedFileTypes'] = 'doc,docx';
+
         $this->subject->_set('settings', $settings);
 
         $_FILES_BACKUP = $_FILES;
@@ -171,11 +188,62 @@ class JobAjaxControllerTest extends UnitTestCase
                         'cv' => 0,
                         'letter' => 0
                     ]
+                ],
+                'name' => [
+                    'applyJobFiles' => [
+                        'cv' => 'cv.doc',
+                        'letter' => 'cv.docx'
+                    ]
+                ],
+                'tmp_name' => [
+                    'applyJobFiles' => [
+                        'cv' => '/tmp/php/blabla',
+                        'letter' => '/tmp/php/blabla'
+                    ]
                 ]
             ]
         ];
 
         $this->assertTrue($this->subject->_call('validateApplyJobFiles'));
+
+        $_FILES = $_FILES_BACKUP;
+    }
+
+    /**
+     * @test
+     */
+    public function validateApplyJobFilesFailsIfSomeFilesAreNotAllowed()
+    {
+        $settings['applyJob']['fields']['requiredFilesFields'] = 'cv,letter';
+        $settings['applyJob']['fields']['allowedFileTypes'] = 'doc,docx';
+        $this->subject->_set('settings', $settings);
+
+        $_FILES_BACKUP = $_FILES;
+
+        $_FILES = [
+            'tx_pxaintelliplanjobs_pi2' => [
+                'error' => [
+                    'applyJobFiles' => [
+                        'cv' => 0,
+                        'letter' => 0
+                    ]
+                ],
+                'name' => [
+                    'applyJobFiles' => [
+                        'cv' => 'cv.doc',
+                        'letter' => 'cv.php' // Not allowed
+                    ]
+                ],
+                'tmp_name' => [
+                    'applyJobFiles' => [
+                        'cv' => '/tmp/php/blabla',
+                        'letter' => '/tmp/php/blabla'
+                    ]
+                ]
+            ]
+        ];
+
+        $this->assertFalse($this->subject->_call('validateApplyJobFiles'));
 
         $_FILES = $_FILES_BACKUP;
     }

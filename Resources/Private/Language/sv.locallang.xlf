@@ -169,6 +169,9 @@
 			<trans-unit id="fe.error_valid_phone">
 				<target>Ogiltigt nummerformat </target>
 			</trans-unit>
+			<trans-unit id="fe.error_file_not_allowed">
+				<target>Felaktig filtyp, vänligen ladda upp en fil i något av följande format: %s.</target>
+			</trans-unit>
 			<trans-unit id="fe.success_sent">
 				<target>E-postmeddelandet har skickatsJobbansökan har skickats</target>
 			</trans-unit>

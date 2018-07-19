@@ -32,6 +32,11 @@ use TYPO3\CMS\Fluid\View\StandaloneView;
 class JobAjaxController extends ActionController
 {
     /**
+     * Reserved upload field name for CV
+     */
+    const CV_UPLOAD_FIELD_NAME = 'cv';
+
+    /**
      * Default view
      *
      * @var string
@@ -45,11 +50,28 @@ class JobAjaxController extends ActionController
     protected $jobRepository = null;
 
     /**
+     * Hold uploaded in apply form files
+     *
+     * @var array
+     */
+    protected $uploadFiles = [];
+
+    /**
      * Errors
      *
      * @var array
      */
     protected $responseErrors = [];
+
+    /**
+     * Remove upload temp files
+     */
+    public function __destruct()
+    {
+        foreach ($this->uploadFiles as $uploadFile) {
+            GeneralUtility::unlink_tempfile($uploadFile['path']);
+        }
+    }
 
     /**
      * Initialize configuration
@@ -119,26 +141,13 @@ class JobAjaxController extends ActionController
         $apiSuccess = false;
 
         if ($isValidFields && $isValidFiles) {
-            // Path to name
-            $files = [];
-            $uploadFiles = $_FILES['tx_pxaintelliplanjobs_pi2'];
-
-            foreach ($uploadFiles['error']['applyJobFiles'] ?? [] as $file => $error) {
-                if ($error === 0) {
-                    $files[$file] = [
-                        'name' => $uploadFiles['name']['applyJobFiles'][$file],
-                        'path' => $uploadFiles['tmp_name']['applyJobFiles'][$file]
-                    ];
-                }
-            }
-
             if (!$requireCV) {
-                // If CV is not required, create comment field from radio buttons data
-                $fields['comment'] = $this->generateCommentFieldAndExcludeItFromFields($fields);
+                // If CV is not required, create text file with information from radio buttons data
+                $this->uploadFiles[self::CV_UPLOAD_FIELD_NAME] = $this->generateTextFileFromNotSupportedFields($fields);
             }
 
             $intelliplanApi = GeneralUtility::makeInstance(IntelliplanApi::class);
-            $response = $intelliplanApi->applyForJob($job, $fields, $files);
+            $response = $intelliplanApi->applyForJob($job, $fields, $this->uploadFiles);
 
             // Assume we succeed if AplyForJob gone well
             $apiSuccess = $response['success'];
@@ -220,16 +229,69 @@ class JobAjaxController extends ActionController
     {
         $isValid = true;
         $requiredFiles = $this->settings['applyJob']['fields']['requiredFilesFields'] ?? '';
+        $allowedFileTypes = $this->settings['applyJob']['fields']['allowedFileTypes'] ?? '';
+        $uploadedFilesErrors = $_FILES['tx_pxaintelliplanjobs_pi2']['error']['applyJobFiles'] ?? [];
+        $uploadedFilesNames = $_FILES['tx_pxaintelliplanjobs_pi2']['name']['applyJobFiles'] ?? [];
+
+        foreach ($uploadedFilesErrors as $file => $error) {
+            if ($uploadedFilesErrors[$file] === UPLOAD_ERR_OK) {
+                $tmpName = $_FILES['tx_pxaintelliplanjobs_pi2']['tmp_name']['applyJobFiles'][$file];
+
+                $this->uploadFiles[$file] = [
+                    'name' => basename($uploadedFilesNames[$file]),
+                    'path' => $this->uploadToTempFile($tmpName)
+                ];
+            }
+        }
 
         foreach (GeneralUtility::trimExplode(',', $requiredFiles, true) as $file) {
-            if (!isset($_FILES['tx_pxaintelliplanjobs_pi2']['error']['applyJobFiles'][$file])
-                || ($_FILES['tx_pxaintelliplanjobs_pi2']['error']['applyJobFiles'][$file]) !== 0) {
+            if (!isset($uploadedFilesErrors[$file])
+                || ($uploadedFilesErrors[$file]) !== UPLOAD_ERR_OK) {
                 $isValid = false;
                 $this->addError($file, $this->translate('fe.error_file_required'));
             }
         }
 
+        foreach ($this->uploadFiles as $file => $uploadFile) {
+            if (false === $this->isFileTypeAllowed($uploadFile['name'], $allowedFileTypes)) {
+                $isValid = false;
+                $this->addError(
+                    $file,
+                    $this->translate(
+                        'fe.error_file_not_allowed',
+                        [$allowedFileTypes]
+                    )
+                );
+            }
+        }
+
         return $isValid;
+    }
+
+    /**
+     * Move upload file to temp file
+     * Wrapper for tests
+     *
+     * @param string $uploadFilePath
+     * @return string
+     */
+    protected function uploadToTempFile(string $uploadFilePath): string
+    {
+        return GeneralUtility::upload_to_tempfile($uploadFilePath);
+    }
+
+    /**
+     * Check if file extension is in list of allowed
+     *
+     * @param string $fileName
+     * @param string $allowedExtensions
+     * @return bool
+     */
+    protected function isFileTypeAllowed(string $fileName, string $allowedExtensions): bool
+    {
+        $extension = pathinfo($fileName, PATHINFO_EXTENSION);
+
+        return GeneralUtility::inList($allowedExtensions, $extension);
     }
 
     /**
@@ -364,23 +426,23 @@ class JobAjaxController extends ActionController
     }
 
     /**
-     * Generate comment field from radio buttons and exclude it from all fields
+     * Generate text file from radio buttons and exclude it from all fields
      *
      * @param array &$fields
-     * @return array
+     * @return array File path and name
      */
-    protected function generateCommentFieldAndExcludeItFromFields(array &$fields): string
+    protected function generateTextFileFromNotSupportedFields(array &$fields): array
     {
         $radios = GeneralUtility::trimExplode(',', $this->settings['applyJob']['fields']['noCvRadios'] ?? '', true);
-        $comment = '';
+        $text = '';
 
         for ($i = 1; $i <= count($radios); $i++) {
             $radio = $radios[$i - 1];
             if (!isset($fields[$radio])) {
                 continue;
             }
-            $comment .= sprintf(
-                '%d. %s: "%s"' . "\n" . '%s: "%s"' . "\n",
+            $text .= sprintf(
+                '%d. %s: "%s"' . "\n" . '%s: "%s"' . "\n\n",
                 $i,
                 $this->translate('fe.question'),
                 $this->translate('fe.checkbox_' . $radio),
@@ -391,7 +453,27 @@ class JobAjaxController extends ActionController
             unset($fields[$radio]);
         }
 
-        return $comment;
+        return [
+            'name' => 'cv_text.txt',
+            'path' => $this->writeToTempFile($text)
+        ];
+    }
+
+    /**
+     * Create temp file and write to it text
+     *
+     * @param string $text
+     * @return string
+     */
+    protected function writeToTempFile(string $text): string
+    {
+        $tempFile = GeneralUtility::tempnam('cv_');
+
+        $fp = fopen($tempFile, 'w');
+        fwrite($fp, $text);
+        fclose($fp);
+
+        return $tempFile;
     }
 
     /**

@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Pixelant\PxaIntelliplanJobs\Api;
 
+use Pixelant\PxaIntelliplanJobs\Controller\JobAjaxController;
 use Pixelant\PxaIntelliplanJobs\Domain\Model\Job;
 use Pixelant\PxaIntelliplanJobs\Exception\ApiCallBadRequestException;
 use Pixelant\PxaIntelliplanJobs\Utility\ConfigurationUtility;
@@ -116,7 +117,7 @@ class IntelliplanApi
 
         foreach ($files as $fileField => $fileInfo) {
             // reserved for CV file
-            if ($fileField === 'cv') { // cv is reserved field name in form files
+            if ($fileField === JobAjaxController::CV_UPLOAD_FIELD_NAME) { // reserved field name in form files
                 $attachFiles['cv_document'] = $fileInfo;
             } else {
                 $attachFiles['other_document_' . $fileField] = $fileInfo;

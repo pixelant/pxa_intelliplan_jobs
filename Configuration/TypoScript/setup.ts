@@ -68,6 +68,7 @@ plugin.tx_pxaintelliplanjobs {
                 excludeSetFields = recruit_interest,success,staffing_interest
 
                 requiredFilesFields = cv,letter
+                allowedFileTypes = doc,docx,pdf,rtf,txt
 
                 # If user doesn't have CV what checkboxes to render
                 noCvRadios = secondary_education,driver_license,have_car,work_shifts

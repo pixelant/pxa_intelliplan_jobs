@@ -127,7 +127,7 @@
 			    <source>Apply applications</source>
 			</trans-unit>
 			<trans-unit id="tx_pxaintelliplanjobs_domain_model_job.bottom_images">
-			    <source>Images before description text</source>
+			    <source>Images below description text</source>
 			</trans-unit>
 			<trans-unit id="tx_pxaintelliplanjobs_domain_model_job.top_images">
 			    <source>Images above description text</source>

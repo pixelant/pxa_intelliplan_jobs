@@ -5,6 +5,7 @@ use Nimut\TestingFramework\MockObject\AccessibleMockObjectInterface;
 use Nimut\TestingFramework\TestCase\UnitTestCase;
 use Pixelant\PxaIntelliplanJobs\Controller\JobAjaxController;
 use Pixelant\PxaIntelliplanJobs\Domain\Model\DTO\ShareJob;
+use Pixelant\PxaIntelliplanJobs\Domain\Model\Job;
 
 /**
  * Class JobAjaxControllerTest
@@ -79,10 +80,11 @@ class JobAjaxControllerTest extends UnitTestCase
     {
         $settings['shareJob']['defaultSenderEmail'] = 'default@mail.com';
         $shareJob = new ShareJob();
+        $job = new Job();
 
         $this->subject->_set('settings', $settings);
 
-        $this->assertFalse($this->subject->_call('validateShare', $shareJob));
+        $this->assertFalse($this->subject->_call('validateShare', $shareJob, $job));
         $this->assertEquals($settings['shareJob']['defaultSenderEmail'], $shareJob->getSenderEmail());
     }
 
@@ -93,6 +95,7 @@ class JobAjaxControllerTest extends UnitTestCase
     {
         $settings['shareJob']['defaultSenderEmail'] = 'default@mail.com';
         $this->subject->_set('settings', $settings);
+        $job = new Job();
 
         $shareJob = new ShareJob();
         $shareJob->setShareUrl('test');
@@ -102,7 +105,7 @@ class JobAjaxControllerTest extends UnitTestCase
 
         $this->subject->_set('settings', $settings);
 
-        $this->assertFalse($this->subject->_call('validateShare', $shareJob));
+        $this->assertFalse($this->subject->_call('validateShare', $shareJob, $job));
     }
 
     /**
@@ -112,6 +115,7 @@ class JobAjaxControllerTest extends UnitTestCase
     {
         $settings['shareJob']['defaultSenderEmail'] = 'default@mail.com';
         $this->subject->_set('settings', $settings);
+        $job = new Job();
 
         $shareJob = new ShareJob();
         $shareJob->setShareUrl('test');
@@ -121,7 +125,7 @@ class JobAjaxControllerTest extends UnitTestCase
 
         $this->subject->_set('settings', $settings);
 
-        $this->assertTrue($this->subject->_call('validateShare', $shareJob));
+        $this->assertTrue($this->subject->_call('validateShare', $shareJob, $job));
     }
 
     /**

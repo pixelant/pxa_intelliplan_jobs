@@ -229,7 +229,7 @@ class JobAjaxController extends ActionController
     {
         $isValid = true;
         $requiredFiles = $this->settings['applyJob']['fields']['requiredFilesFields'] ?? '';
-        $allowedFileTypes = $this->settings['applyJob']['fields']['allowedFileTypes'] ?? '';
+
         $uploadedFilesErrors = $_FILES['tx_pxaintelliplanjobs_pi2']['error']['applyJobFiles'] ?? [];
         $uploadedFilesNames = $_FILES['tx_pxaintelliplanjobs_pi2']['name']['applyJobFiles'] ?? [];
 
@@ -253,13 +253,15 @@ class JobAjaxController extends ActionController
         }
 
         foreach ($this->uploadFiles as $file => $uploadFile) {
-            if (false === $this->isFileTypeAllowed($uploadFile['name'], $allowedFileTypes)) {
+            $mimeType = mime_content_type($uploadFile['path']);
+
+            if (false === $this->isFileTypeAllowed($uploadFile['name'], $mimeType)) {
                 $isValid = false;
                 $this->addError(
                     $file,
                     $this->translate(
                         'fe.error_file_not_allowed',
-                        [$allowedFileTypes]
+                        [$this->settings['applyJob']['fields']['allowedFileTypes']]
                     )
                 );
             }
@@ -284,14 +286,22 @@ class JobAjaxController extends ActionController
      * Check if file extension is in list of allowed
      *
      * @param string $fileName
-     * @param string $allowedExtensions
+     * @param string $mimeType
      * @return bool
      */
-    protected function isFileTypeAllowed(string $fileName, string $allowedExtensions): bool
+    protected function isFileTypeAllowed(string $fileName, string $mimeType): bool
     {
+        $allowedFileTypes = $this->settings['applyJob']['fields']['allowedFileTypes'];
+        $allowedMimeTypes = $this->settings['applyJob']['fields']['allowedMimeTypes'];
+
+        if (empty($allowedFileTypes) || empty($allowedMimeTypes)) {
+            return false;
+        }
+
         $extension = pathinfo($fileName, PATHINFO_EXTENSION);
 
-        return GeneralUtility::inList($allowedExtensions, $extension);
+        return GeneralUtility::inList($allowedFileTypes, $extension)
+            && GeneralUtility::inList($allowedMimeTypes, $mimeType);
     }
 
     /**

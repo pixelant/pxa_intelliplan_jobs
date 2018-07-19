@@ -69,6 +69,7 @@ plugin.tx_pxaintelliplanjobs {
 
                 requiredFilesFields = cv,letter
                 allowedFileTypes = doc,docx,pdf,rtf,txt
+                allowedMimeTypes = application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/pdf,application/rtf,text/plain
 
                 # If user doesn't have CV what checkboxes to render
                 noCvRadios = secondary_education,driver_license,have_car,work_shifts

@@ -132,37 +132,19 @@ class JobAjaxControllerTest extends UnitTestCase
 
     /**
      * @test
+     * @dataProvider failUploadsDataProvide
      */
-    public function validateApplyJobFilesFailsIfNotAllRequiredFilesUploaded()
+    public function validateApplyJobFilesFailsIfNotAllRequiredFilesUploadedOrSomeAreNotAllowed($filesUpload)
     {
         $settings['applyJob']['fields']['requiredFilesFields'] = 'cv,letter';
         $settings['applyJob']['fields']['allowedFileTypes'] = 'doc,docx';
+        $settings['applyJob']['fields']['allowedMimeTypes'] = 'text/plain';
+
         $this->subject->_set('settings', $settings);
 
         $_FILES_BACKUP = $_FILES;
 
-        $_FILES = [
-            'tx_pxaintelliplanjobs_pi2' => [
-                'error' => [
-                    'applyJobFiles' => [
-                        'cv' => 4,
-                        'letter' => 0
-                    ]
-                ],
-                'name' => [
-                    'applyJobFiles' => [
-                        'cv' => 'cv.doc',
-                        'letter' => 'cv.docx'
-                    ]
-                ],
-                'tmp_name' => [
-                    'applyJobFiles' => [
-                        'cv' => '',
-                        'letter' => '/tmp/php/blabla'
-                    ]
-                ]
-            ]
-        ];
+        $_FILES = $filesUpload;
 
         $this->assertFalse($this->subject->_call('validateApplyJobFiles'));
 
@@ -176,6 +158,7 @@ class JobAjaxControllerTest extends UnitTestCase
     {
         $settings['applyJob']['fields']['requiredFilesFields'] = 'cv,letter';
         $settings['applyJob']['fields']['allowedFileTypes'] = 'doc,docx';
+        $settings['applyJob']['fields']['allowedMimeTypes'] = 'text/plain';
 
         $this->subject->_set('settings', $settings);
 
@@ -200,50 +183,17 @@ class JobAjaxControllerTest extends UnitTestCase
                         'cv' => '/tmp/php/blabla',
                         'letter' => '/tmp/php/blabla'
                     ]
+                ],
+                'type' => [
+                    'applyJobFiles' => [
+                        'cv' => 'text/plain',
+                        'letter' => 'text/plain'
+                    ]
                 ]
             ]
         ];
 
         $this->assertTrue($this->subject->_call('validateApplyJobFiles'));
-
-        $_FILES = $_FILES_BACKUP;
-    }
-
-    /**
-     * @test
-     */
-    public function validateApplyJobFilesFailsIfSomeFilesAreNotAllowed()
-    {
-        $settings['applyJob']['fields']['requiredFilesFields'] = 'cv,letter';
-        $settings['applyJob']['fields']['allowedFileTypes'] = 'doc,docx';
-        $this->subject->_set('settings', $settings);
-
-        $_FILES_BACKUP = $_FILES;
-
-        $_FILES = [
-            'tx_pxaintelliplanjobs_pi2' => [
-                'error' => [
-                    'applyJobFiles' => [
-                        'cv' => 0,
-                        'letter' => 0
-                    ]
-                ],
-                'name' => [
-                    'applyJobFiles' => [
-                        'cv' => 'cv.doc',
-                        'letter' => 'cv.php' // Not allowed
-                    ]
-                ],
-                'tmp_name' => [
-                    'applyJobFiles' => [
-                        'cv' => '/tmp/php/blabla',
-                        'letter' => '/tmp/php/blabla'
-                    ]
-                ]
-            ]
-        ];
-
-        $this->assertFalse($this->subject->_call('validateApplyJobFiles'));
 
         $_FILES = $_FILES_BACKUP;
     }
@@ -344,5 +294,100 @@ class JobAjaxControllerTest extends UnitTestCase
             'agree_on_terms' => '1'
         ];
         $this->assertTrue($this->subject->_call('validateApplyJobFields', $fields, $validationRules));
+    }
+
+    /**
+     * Simulate different cases where validation of files will fail
+     *
+     * @return array
+     */
+    public function failUploadsDataProvide()
+    {
+        return [
+            'notAllRequiredFilesAreUploaded' => [
+                'tx_pxaintelliplanjobs_pi2' => [
+                    'error' => [
+                        'applyJobFiles' => [
+                            'cv' => 4,
+                            'letter' => 0
+                        ]
+                    ],
+                    'name' => [
+                        'applyJobFiles' => [
+                            'cv' => 'cv.doc',
+                            'letter' => 'cv.docx'
+                        ]
+                    ],
+                    'tmp_name' => [
+                        'applyJobFiles' => [
+                            'cv' => '/tmp/php/blabla123321',
+                            'letter' => '/tmp/php/blabla'
+                        ]
+                    ],
+                    'type' => [
+                        'applyJobFiles' => [
+                            'cv' => 'text/plain',
+                            'letter' => 'text/plain'
+                        ]
+                    ]
+                ]
+            ],
+            'allRequiredUploadedButExtensionNotAllowed' => [
+                'tx_pxaintelliplanjobs_pi2' => [
+                    'error' => [
+                        'applyJobFiles' => [
+                            'cv' => 0,
+                            'letter' => 0
+                        ]
+                    ],
+                    'name' => [
+                        'applyJobFiles' => [
+                            'cv' => 'cv.php', // Forbidden extension
+                            'letter' => 'cv.docx'
+                        ]
+                    ],
+                    'tmp_name' => [
+                        'applyJobFiles' => [
+                            'cv' => '/tmp/php/blabla123321',
+                            'letter' => '/tmp/php/blabla'
+                        ]
+                    ],
+                    'type' => [
+                        'applyJobFiles' => [
+                            'cv' => 'text/plain',
+                            'letter' => 'text/plain'
+                        ]
+                    ]
+                ]
+            ],
+            'allRequiredUploadedButMimeTypeIsNotAllowed' => [
+                'tx_pxaintelliplanjobs_pi2' => [
+                    'error' => [
+                        'applyJobFiles' => [
+                            'cv' => 0,
+                            'letter' => 0
+                        ]
+                    ],
+                    'name' => [
+                        'applyJobFiles' => [
+                            'cv' => 'cv.doc',
+                            'letter' => 'cv.docx'
+                        ]
+                    ],
+                    'tmp_name' => [
+                        'applyJobFiles' => [
+                            'cv' => '/tmp/php/blabla123321',
+                            'letter' => '/tmp/php/blabla'
+                        ]
+                    ],
+                    'type' => [
+                        'applyJobFiles' => [
+                            'cv' => 'image/jpeg',
+                            'letter' => 'text/plain'
+                        ]
+                    ]
+                ]
+            ]
+        ];
     }
 }

@@ -30,6 +30,8 @@ plugin.tx_pxaintelliplanjobs {
         shareJob {
             allowMappingProperties = receiverName,receiverEmail,senderName,senderEmail,shareUrl
             defaultSenderEmail = {$plugin.tx_pxaintelliplanjobs.settings.shareJob.defaultSenderEmail}
+            siteName = {$plugin.tx_pxaintelliplanjobs.settings.shareJob.siteName}
+            siteDomain = {$plugin.tx_pxaintelliplanjobs.settings.shareJob.siteDomain}
 
             template = EXT:pxa_intelliplan_jobs/Resources/Private/Templates/Email/ShareJob.html
         }

@@ -169,14 +169,14 @@
 			<!--FE LABELS:END-->
 
 			<!--EMAIL LABELS:START-->
-			<trans-unit id="mail.your_field">
-			    <source>Your friend</source>
+			<trans-unit id="mail.welcome">
+			    <source>Welcome with your application.</source>
 			</trans-unit>
-			<trans-unit id="mail.recommend">
-			    <source>has recommend you a link. Click the link below.</source>
+			<trans-unit id="mail.message">
+			    <source>Here's a job tip from %s regarding a job as "%s". Check it out here: %s</source>
 			</trans-unit>
-			<trans-unit id="mail.link">
-			    <source>See more</source>
+			<trans-unit id="mail.subject">
+				<source>Job tip from %s: "%s"</source>
 			</trans-unit>
 			<!--EMAIL LABELS:END-->
 		</body>

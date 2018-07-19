@@ -1,5 +1,14 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
-<f:translate key="mail.your_field" extensionName="PxaIntelliplanJobs" /> {shareJob.senderName}<br>
-<f:translate key="mail.recommend" extensionName="PxaIntelliplanJobs" /><br>
-<a href="{shareJob.decodedShareUrl}" target="_blank"><f:translate key="mail.link" extensionName="PxaIntelliplanJobs" /></a>
+<p>
+    <f:translate key="mail.message" extensionName="PxaIntelliplanJobs" arguments="{0: shareJob.senderName, 1: job.title, 2: '{f:render(section: \'link\', arguments: \'{shareJob: shareJob}\')}'}"/>
+</p>
+<p>
+    <f:translate key="mail.welcome" extensionName="PxaIntelliplanJobs" />
+</p>
+<p>
+    {settings.shareJob.siteName}<br />
+    {settings.shareJob.siteDomain}
+</p>
+
+<f:section name="link"><a href="{shareJob.decodedShareUrl}" target="_blank">{shareJob.decodedShareUrl}</a></f:section>
 </html>

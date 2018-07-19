@@ -31,13 +31,19 @@ plugin.tx_pxaintelliplanjobs {
         # cat=plugin.tx_pxaintelliplanjobs/pxaintelliplanjobs/040; type=string; label=LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:ts.defaultSenderEmail
         shareJob.defaultSenderEmail = noreply@site.com
 
-        # cat=plugin.tx_pxaintelliplanjobs/pxaintelliplanjobs/050; type=string; label=LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:ts.termsLink
+        # cat=plugin.tx_pxaintelliplanjobs/pxaintelliplanjobs/050; type=string; label=LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:ts.siteName
+        shareJob.siteName = Site name
+
+        # cat=plugin.tx_pxaintelliplanjobs/pxaintelliplanjobs/060; type=string; label=LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:ts.siteDomain
+        shareJob.siteDomain = www.site.com
+
+        # cat=plugin.tx_pxaintelliplanjobs/pxaintelliplanjobs/070; type=string; label=LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:ts.termsLink
         applyJob.termsLink =
 
-        # cat=plugin.tx_pxaintelliplanjobs/pxaintelliplanjobs/060; type=string; label=LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:ts.singleView.image.width
+        # cat=plugin.tx_pxaintelliplanjobs/pxaintelliplanjobs/080; type=string; label=LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:ts.singleView.image.width
         singleView.image.width = 750
 
-        # cat=plugin.tx_pxaintelliplanjobs/pxaintelliplanjobs/070; type=string; label=LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:ts.singleView.image.height
+        # cat=plugin.tx_pxaintelliplanjobs/pxaintelliplanjobs/090; type=string; label=LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:ts.singleView.image.height
         singleView.image.height =
     }
 }

@@ -173,6 +173,18 @@
 				<target>E-postmeddelandet har skickatsJobbansökan har skickats</target>
 			</trans-unit>
 			<!--FE LABELS:END-->
+
+			<!--EMAIL LABELS:START-->
+			<trans-unit id="mail.welcome">
+				<target>Välkommen med din ansökan.</target>
+			</trans-unit>
+			<trans-unit id="mail.message">
+				<target>Här kommer ett jobbtips från %s avseende en tjänst som "%s". Kolla här för mer information: %s</target>
+			</trans-unit>
+			<trans-unit id="mail.subject">
+				<target>Jobbtips från %s: "%s"</target>
+			</trans-unit>
+			<!--EMAIL LABELS:END-->
 		</body>
 	</file>
 </xliff>

@@ -98,4 +98,16 @@ class ShareJobTest extends UnitTestCase
 
         $this->assertEquals($value, $this->subject->getDecodedShareUrl());
     }
+
+    /**
+     * @test
+     */
+    public function subjectCanBeSet()
+    {
+        $subject = 'subject';
+
+        $this->subject->setSubject($subject);
+
+        $this->assertEquals($subject, $this->subject->getSubject());
+    }
 }

@@ -75,7 +75,7 @@ class JobAjaxController extends ActionController
      */
     public function shareAction(ShareJob $shareJob, Job $job)
     {
-        $isValid = $this->validateShare($shareJob);
+        $isValid = $this->validateShare($shareJob, $job);
 
         if ($isValid) {
             $mail = GeneralUtility::makeInstance(MailMessage::class);
@@ -85,6 +85,7 @@ class JobAjaxController extends ActionController
                 ->setTo($shareJob->getReceiverEmail(), $shareJob->getReceiverName())
                 ->setFrom($shareJob->getSenderEmail(), $shareJob->getSenderName())
                 ->setBody($this->getShareJobMessage($shareJob, $job))
+                ->setSubject($shareJob->getSubject())
                 ->send();
         }
 
@@ -312,9 +313,10 @@ class JobAjaxController extends ActionController
      * Validate share job
      *
      * @param ShareJob $shareJob
+     * @param Job $job
      * @return bool
      */
-    protected function validateShare(ShareJob $shareJob): bool
+    protected function validateShare(ShareJob $shareJob, Job $job): bool
     {
         $valid = true;
         $senderEmail = $shareJob->getSenderEmail();
@@ -322,6 +324,11 @@ class JobAjaxController extends ActionController
         if (empty($senderEmail)) {
             $senderEmail = $this->settings['shareJob']['defaultSenderEmail'];
             $shareJob->setSenderEmail($senderEmail);
+        }
+        if (empty($shareJob->getSubject())) {
+            $shareJob->setSubject(
+                $this->translate('mail.subject', [$shareJob->getSenderName(), $job->getTitle()])
+            );
         }
 
         if (empty($shareJob->getReceiverName())) {
@@ -391,10 +398,11 @@ class JobAjaxController extends ActionController
      * Translate label
      *
      * @param string $key
+     * @param array $arguments
      * @return string
      */
-    protected function translate(string $key): string
+    protected function translate(string $key, array $arguments = null): string
     {
-        return LocalizationUtility::translate($key, 'PxaIntelliplanJobs') ?? '';
+        return LocalizationUtility::translate($key, 'PxaIntelliplanJobs', $arguments) ?? '';
     }
 }

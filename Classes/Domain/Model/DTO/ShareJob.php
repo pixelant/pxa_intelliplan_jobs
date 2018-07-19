@@ -32,6 +32,11 @@ class ShareJob
     /**
      * @var string
      */
+    protected $subject = '';
+    
+    /**
+     * @var string
+     */
     protected $shareUrl = '';
 
     /**
@@ -96,6 +101,22 @@ class ShareJob
     public function setSenderEmail(string $senderEmail)
     {
         $this->senderEmail = $senderEmail;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSubject(): string
+    {
+        return $this->subject;
+    }
+
+    /**
+     * @param string $subject
+     */
+    public function setSubject(string $subject)
+    {
+        $this->subject = $subject;
     }
 
     /**

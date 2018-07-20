@@ -253,7 +253,7 @@ class JobAjaxController extends ActionController
         }
 
         foreach ($this->uploadFiles as $file => $uploadFile) {
-            $mimeType = mime_content_type($uploadFile['path']);
+            $mimeType = $this->getMimeType($uploadFile['path']);
 
             if (false === $this->isFileTypeAllowed($uploadFile['name'], $mimeType)) {
                 $isValid = false;
@@ -280,6 +280,18 @@ class JobAjaxController extends ActionController
     protected function uploadToTempFile(string $uploadFilePath): string
     {
         return GeneralUtility::upload_to_tempfile($uploadFilePath);
+    }
+
+    /**
+     * Return mime type
+     * Wrapper for tests
+     *
+     * @param string $filePath
+     * @return string
+     */
+    protected function getMimeType(string $filePath): string
+    {
+        return mime_content_type($filePath);
     }
 
     /**

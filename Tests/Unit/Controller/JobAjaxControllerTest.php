@@ -3,6 +3,7 @@ namespace Pixelant\PxaIntelliplanJobs\Tests\Unit;
 
 use Nimut\TestingFramework\MockObject\AccessibleMockObjectInterface;
 use Nimut\TestingFramework\TestCase\UnitTestCase;
+use PHPUnit\Framework\MockObject\MockObject;
 use Pixelant\PxaIntelliplanJobs\Controller\JobAjaxController;
 use Pixelant\PxaIntelliplanJobs\Domain\Model\DTO\ShareJob;
 use Pixelant\PxaIntelliplanJobs\Domain\Model\Job;
@@ -14,7 +15,7 @@ use Pixelant\PxaIntelliplanJobs\Domain\Model\Job;
 class JobAjaxControllerTest extends UnitTestCase
 {
     /**
-     * @var JobAjaxController|AccessibleMockObjectInterface
+     * @var JobAjaxController|AccessibleMockObjectInterface|MockObject
      */
     protected $subject = null;
 
@@ -23,7 +24,7 @@ class JobAjaxControllerTest extends UnitTestCase
         parent::setUp();
         $this->subject = $this->getAccessibleMock(
             JobAjaxController::class,
-            ['translate', 'uploadToTempFile', 'writeToTempFile'],
+            ['translate', 'uploadToTempFile', 'writeToTempFile', 'getMimeType'],
             [],
             '',
             false
@@ -134,7 +135,7 @@ class JobAjaxControllerTest extends UnitTestCase
      * @test
      * @dataProvider failUploadsDataProvide
      */
-    public function validateApplyJobFilesFailsIfNotAllRequiredFilesUploadedOrSomeAreNotAllowed($filesUpload)
+    public function validateApplyJobFilesFailsIfNotAllRequiredFilesUploadedOrSomeAreNotAllowed($filesUpload, $mimeType)
     {
         $settings['applyJob']['fields']['requiredFilesFields'] = 'cv,letter';
         $settings['applyJob']['fields']['allowedFileTypes'] = 'doc,docx';
@@ -145,6 +146,11 @@ class JobAjaxControllerTest extends UnitTestCase
         $_FILES_BACKUP = $_FILES;
 
         $_FILES = $filesUpload;
+
+        $this->subject
+            ->expects($this->atLeastOnce())
+            ->method('getMimeType')
+            ->willReturn($mimeType);
 
         $this->assertFalse($this->subject->_call('validateApplyJobFiles'));
 
@@ -183,15 +189,14 @@ class JobAjaxControllerTest extends UnitTestCase
                         'cv' => '/tmp/php/blabla',
                         'letter' => '/tmp/php/blabla'
                     ]
-                ],
-                'type' => [
-                    'applyJobFiles' => [
-                        'cv' => 'text/plain',
-                        'letter' => 'text/plain'
-                    ]
                 ]
             ]
         ];
+
+        $this->subject
+            ->expects($this->atLeastOnce())
+            ->method('getMimeType')
+            ->willReturn('text/plain');
 
         $this->assertTrue($this->subject->_call('validateApplyJobFiles'));
 
@@ -305,88 +310,79 @@ class JobAjaxControllerTest extends UnitTestCase
     {
         return [
             'notAllRequiredFilesAreUploaded' => [
-                'tx_pxaintelliplanjobs_pi2' => [
-                    'error' => [
-                        'applyJobFiles' => [
-                            'cv' => 4,
-                            'letter' => 0
+                'files' => [
+                    'tx_pxaintelliplanjobs_pi2' => [
+                        'error' => [
+                            'applyJobFiles' => [
+                                'cv' => 4,
+                                'letter' => 0
+                            ]
+                        ],
+                        'name' => [
+                            'applyJobFiles' => [
+                                'cv' => 'cv.doc',
+                                'letter' => 'cv.docx'
+                            ]
+                        ],
+                        'tmp_name' => [
+                            'applyJobFiles' => [
+                                'cv' => '/tmp/php/blabla123321',
+                                'letter' => '/tmp/php/blabla'
+                            ]
                         ]
                     ],
-                    'name' => [
-                        'applyJobFiles' => [
-                            'cv' => 'cv.doc',
-                            'letter' => 'cv.docx'
-                        ]
-                    ],
-                    'tmp_name' => [
-                        'applyJobFiles' => [
-                            'cv' => '/tmp/php/blabla123321',
-                            'letter' => '/tmp/php/blabla'
-                        ]
-                    ],
-                    'type' => [
-                        'applyJobFiles' => [
-                            'cv' => 'text/plain',
-                            'letter' => 'text/plain'
-                        ]
-                    ]
-                ]
+                ],
+                'mimeType' => 'text/plain'
             ],
             'allRequiredUploadedButExtensionNotAllowed' => [
-                'tx_pxaintelliplanjobs_pi2' => [
-                    'error' => [
-                        'applyJobFiles' => [
-                            'cv' => 0,
-                            'letter' => 0
-                        ]
-                    ],
-                    'name' => [
-                        'applyJobFiles' => [
-                            'cv' => 'cv.php', // Forbidden extension
-                            'letter' => 'cv.docx'
-                        ]
-                    ],
-                    'tmp_name' => [
-                        'applyJobFiles' => [
-                            'cv' => '/tmp/php/blabla123321',
-                            'letter' => '/tmp/php/blabla'
-                        ]
-                    ],
-                    'type' => [
-                        'applyJobFiles' => [
-                            'cv' => 'text/plain',
-                            'letter' => 'text/plain'
+                'files' => [
+                    'tx_pxaintelliplanjobs_pi2' => [
+                        'error' => [
+                            'applyJobFiles' => [
+                                'cv' => 0,
+                                'letter' => 0
+                            ]
+                        ],
+                        'name' => [
+                            'applyJobFiles' => [
+                                'cv' => 'cv.php', // Forbidden extension
+                                'letter' => 'cv.docx'
+                            ]
+                        ],
+                        'tmp_name' => [
+                            'applyJobFiles' => [
+                                'cv' => '/tmp/php/blabla123321',
+                                'letter' => '/tmp/php/blabla'
+                            ]
                         ]
                     ]
-                ]
+                ],
+                'mimeType' => 'text/plain'
             ],
             'allRequiredUploadedButMimeTypeIsNotAllowed' => [
-                'tx_pxaintelliplanjobs_pi2' => [
-                    'error' => [
-                        'applyJobFiles' => [
-                            'cv' => 0,
-                            'letter' => 0
-                        ]
-                    ],
-                    'name' => [
-                        'applyJobFiles' => [
-                            'cv' => 'cv.doc',
-                            'letter' => 'cv.docx'
-                        ]
-                    ],
-                    'tmp_name' => [
-                        'applyJobFiles' => [
-                            'cv' => '/tmp/php/blabla123321',
-                            'letter' => '/tmp/php/blabla'
-                        ]
-                    ],
-                    'type' => [
-                        'applyJobFiles' => [
-                            'cv' => 'image/jpeg',
-                            'letter' => 'text/plain'
+                'files' => [
+                    'tx_pxaintelliplanjobs_pi2' => [
+                        'error' => [
+                            'applyJobFiles' => [
+                                'cv' => 0,
+                                'letter' => 0
+                            ]
+                        ],
+                        'name' => [
+                            'applyJobFiles' => [
+                                'cv' => 'cv.doc',
+                                'letter' => 'cv.docx'
+                            ]
+                        ],
+                        'tmp_name' => [
+                            'applyJobFiles' => [
+                                'cv' => '/tmp/php/blabla123321',
+                                'letter' => '/tmp/php/blabla'
+                            ]
                         ]
                     ]
-                ]
+                ],
+                'mimeType' => 'image/jpeg'
             ]
         ];
     }

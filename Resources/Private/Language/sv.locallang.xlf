@@ -175,6 +175,9 @@
 			<trans-unit id="fe.success_sent">
 				<target>E-postmeddelandet har skickatsJobbansökan har skickats</target>
 			</trans-unit>
+			<trans-unit id="fe.success_apply_job">
+				<target>Jobbansökan har skickats</target>
+			</trans-unit>
 			<!--FE LABELS:END-->
 
 			<!--EMAIL LABELS:START-->

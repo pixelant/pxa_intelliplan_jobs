@@ -93,13 +93,9 @@ const PxaIntelliplanJobs = (function () {
 				this.additionalFileLastItem = this.additionalFileTemplate;
 			} else {
 				let additionalFile = this.additionalFileTemplate.clone();
-				let label = additionalFile.data('label').replace(
-					this.settings.additionalFilesCounterPlaceHolder,
-					this.additonalFilesCounter
-				);
 
-				this.setNewFileNameForAdditionalFile(additionalFile);
-				additionalFile.find(this.settings.fileLabelWrapper).text(label);
+				this.resetNewUploadElement(additionalFile);
+				this.setNewAttributeNamesForNewUploadElement(additionalFile);
 
 				this.initFileUploadActions(
 					additionalFile.find(this.settings.fileUploadInput),
@@ -115,19 +111,55 @@ const PxaIntelliplanJobs = (function () {
 		},
 
 		/**
-		 * Set name of input for additional files
+		 * Reset new upload element
+		 *
 		 * @param fileElement
-		 * @return {*}
 		 */
-		setNewFileNameForAdditionalFile: function (fileElement) {
-			let name = fileElement.data('name').replace(
+		resetNewUploadElement: function(fileElement) {
+			// Reset error class
+			fileElement
+				.find('.' + this.settings.errorFieldClass)
+				.removeClass(this.settings.errorFieldClass);
+
+			// Remove errors
+			fileElement
+				.find('.text-danger')
+				.remove();
+			// Reset id
+			fileElement.removeAttr('id');
+		},
+
+		/**
+		 * Set new values for upload element
+		 *
+		 * @param fileElement
+		 */
+		setNewAttributeNamesForNewUploadElement: function(fileElement) {
+			let newLabel = fileElement.data('label').replace(
 				this.settings.additionalFilesCounterPlaceHolder,
 				this.additonalFilesCounter
 			);
-			let inputFile = fileElement.find('input'),
-				newName = 'tx_pxaintelliplanjobs_pi2[applyJobFiles][' + name + ']';
+			let newName = fileElement.data('name').replace(
+				this.settings.additionalFilesCounterPlaceHolder,
+				this.additonalFilesCounter
+			);
+			let newNameInput = 'tx_pxaintelliplanjobs_pi2[applyJobFiles][' + newName + ']';
 
-			inputFile.attr('name', newName);
+			// Set new label
+			fileElement
+				.find(this.settings.fileLabelWrapper)
+				.text(newLabel);
+
+			// Set new data-field value
+			fileElement
+				.find('[data-field]')
+				.addClass('red')
+				.attr('data-field', newName);
+
+			// Set new input name
+			fileElement
+				.find('input')
+				.attr('name', newNameInput);
 		},
 
 		/**
@@ -161,7 +193,6 @@ const PxaIntelliplanJobs = (function () {
 			let that = this,
 				url = form.attr('action'),
 				formData = new FormData(form[0]);
-			console.log(form[0]);
 
 			form.find('[type="submit"]').prop('disabled', true);
 			form.find('.text-danger').remove();

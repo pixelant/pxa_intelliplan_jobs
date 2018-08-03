@@ -41,7 +41,7 @@ class ImportJobsAndDataTaskAdditionalFieldProvider implements AdditionalFieldPro
             ],
             'clearCache' => [
                 'code' => '<input type="text" name="tx_scheduler[pxa_intelliplan_jobs_clear_cache]" value="' . htmlspecialchars($taskInfo['clearCache']) . '" />',
-                'label' => 'LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:importJobsAndDataTask.pid',
+                'label' => 'LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:importJobsAndDataTask.clearCache',
                 'cshKey' => '',
                 'cshLabel' => ''
             ]

@@ -79,19 +79,19 @@
 			<trans-unit id="placeholder.email">
 				<target>E-post</target>
 			</trans-unit>
-			<trans-unit id="placeholder.address">
+			<trans-unit id="placeholder.street_address">
 				<target>Gatuadress</target>
 			</trans-unit>
 			<trans-unit id="placeholder.city">
 				<target>Postort</target>
 			</trans-unit>
-			<trans-unit id="placeholder.postal_code">
+			<trans-unit id="placeholder.zip_code">
 				<target>Postnummber</target>
 			</trans-unit>
 			<trans-unit id="placeholder.mobile_phone">
-				<target>Personnummber - format 800101-0101</target>
+				<target>Personnummer - format 800101-0101</target>
 			</trans-unit>
-			<trans-unit id="placeholder.telephone">
+			<trans-unit id="placeholder.phone_number_home">
 				<target>Telefonnummber</target>
 			</trans-unit>
 			<trans-unit id="fe.add_cv">
@@ -173,7 +173,7 @@
 				<target>Felaktig filtyp, vänligen ladda upp en fil i något av följande format: %s.</target>
 			</trans-unit>
 			<trans-unit id="fe.success_sent">
-				<target>E-postmeddelandet har skickatsJobbansökan har skickats</target>
+				<target>E-postmeddelandet har skickats.</target>
 			</trans-unit>
 			<trans-unit id="fe.success_apply_job">
 				<target>Jobbansökan har skickats</target>

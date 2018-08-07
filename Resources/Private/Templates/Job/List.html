@@ -13,7 +13,7 @@
                 <f:then>
                     <ul class="category-filter__list" id="js__category-filter">
                         <f:for each="{subCategories}" as="category">
-                            <li class="category-filter__list-item" data-value="cat{category.uid}">{category.title}</li>
+                            <li class="category-filter__list-item" data-value="cat{category.uid}" data-filter-set="1">{category.title}</li>
                         </f:for>
                     </ul>
                 </f:then>
@@ -30,7 +30,7 @@
             <div class="container">
                 <ul class="category-filter__list" id="js__city-filter">
                     <f:for each="{cities}" as="city" key="cityKey">
-                        <li class="category-filter__list-item" data-value="city{cityKey}">{city}</li>
+                        <li class="category-filter__list-item" data-value="city{cityKey}" data-filter-set="2">{city}</li>
                     </f:for>
                 </ul>
             </div>

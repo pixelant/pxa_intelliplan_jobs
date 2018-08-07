@@ -103,10 +103,9 @@ class JobAjaxController extends ActionController
             $mail = GeneralUtility::makeInstance(MailMessage::class);
 
             $mail
-                ->setFormat('html')
                 ->setTo($shareJob->getReceiverEmail(), $shareJob->getReceiverName())
                 ->setFrom($shareJob->getSenderEmail(), $shareJob->getSenderName())
-                ->setBody($this->getShareJobMessage($shareJob, $job))
+                ->setBody($this->getShareJobMessage($shareJob, $job), 'text/html')
                 ->setSubject($shareJob->getSubject())
                 ->send();
         }
@@ -330,6 +329,7 @@ class JobAjaxController extends ActionController
         /** @var StandaloneView $standaloneView */
         $standaloneView = $this->objectManager->get(StandaloneView::class);
         $standaloneView->setTemplatePathAndFilename($templatePathAndFilename);
+        $standaloneView->setFormat('html');
 
         $standaloneView
             ->assign('settings', $this->settings)

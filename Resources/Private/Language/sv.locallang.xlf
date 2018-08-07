@@ -86,13 +86,13 @@
 				<target>Postort</target>
 			</trans-unit>
 			<trans-unit id="placeholder.zip_code">
-				<target>Postnummber</target>
+				<target>Postnummer</target>
 			</trans-unit>
 			<trans-unit id="placeholder.mobile_phone">
 				<target>Personnummer - format 800101-0101</target>
 			</trans-unit>
 			<trans-unit id="placeholder.phone_number_home">
-				<target>Telefonnummber</target>
+				<target>Telefonnummer</target>
 			</trans-unit>
 			<trans-unit id="fe.add_cv">
 			    <target>Lägg till CV</target>

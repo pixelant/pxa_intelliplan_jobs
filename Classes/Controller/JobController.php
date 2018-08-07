@@ -17,6 +17,7 @@ namespace Pixelant\PxaIntelliplanJobs\Controller;
 use Pixelant\PxaIntelliplanJobs\Domain\Model\Job;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
+use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
 /**
  * JobController
@@ -96,9 +97,13 @@ class JobController extends ActionController
     protected function getShareUrl(Job $job): string
     {
         $uriBuilder = $this->getControllerContext()->getUriBuilder()->reset();
+        /** @var TypoScriptFrontendController $tsfe */
+        $tsfe = $GLOBALS['TSFE'];
+
+        $targetPage = $this->settings['singleViewPid'] ?: $tsfe->id;
 
         return $uriBuilder
-            ->setTargetPageUid($this->settings['singleViewPid'])
+            ->setTargetPageUid($targetPage)
             ->setCreateAbsoluteUri(true)
             ->uriFor('show', ['job' => $job]);
     }

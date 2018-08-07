@@ -44,7 +44,10 @@ class JobController extends ActionController
 
             /** @var Job $job */
             foreach ($jobs as $job) {
-                $subCategories[] = $job->getCategoryTypo3();
+                $category = $job->getCategoryTypo3();
+                if (!isset($subCategories[$category->getUid()])) {
+                    $subCategories[$category->getUid()] = $category;
+                }
             }
 
             $this->view->assign('subCategories', $subCategories);

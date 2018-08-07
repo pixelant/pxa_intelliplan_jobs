@@ -126,6 +126,7 @@ lib.pxaIntelliplanJobsContentElementsRenderer {
 
 lib.pxaIntelliplanJobsBreadCrumbs = COA
 lib.pxaIntelliplanJobsBreadCrumbs {
+
     10 = HMENU
     10 {
         special = rootline
@@ -137,28 +138,50 @@ lib.pxaIntelliplanJobsBreadCrumbs {
             NO {
                 allWrap = <li class="page-navigation__item">|</li>
                 ATagParams = class="page-navigation__item-link"
-            }
 
-            stdWrap.append = COA
-            stdWrap.append {
-                10 = RECORDS
-                10 {
-                    tables = tx_pxaintelliplanjobs_domain_model_job
-                    source.data = GP:tx_pxaintelliplanjobs_pi1|job
-                    source.intval = 1
-                    conf {
-                        tx_pxaintelliplanjobs_domain_model_job = TEXT
-                        tx_pxaintelliplanjobs_domain_model_job {
-                            field = title
-                            htmlSpecialChars = 1
-                        }
+                stdWrap.append = COA
+                stdWrap.append {
+                    # Save last page UID, assume this is list page of jobs
+                    10 = LOAD_REGISTER
+                    10 {
+                        lastMenuPid.cObject = TEXT
+                        lastMenuPid.cObject.stdWrap.data = field:uid
+                        lastMenuPid.cObject.stdWrap.intval = 1
                     }
-
-                    wrap = <li class="page-navigation__item"><span>|</span></li>
                 }
             }
         }
-
-        wrap = <ul class="page-navigation__list">|</ul>
     }
+
+    20 = COA
+    20 {
+        5 = TEXT
+        5 {
+            typolink {
+                parameter.data = REGISTER:lastMenuPid
+                returnLast = url
+            }
+
+            dataWrap = <li class="page-navigation__item"><a href="|#category={field:categoryUid}" class="page-navigation__item-link">{field:categoryTitle}</a></li>
+            if.isTrue.data = field:categoryTitle
+        }
+
+        10 = RECORDS
+        10 {
+            tables = tx_pxaintelliplanjobs_domain_model_job
+            source.data = GP:tx_pxaintelliplanjobs_pi1|job
+            source.intval = 1
+            conf {
+                tx_pxaintelliplanjobs_domain_model_job = TEXT
+                tx_pxaintelliplanjobs_domain_model_job {
+                    field = title
+                    htmlSpecialChars = 1
+                }
+            }
+
+            wrap = <li class="page-navigation__item"><span>|</span></li>
+        }
+    }
+
+    wrap = <ul class="page-navigation__list">|</ul>
 }

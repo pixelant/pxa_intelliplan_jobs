@@ -107,6 +107,10 @@
             <div class="row">
                 <div class="col-md-8 center-block">
                     <div class="panel-box">
+                        <div class="form-header text-center">
+                            <h2><f:translate key="fe.application" /></h2>
+                        </div>
+
                         <f:form enctype="multipart/form-data" name="apply-job" action="applyJob" controller="JobAjax" pluginName="Pi2" pageType="{settings.sharePageType}">
                             <f:form.hidden name="job" value="{job}" />
                             <f:form.hidden name="requireCV" value="1" />

@@ -311,8 +311,8 @@ class JobAjaxController extends ActionController
 
         $extension = pathinfo($fileName, PATHINFO_EXTENSION);
 
-        return GeneralUtility::inList($allowedFileTypes, $extension)
-            && GeneralUtility::inList($allowedMimeTypes, $mimeType);
+        return ($allowedFileTypes === '*' || GeneralUtility::inList($allowedFileTypes, $extension))
+            && ($allowedMimeTypes === '*' || GeneralUtility::inList($allowedMimeTypes, $mimeType));
     }
 
     /**
@@ -464,7 +464,7 @@ class JobAjaxController extends ActionController
                 continue;
             }
             $text .= sprintf(
-                '%d. %s: "%s"' . "\n" . '%s: "%s"' . "\n\n",
+                '%d. %s: "%s"' . "\r\n" . '%s: "%s"' . "\r\n\r\n",
                 $i,
                 $this->translate('fe.question'),
                 $this->translate('fe.checkbox_' . $radio),

@@ -88,6 +88,7 @@ plugin.tx_pxaintelliplanjobs {
 page {
     includeJSFooter {
         pxa_intelliplan_jobs = EXT:pxa_intelliplan_jobs/Resources/Public/Js/pxa_intelliplan_jobs.js
+        pxa_jobs_filtering = EXT:pxa_intelliplan_jobs/Resources/Public/Js/pxa_jobs_filtering.js
     }
 }
 

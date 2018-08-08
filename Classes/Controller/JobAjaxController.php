@@ -311,8 +311,8 @@ class JobAjaxController extends ActionController
 
         $extension = pathinfo($fileName, PATHINFO_EXTENSION);
 
-        return GeneralUtility::inList($allowedFileTypes, $extension)
-            && GeneralUtility::inList($allowedMimeTypes, $mimeType);
+        return ($allowedFileTypes === '*' || GeneralUtility::inList($allowedFileTypes, $extension))
+            && ($allowedMimeTypes === '*' || GeneralUtility::inList($allowedMimeTypes, $mimeType));
     }
 
     /**

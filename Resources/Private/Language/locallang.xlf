@@ -169,6 +169,9 @@
 			<trans-unit id="fe.additional_file">
 			    <source>Additional document</source>
 			</trans-unit>
+			<trans-unit id="fe.application">
+			    <source>Application</source>
+			</trans-unit>
 			<!--FE LABELS:END-->
 
 			<!--EMAIL LABELS:START-->

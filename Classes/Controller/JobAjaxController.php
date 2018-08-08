@@ -464,7 +464,7 @@ class JobAjaxController extends ActionController
                 continue;
             }
             $text .= sprintf(
-                '%d. %s: "%s"' . "\n" . '%s: "%s"' . "\n\n",
+                '%d. %s: "%s"' . "\r\n" . '%s: "%s"' . "\r\n\r\n",
                 $i,
                 $this->translate('fe.question'),
                 $this->translate('fe.checkbox_' . $radio),

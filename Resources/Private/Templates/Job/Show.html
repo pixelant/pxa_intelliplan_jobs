@@ -15,12 +15,14 @@
             <span>{job.municipality}</span>
         </div>
         <h1>{job.title}</h1>
-        <f:if condition="{job.pubDateTo}">
-            <p><f:translate key="fe.apply_before" /> <f:format.date date="{job.pubDateTo}" format="{settings.dateFormatHeader}"/></p>
-        </f:if>
-        <div class="text-center text-uppercase">
-            <a href="javascript:{}" data-job-scroll="1" data-scroll-fix="-40|-180" data-scroll-to="#pxa-apply-job" class="btn btn-default"><f:translate key="fe.sumit_2" /></a>
-        </div>
+        <f:comment>
+            <f:if condition="{job.pubDateTo}">
+                <p><f:translate key="fe.apply_before" /> <f:format.date date="{job.pubDateTo}" format="{settings.dateFormatHeader}"/></p>
+            </f:if>
+            <div class="text-center text-uppercase">
+                <a href="javascript:{}" data-job-scroll="1" data-scroll-fix="-40|-180" data-scroll-to="#pxa-apply-job" class="btn btn-default"><f:translate key="fe.sumit_2" /></a>
+            </div>
+        </f:comment>
     </div>
 
     <div class="container">

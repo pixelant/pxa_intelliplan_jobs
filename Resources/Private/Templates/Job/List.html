@@ -9,6 +9,9 @@
 
     <div class="category-filter js__category-filter">
         <div class="container">
+            <h2>
+                <f:translate key="fe.professional_area" />
+            </h2>
             <f:if condition="{subCategories -> f:count()} > 0">
                 <f:then>
                     <ul class="category-filter__list" id="js__category-filter">
@@ -28,6 +31,9 @@
     <f:if condition="{cities -> f:count()} > 0">
         <div class="category-filter _sub-filter js__category-filter">
             <div class="container">
+                <h2>
+                    <f:translate key="fe.place" />
+                </h2>
                 <ul class="category-filter__list" id="js__city-filter">
                     <f:for each="{cities}" as="city" key="cityKey">
                         <li class="category-filter__list-item" data-value="city{cityKey}" data-filter-set="2">{city}</li>

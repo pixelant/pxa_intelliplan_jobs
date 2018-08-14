@@ -185,6 +185,13 @@
 				<source>Job tip from %s: "%s"</source>
 			</trans-unit>
 			<!--EMAIL LABELS:END-->
+
+			<trans-unit id="fe.professional_area">
+				<source>Professional area</source>
+			</trans-unit>
+			<trans-unit id="fe.place">
+				<source>City</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

@@ -10,17 +10,19 @@
                 <img src="{job.companyLogoUrl}" alt="{job.company}" title="{job.company}">
             </f:if>
         </div>
-        <div class="page-header__categories">
+        <h2 class="page-header__categories">
             <span>{job.company}</span>
             <span>{job.municipality}</span>
-        </div>
+        </h2>
         <h1>{job.title}</h1>
-        <f:if condition="{job.pubDateTo}">
-            <p><f:translate key="fe.apply_before" /> <f:format.date date="{job.pubDateTo}" format="{settings.dateFormatHeader}"/></p>
-        </f:if>
-        <div class="text-center text-uppercase">
-            <a href="javascript:{}" data-job-scroll="1" data-scroll-fix="-40|-180" data-scroll-to="#pxa-apply-job" class="btn btn-default"><f:translate key="fe.sumit_2" /></a>
-        </div>
+        <f:comment>
+            <f:if condition="{job.pubDateTo}">
+                <p><f:translate key="fe.apply_before" /> <f:format.date date="{job.pubDateTo}" format="{settings.dateFormatHeader}"/></p>
+            </f:if>
+            <div class="text-center text-uppercase">
+                <a href="javascript:{}" data-job-scroll="1" data-scroll-fix="-40|-180" data-scroll-to="#pxa-apply-job" class="btn btn-default"><f:translate key="fe.sumit_2" /></a>
+            </div>
+        </f:comment>
     </div>
 
     <div class="container">
@@ -256,7 +258,7 @@
                     <span><f:translate key="fe.add_documents" /></span>
                 </a>
             </div>
-            <div class="col-sm-5 col-sm-offset-1">
+            <div class="col-sm-6">
                 <p><f:translate key="fe.add_documents_tip" /></p>
             </div>
         </div>

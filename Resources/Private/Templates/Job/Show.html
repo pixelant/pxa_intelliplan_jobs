@@ -283,20 +283,23 @@
 
 <f:section name="applyJobFields">
     <div class="row">
-        <div class="col-sm-6">
-            <f:for each="{settings.applyJob.fields.firstColumns -> pxa:explode()}" as="field">
-                <div class="form-item" data-field="{field}">
-                    <f:form.textfield class="form-control" placeholder="{f:translate(key: 'placeholder.{field}')}" name="applyJob[{field}]"/>
+        <f:for each="{settings.applyJob.fields.formFields -> pxa:explode()}" as="field" iteration="i">
+            <f:cycle values="{0: '0', 1: '1'}" as="cycle">
+                <div class="col-sm-6">
+                    <div class="form-item" data-field="{field}">
+                        <f:form.textfield
+                                class="form-control"
+                                placeholder="{f:translate(key: 'placeholder.{field}')}"
+                                name="applyJob[{field}]" />
+                    </div>
                 </div>
-            </f:for>
-        </div>
-        <div class="col-sm-6">
-            <f:for each="{settings.applyJob.fields.secondColumn -> pxa:explode()}" as="field">
-                <div class="form-item" data-field="{field}">
-                    <f:form.textfield class="form-control" placeholder="{f:translate(key: 'placeholder.{field}')}" name="applyJob[{field}]"/>
-                </div>
-            </f:for>
-        </div>
+                <f:if condition="{cycle}">
+                    <f:if condition="{i.isLast}">
+                        <f:else><f:render section="closeOpenRow" /></f:else>
+                    </f:if>
+                </f:if>
+            </f:cycle>
+        </f:for>
     </div>
 </f:section>
 
@@ -307,4 +310,6 @@
         </div>
     </div>
 </f:section>
+
+<f:section name="closeOpenRow"></div><div class="row"></f:section>
 </html>

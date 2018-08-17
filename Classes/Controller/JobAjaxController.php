@@ -162,6 +162,7 @@ class JobAjaxController extends ActionController
                 $applyJob = GeneralUtility::makeInstance(ApplyApplication::class);
                 $applyJob->setAccountTicket($response['account_ticket']);
                 $applyJob->setEmail($fields['email']);
+                $applyJob->setPid($job->getPid());
 
                 $job->addApplyApplication($applyJob);
 

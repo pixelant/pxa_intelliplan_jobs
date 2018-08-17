@@ -23,7 +23,7 @@
 			    <source>Tell a friend</source>
 			</trans-unit>
 			<trans-unit id="fe.friend_name">
-			    <source>Your friends name</source>
+			    <source>Your friend's name</source>
 			</trans-unit>
 			<trans-unit id="fe.friend_email">
 			    <source>Your friend's email</source>
@@ -187,10 +187,10 @@
 			<!--EMAIL LABELS:END-->
 
 			<trans-unit id="fe.professional_area">
-				<source>Professional area</source>
+				<source>What are you looking for for a job?</source>
 			</trans-unit>
 			<trans-unit id="fe.place">
-				<source>City</source>
+				<source>Where do you want to work?</source>
 			</trans-unit>
 		</body>
 	</file>

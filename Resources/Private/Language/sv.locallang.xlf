@@ -196,10 +196,10 @@
 			<!--EMAIL LABELS:END-->
 
 			<trans-unit id="fe.professional_area">
-				<target>Yrkesområde</target>
+				<target>Vad söker du för jobb?</target>
 			</trans-unit>
 			<trans-unit id="fe.place">
-				<target>Ort</target>
+				<target>Var vill du jobba?</target>
 			</trans-unit>
 		</body>
 	</file>

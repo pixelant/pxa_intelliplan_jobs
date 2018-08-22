@@ -27,75 +27,77 @@
         </f:comment>
     </div>
 
-    <div class="container">
-        <div class="row">
-            <div class="col-md-9">
-                <f:if condition="{job.topImages}">
-                    <f:render section="additonalImages" arguments="{job: job, images: job.topImages}" />
-                </f:if>
-                <f:format.html>{job.description}</f:format.html>
-                <f:if condition="{job.bottomImages}">
-                    <f:render section="additonalImages" arguments="{job: job, images: job.bottomImages}" />
-                </f:if>
-            </div>
-            <div class="col-md-3">
-                <div class="light-gray-background">
-                    <div class="side-content">
-                        <h3><f:translate key="fe.quick_facts" /></h3>
-                        <p><strong><f:translate key="fe.job" /></strong> <br>{job.service}</p>
-                        <f:if condition="{job.state}">
-                            <p><strong><f:translate key="fe.region" /></strong> <br>{job.state}</p>
-                        </f:if>
-                        <f:if condition="{job.municipality}">
-                            <p><strong><f:translate key="fe.city" /></strong> <br>{job.municipality}</p>
-                        </f:if>
-                        <f:if condition="{job.employmentExtent}">
-                            <p><strong><f:translate key="fe.extent" /></strong> <br>{job.employmentExtent}</p>
-                        </f:if>
-                        <f:if condition="{job.employmentType}">
-                            <p><strong><f:translate key="fe.duration" /></strong> <br>{job.employmentType}</p>
-                        </f:if>
-                        <f:if condition="{job.start}">
-                            <p><strong><f:translate key="fe.start" /></strong> <br>{job.start}</p>
-                        </f:if>
-                        <f:if condition="{job.pubDateTo}">
-                            <p><strong><f:translate key="fe.apply_before" /></strong> <br><f:format.date date="{job.pubDateTo}" format="{settings.dateFormat}"/></p>
-                        </f:if>
-                    </div>
+    <div class="light-gray-background">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-9">
+                    <f:if condition="{job.topImages}">
+                        <f:render section="additonalImages" arguments="{job: job, images: job.topImages}" />
+                    </f:if>
+                    <f:format.html>{job.description}</f:format.html>
+                    <f:if condition="{job.bottomImages}">
+                        <f:render section="additonalImages" arguments="{job: job, images: job.bottomImages}" />
+                    </f:if>
                 </div>
-
-                <f:if condition="{job.contentElementsUids}">
-                    <f:cObject typoscriptObjectPath="lib.pxaIntelliplanJobsContentElementsRenderer" data="{uids: job.contentElementsUids}" />
-                </f:if>
-
-                <f:if condition="{settings.showShareForm}">
+                <div class="col-md-3">
                     <div class="light-gray-background">
-                        <div class="side-form">
-                            <h3><f:translate key="fe.tell_friend" /></h3>
-
-                            <f:form controller="JobAjax" action="share" pluginName="Pi2" pageType="{settings.sharePageType}" objectName="shareJob" class="pxa-tell-friend">
-                                <div class="form-group" data-field="receiverName">
-                                    <f:form.textfield class="form-control" placeholder="{f:translate(key: 'fe.friend_name')}" property="receiverName"/>
-                                </div>
-                                <div class="form-group" data-field="receiverEmail">
-                                    <f:form.textfield class="form-control" placeholder="{f:translate(key: 'fe.friend_email')}" property="receiverEmail"/>
-                                </div>
-                                <div class="form-group" data-field="senderName">
-                                    <f:form.textfield class="form-control" placeholder="{f:translate(key: 'fe.your_name')}" property="senderName"/>
-                                </div>
-
-                                <button type="submit" class="btn btn-default text-uppercase"><f:translate key="fe.submit" /></button>
-
-                                <f:form.hidden property="shareUrl" value="{shareUrl}" />
-                                <f:form.hidden name="job" value="{job}" />
-                            </f:form>
-                            <!-- '_ready' -->
-                            <div class="ajax-loader _ready">
-                                <f:render partial="AjaxLoader" />
-                            </div>
+                        <div class="side-content">
+                            <h3><f:translate key="fe.quick_facts" /></h3>
+                            <p><strong><f:translate key="fe.job" /></strong> <br>{job.service}</p>
+                            <f:if condition="{job.state}">
+                                <p><strong><f:translate key="fe.region" /></strong> <br>{job.state}</p>
+                            </f:if>
+                            <f:if condition="{job.municipality}">
+                                <p><strong><f:translate key="fe.city" /></strong> <br>{job.municipality}</p>
+                            </f:if>
+                            <f:if condition="{job.employmentExtent}">
+                                <p><strong><f:translate key="fe.extent" /></strong> <br>{job.employmentExtent}</p>
+                            </f:if>
+                            <f:if condition="{job.employmentType}">
+                                <p><strong><f:translate key="fe.duration" /></strong> <br>{job.employmentType}</p>
+                            </f:if>
+                            <f:if condition="{job.start}">
+                                <p><strong><f:translate key="fe.start" /></strong> <br>{job.start}</p>
+                            </f:if>
+                            <f:if condition="{job.pubDateTo}">
+                                <p><strong><f:translate key="fe.apply_before" /></strong> <br><f:format.date date="{job.pubDateTo}" format="{settings.dateFormat}"/></p>
+                            </f:if>
                         </div>
                     </div>
-                </f:if>
+                
+                    <f:if condition="{job.contentElementsUids}">
+                        <f:cObject typoscriptObjectPath="lib.pxaIntelliplanJobsContentElementsRenderer" data="{uids: job.contentElementsUids}" />
+                    </f:if>
+                
+                    <f:if condition="{settings.showShareForm}">
+                        <div class="light-gray-background">
+                            <div class="side-form">
+                                <h3><f:translate key="fe.tell_friend" /></h3>
+                            
+                                <f:form controller="JobAjax" action="share" pluginName="Pi2" pageType="{settings.sharePageType}" objectName="shareJob" class="pxa-tell-friend">
+                                    <div class="form-group" data-field="receiverName">
+                                        <f:form.textfield class="form-control" placeholder="{f:translate(key: 'fe.friend_name')}" property="receiverName"/>
+                                    </div>
+                                    <div class="form-group" data-field="receiverEmail">
+                                        <f:form.textfield class="form-control" placeholder="{f:translate(key: 'fe.friend_email')}" property="receiverEmail"/>
+                                    </div>
+                                    <div class="form-group" data-field="senderName">
+                                        <f:form.textfield class="form-control" placeholder="{f:translate(key: 'fe.your_name')}" property="senderName"/>
+                                    </div>
+                                
+                                    <button type="submit" class="btn btn-default text-uppercase"><f:translate key="fe.submit" /></button>
+                                
+                                    <f:form.hidden property="shareUrl" value="{shareUrl}" />
+                                    <f:form.hidden name="job" value="{job}" />
+                                </f:form>
+                                <!-- '_ready' -->
+                                <div class="ajax-loader _ready">
+                                    <f:render partial="AjaxLoader" />
+                                </div>
+                            </div>
+                        </div>
+                    </f:if>
+                </div>
             </div>
         </div>
     </div>

@@ -55,7 +55,7 @@
             <div class="filter-container">
                 <div class="container" id="js__filter-container">
                     <f:for each="{jobs}" as="job">
-                        <f:link.action pageUid="{settings.singleViewPid}" arguments="{job: job}" class="filtering-item" data-categories="{job.filteringIdentifiers}">
+                        <f:link.action pageUid="{settings.singleViewPid}" arguments="{job: job}" additionalAttributes="{data-categories: job.filteringIdentifiers}" class="filtering-item">
                             <div class="filtering-item__logo">
                                 <f:if condition="{job.companyLogoUrl}">
                                     <img class="filtering-item__logo-image" src="{job.companyLogoUrl}" alt="{job.company}" title="{job.company}">

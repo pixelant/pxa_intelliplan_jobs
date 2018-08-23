@@ -8,45 +8,45 @@
     <f:flashMessages />
 
     <div class="background-wrapper">
-
-        <div class="container">
-            <div class="text-center">
-                <h2><f:translate key="fe.professional_area" /></h2>
-            </div>
-        </div>
-
-        <div class="category-filter js__category-filter">
+        <div class="white-overlay">
             <div class="container">
-                <f:if condition="{subCategories -> f:count()} > 0">
-                    <f:then>
-                        <ul class="category-filter__list" id="js__category-filter">
-                            <f:for each="{subCategories}" as="category">
-                                <li class="category-filter__list-item" data-value="cat{category.uid}" data-filter-set="1">{category.title}</li>
-                            </f:for>
-                        </ul>
-                    </f:then>
-                    <f:else>
-                        <p class="bg-danger"><f:translate key="fe.no_categories_found" /></p>
-                    </f:else>
-                </f:if>
-            </div>
-        </div>
-
-        <f:if condition="{cities -> f:count()} > 0">
-            <div class="category-filter _sub-filter js__category-filter">
-                <div class="container">
-                    <div class="text-center">
-                        <h2><f:translate key="fe.place" /></h2>
-                    </div>
-                    <ul class="category-filter__list" id="js__city-filter">
-                        <f:for each="{cities}" as="city" key="cityKey">
-                            <li class="category-filter__list-item" data-value="city{cityKey}" data-filter-set="2">{city}</li>
-                        </f:for>
-                    </ul>
+                <div class="text-center">
+                    <h2><f:translate key="fe.professional_area" /></h2>
                 </div>
             </div>
-        </f:if>
 
+            <div class="category-filter js__category-filter">
+                <div class="container">
+                    <f:if condition="{subCategories -> f:count()} > 0">
+                        <f:then>
+                            <ul class="category-filter__list" id="js__category-filter">
+                                <f:for each="{subCategories}" as="category">
+                                    <li class="category-filter__list-item" data-value="cat{category.uid}" data-filter-set="1">{category.title}</li>
+                                </f:for>
+                            </ul>
+                        </f:then>
+                        <f:else>
+                            <p class="bg-danger"><f:translate key="fe.no_categories_found" /></p>
+                        </f:else>
+                    </f:if>
+                </div>
+            </div>
+
+            <f:if condition="{cities -> f:count()} > 0">
+                <div class="category-filter _sub-filter js__category-filter">
+                    <div class="container">
+                        <div class="text-center">
+                            <h2><f:translate key="fe.place" /></h2>
+                        </div>
+                        <ul class="category-filter__list" id="js__city-filter">
+                            <f:for each="{cities}" as="city" key="cityKey">
+                                <li class="category-filter__list-item" data-value="city{cityKey}" data-filter-set="2">{city}</li>
+                            </f:for>
+                        </ul>
+                    </div>
+                </div>
+            </f:if>
+        </div>
     </div>
 
     <f:if condition="{jobs -> f:count()}">

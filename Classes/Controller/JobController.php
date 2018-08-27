@@ -50,12 +50,12 @@ class JobController extends ActionController
                 }
             }
 
-            $this->view->assign('subCategories', $subCategories);
+            $this->view->assign('subCategories', $this->sortArrayAlphabetically($subCategories));
         }
 
         $this->view
             ->assign('jobs', $jobs)
-            ->assign('cities', $this->collectJobCities($jobs));
+            ->assign('cities', $this->sortArrayAlphabetically($this->collectJobCities($jobs)));
     }
 
     /**
@@ -109,6 +109,36 @@ class JobController extends ActionController
             ->setTargetPageUid($targetPage)
             ->setCreateAbsoluteUri(true)
             ->uriFor('show', ['job' => $job]);
+    }
+
+    /**
+     * Sort array in alphabetical order
+     *
+     * @param array $array
+     * @return array
+     */
+    protected function sortArrayAlphabetically(array $array): array
+    {
+        $replacements = [
+            'ä' => 'a',
+            'å' => 'a',
+            'ö' => 'o',
+            'Å' => 'a',
+            'Ä' => 'a',
+            'Ö' => 'o',
+            'ø' => 'o',
+            'Ø' => 'o'
+        ];
+        $search = array_keys($replacements);
+
+        $arrayNoSpecialChars = [];
+        foreach ($array as $key => $item) {
+            $arrayNoSpecialChars[$key] = str_replace($search, $replacements, $item);
+        }
+
+        asort($arrayNoSpecialChars);
+
+        return array_replace($arrayNoSpecialChars, $array);
     }
 
     /**

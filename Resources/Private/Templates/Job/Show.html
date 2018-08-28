@@ -45,8 +45,8 @@
                             <div class="side-content">
                                 <h3><f:translate key="fe.quick_facts" /></h3>
                                 <p><strong><f:translate key="fe.job" /></strong> <br>{job.service}</p>
-                                <f:if condition="{job.state}">
-                                    <p><strong><f:translate key="fe.region" /></strong> <br>{job.state}</p>
+                                <f:if condition="{job.serviceCategory}">
+                                    <p><strong><f:translate key="fe.region" /></strong> <br>{job.serviceCategory}</p>
                                 </f:if>
                                 <f:if condition="{job.municipality}">
                                     <p><strong><f:translate key="fe.city" /></strong> <br>{job.municipality}</p>

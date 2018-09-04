@@ -95,10 +95,10 @@
 				<target>Telefonnummer</target>
 			</trans-unit>
 			<trans-unit id="fe.add_cv">
-			    <target>Lägg till CV</target>
+			    <target>Ladda upp CV</target>
 			</trans-unit>]
 			<trans-unit id="fe.add_letter">
-			    <target>Lägg till personligt brev</target>
+			    <target>Ladda upp personligt brev</target>
 			</trans-unit>
 			<trans-unit id="fe.attach_document">
 			    <target>Bifoga dokument</target>

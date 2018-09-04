@@ -126,8 +126,16 @@
                             <div class="panel-box__body">
                                 <f:render section="applyJobFields" />
 
-                                <f:render section="uploadFile" arguments="{label: 'add_cv', name: 'cv'}"/>
-                                <f:render section="uploadFile" arguments="{label: 'add_letter', name: 'letter'}"/>
+                                <div class="form-additions">
+                                    <div class="row">
+                                        <div class="col-sm-6 _actions">
+                                            <f:render section="uploadFile" arguments="{label: 'add_cv', name: 'cv'}"/>
+                                        </div>
+                                        <div class="col-sm-6 _actions">
+                                            <f:render section="uploadFile" arguments="{label: 'add_letter', name: 'letter'}"/>
+                                        </div>
+                                    </div>
+                                </div>
 
                                 <div id="pxa-additional-file-template" class="hidden" data-label="{f:translate(key:'fe.additional_file')} ###COUNTER###" data-name="file_###COUNTER###">
                                     <f:render section="uploadFile" arguments="{label: 'additional_file', name: 'file_0'}"/>
@@ -228,30 +236,48 @@
 </f:section>
 
 <f:section name="uploadFile">
-    <div class="form-additions">
-        <div class="row">
-            <div class="col-sm-6">
-                <p class="additions-label">
-                    <strong data-file-label="1"><f:translate key="fe.{label}"/></strong>
-                </p>
-                <span data-field="{name}"></span>
-            </div>
-            <div class="col-sm-6 _actions">
-                <div class="file-uploader">
-                    <label class="btn btn-upload">
-                        <f:form.upload class="js__file-upload" name="applyJobFiles[{name}]"/>
-                        <span>
-                            <span class="action-name">
-                                <f:translate key="fe.attach_document" />
+    <div class="file-uploader">
+        <label class="btn btn-upload">
+            <f:form.upload class="js__file-upload" name="applyJobFiles[{name}]"/>
+            <span>
+                <span class="action-name">
+                    <f:translate key="fe.{label}"/>
+                    <f:comment>
+                        <f:translate key="fe.attach_document" />
+                    </f:comment>
+                </span>
+                <span class="file-uploader__name"></span>
+            </span>
+        </label>
+        <i class="icons icon-clear file-uploader__clear js__file-upload__clear"></i>
+    </div>
+
+    <f:comment>
+        <div class="form-additions">
+            <div class="row">
+                <div class="col-sm-6">
+                    <p class="additions-label">
+                        <strong data-file-label="1"><f:translate key="fe.{label}"/></strong>
+                    </p>
+                    <span data-field="{name}"></span>
+                </div>
+                <div class="col-sm-6 _actions">
+                    <div class="file-uploader">
+                        <label class="btn btn-upload">
+                            <f:form.upload class="js__file-upload" name="applyJobFiles[{name}]"/>
+                            <span>
+                                <span class="action-name">
+                                    <f:translate key="fe.attach_document" />
+                                </span>
+                                <span class="file-uploader__name"></span>
                             </span>
-                            <span class="file-uploader__name"></span>
-                        </span>
-                    </label>
-                    <i class="icons icon-clear file-uploader__clear js__file-upload__clear"></i>
+                        </label>
+                        <i class="icons icon-clear file-uploader__clear js__file-upload__clear"></i>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </f:comment>
 </f:section>
 
 <f:section name="addAdditionalFile">

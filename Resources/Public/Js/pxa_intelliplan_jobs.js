@@ -19,7 +19,6 @@ const PxaIntelliplanJobs = (function () {
 	PxaIntelliplanJobs.prototype = {
 		/**
 		 * Init
-		 * @returns {boolean}
 		 */
 		init: function () {
 			let that = this;

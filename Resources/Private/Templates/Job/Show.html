@@ -126,11 +126,15 @@
                             <div class="panel-box__body">
                                 <f:render section="applyJobFields" />
 
-                                    <f:render section="uploadFile" arguments="{label: 'add_cv', name: 'cv'}"/>
-                                    <f:render section="uploadFile" arguments="{label: 'add_letter', name: 'letter'}"/>
+                                <div class="form-additions">
+                                    <div class="row">
+                                        <f:render section="uploadFile" arguments="{name: 'cv'}"/>
+                                        <f:render section="uploadFile" arguments="{name: 'letter'}"/>
+                                    </div>
+                                </div>
 
                                 <div id="pxa-additional-file-template" class="hidden" data-label="{f:translate(key:'fe.additional_file')} ###COUNTER###" data-name="file_###COUNTER###">
-                                    <f:render section="uploadFile" arguments="{label: 'additional_file', name: 'file_0'}"/>
+                                    <f:render section="additionalFileUploadFileTemplate" arguments="{label: 'additional_file', name: 'file_0'}"/>
                                 </div>
 
                                 <f:render section="addAdditionalFile" />
@@ -228,6 +232,24 @@
 </f:section>
 
 <f:section name="uploadFile">
+    <div class="col-sm-6 _actions">
+        <div class="file-uploader">
+            <span data-field="{name}"></span>
+            <label class="btn btn-upload">
+                <f:form.upload class="js__file-upload" name="applyJobFiles[{name}]"/>
+                <span>
+                    <span class="action-name">
+                        <f:translate key="fe.attach_document" />
+                    </span>
+                    <span class="file-uploader__name"></span>
+                </span>
+            </label>
+            <i class="icons icon-clear file-uploader__clear js__file-upload__clear"></i>
+        </div>
+    </div>
+</f:section>
+
+<f:section name="additionalFileUploadFileTemplate">
     <div class="form-additions">
         <div class="row">
             <div class="col-sm-6">

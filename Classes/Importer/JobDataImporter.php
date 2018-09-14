@@ -69,6 +69,13 @@ class JobDataImporter extends AbstractImporter
     ];
 
     /**
+     * Keep new uids of data handler 'NEW...'
+     *
+     * @var array
+     */
+    protected $newJobsNewIds = [];
+
+    /**
      * Import jobs data
      *
      * @param array $importData
@@ -77,6 +84,7 @@ class JobDataImporter extends AbstractImporter
     public function import(array $importData, int $pid)
     {
         $jobDataToTypo3 = [];
+        $activeJobsUids = [];
         foreach ($importData as $jobData) {
             /** @var Job $job */
             if ($job = $this->jobRepository->findById((int)$jobData['id'])) {
@@ -126,11 +134,14 @@ class JobDataImporter extends AbstractImporter
                 if (!empty($updateJobData)) {
                     $jobDataToTypo3[$job->getUid()] = $updateJobData;
                 }
+                $activeJobsUids[] = $job->getUid();
             } else {
                 $newId = StringUtility::getUniqueId('NEW');
+                $activeJobsUids[] = $newId;
                 $jobDataToTypo3[$newId] = [
                     'pid' => $pid
                 ];
+                $this->newJobsNewIds[] = $newId;
 
                 foreach ($this->importFields as $importField) {
                     $this->setImportFieldValue($importField, $jobData, $jobDataToTypo3[$newId]);
@@ -147,8 +158,42 @@ class JobDataImporter extends AbstractImporter
             $dataHandler->start($jobDataToTypo3, []);
             $dataHandler->process_datamap();
 
+            // Replace temp new uid with real uids
+            foreach ($activeJobsUids as &$activeJobsUid) {
+                if (is_string($activeJobsUid) && StringUtility::beginsWith($activeJobsUid, 'NEW')) {
+                    if (isset($dataHandler->substNEWwithIDs[$activeJobsUid])) {
+                        $activeJobsUid = $dataHandler->substNEWwithIDs[$activeJobsUid];
+                    } else {
+                        $activeJobsUid = 0;
+                    }
+                }
+            }
+
             $this->requireClearCache = true;
         }
+
+        $this->hideNoActiveJobAds($activeJobsUids);
+    }
+
+    /**
+     * Hide all job ads that wasn't in feed, means - disabled
+     *
+     */
+    protected function hideNoActiveJobAds(array $activeUids)
+    {
+        if (empty($activeUids)) {
+            $activeUids = [0];
+        } else {
+            $activeUids = array_map('intval', $activeUids);
+        }
+
+        $hiddenField = $GLOBALS['TCA']['tx_pxaintelliplanjobs_domain_model_job']['ctrl']['enablecolumns']['disabled'];
+
+        $GLOBALS['TYPO3_DB']->exec_UPDATEquery(
+            'tx_pxaintelliplanjobs_domain_model_job',
+            'uid NOT IN (' . implode(',', $activeUids) . ')',
+            [$hiddenField => 1]
+        );
     }
 
     /**

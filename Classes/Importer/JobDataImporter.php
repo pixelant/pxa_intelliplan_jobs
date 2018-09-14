@@ -134,7 +134,6 @@ class JobDataImporter extends AbstractImporter
                 $jobDataToTypo3[$newId] = [
                     'pid' => $pid
                 ];
-                $this->newJobsNewIds[] = $newId;
 
                 foreach ($this->importFields as $importField) {
                     $this->setImportFieldValue($importField, $jobData, $jobDataToTypo3[$newId]);

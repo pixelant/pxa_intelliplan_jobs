@@ -69,13 +69,6 @@ class JobDataImporter extends AbstractImporter
     ];
 
     /**
-     * Keep new uids of data handler 'NEW...'
-     *
-     * @var array
-     */
-    protected $newJobsNewIds = [];
-
-    /**
      * Import jobs data
      *
      * @param array $importData

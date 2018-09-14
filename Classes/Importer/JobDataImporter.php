@@ -170,6 +170,7 @@ class JobDataImporter extends AbstractImporter
     /**
      * Hide all job ads that wasn't in feed, means - disabled
      *
+     * @param array $activeUids
      */
     protected function hideNoActiveJobAds(array $activeUids)
     {

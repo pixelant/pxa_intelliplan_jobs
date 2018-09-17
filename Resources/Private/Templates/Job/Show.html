@@ -313,16 +313,13 @@
         <f:for each="{settings.applyJob.fields.formFields -> pxa:explode()}" as="field" iteration="i">
             <f:cycle values="{0: '0', 1: '1'}" as="cycle">
                 <div class="col-sm-6">
-                    <div class="form-item row" data-field="{field}">
-                        <label class="col-sm-3">
+                    <div class="form-item" data-field="{field}">
+                        <label>
                             <f:translate key="placeholder.{field}"></f:translate>
                         </label>
-                        <div class="col-sm-9">
-                            <f:form.textfield
-                                    class="form-control"
-                                    placeholder="{f:translate(key: 'placeholder.{field}')}"
-                                    name="applyJob[{field}]" />
-                        </div>
+                        <f:form.textfield
+                                class="form-control"
+                                name="applyJob[{field}]" />
                     </div>
                 </div>
                 <f:if condition="{cycle}">

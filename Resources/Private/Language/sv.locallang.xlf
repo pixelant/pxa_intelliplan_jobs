@@ -11,7 +11,7 @@
 			    <target>Inga jobbbjudanden hittades</target>
 			</trans-unit>
 			<trans-unit id="fe.apply_before">
-			    <target>SISTA ANSÖKNINGSDAG</target>
+			    <target>Sista ansökningsdag</target>
 			</trans-unit>
 			<trans-unit id="fe.new">
 			    <target>NY</target>

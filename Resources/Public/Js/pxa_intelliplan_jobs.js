@@ -50,7 +50,7 @@ const PxaIntelliplanJobs = (function () {
 					}
 				});
 
-				/*this.formApplyJob.on('submit', function (e) {
+				this.formApplyJob.on('submit', function (e) {
 					e.preventDefault();
 					let $form = $(this);
 
@@ -59,7 +59,7 @@ const PxaIntelliplanJobs = (function () {
 							$form.replaceWith(that.getMessage(data.successMessage, true));
 						});
 					}
-				});*/
+				});
 			}
 
 			// Init file upload buttons actions

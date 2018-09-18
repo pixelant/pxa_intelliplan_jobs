@@ -81,6 +81,22 @@ plugin.tx_pxaintelliplanjobs {
                 height = {$plugin.tx_pxaintelliplanjobs.settings.singleView.image.height}
             }
         }
+
+        # Some values from job type field from API need to have different value than it's
+        jobTypes {
+            replaceValues {
+                needle {
+                    0 = Bemanning Kollektivare
+                    1 = Bemanning/rekrytering tjänstemän
+                }
+                replacement {
+                    0 = Bemanning
+                    1 = Bemanning
+                }
+            }
+
+            cvOptionalCategoryId = 8195
+        }
     }
 }
 

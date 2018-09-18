@@ -56,6 +56,11 @@
                 <div class="container" id="js__filter-container">
                     <f:for each="{jobs}" as="job">
                         <f:link.action pageUid="{settings.singleViewPid}" arguments="{job: job}" additionalAttributes="{data-categories: job.filteringIdentifiers}" class="filtering-item">
+                            <f:if condition="{pxa:isJobAdNew(job: job, newForDays: settings.newForDays)}">
+                                <span class="filtering-item__marker">
+                                    <f:comment><f:translate key="fe.new" /></f:comment>
+                                </span>
+                            </f:if>
                             <div class="filtering-item__logo">
                                 <f:if condition="{job.companyLogoUrl}">
                                     <img class="filtering-item__logo-image" src="{job.companyLogoUrl}" alt="{job.company}" title="{job.company}">
@@ -88,9 +93,6 @@
                                         </li>
                                     </f:if>
                                 </ul>
-                                <f:if condition="{pxa:isJobAdNew(job: job, newForDays: settings.newForDays)}">
-                                    <p class="filtering-item__marker"><f:translate key="fe.new" /></p>
-                                </f:if>
                             </div>
                             <div class="filtering-item__action">
                                 <span class="filtering-item__action-arrow"><span>

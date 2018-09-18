@@ -172,6 +172,9 @@
 			<trans-unit id="fe.application">
 			    <source>Application</source>
 			</trans-unit>
+			<trans-unit id="fe.type">
+			    <source>Assignment</source>
+			</trans-unit>
 			<!--FE LABELS:END-->
 
 			<!--EMAIL LABELS:START-->
@@ -187,7 +190,7 @@
 			<!--EMAIL LABELS:END-->
 
 			<trans-unit id="fe.professional_area">
-				<source>What are you looking for for a job?</source>
+				<source>What kind of job are you looking for?</source>
 			</trans-unit>
 			<trans-unit id="fe.place">
 				<source>Where do you want to work?</source>

@@ -181,6 +181,9 @@
 			<trans-unit id="fe.application">
 				<target>Ansökan</target>
 			</trans-unit>
+			<trans-unit id="fe.type">
+				<target>Uppdragstyp</target>
+			</trans-unit>
 			<!--FE LABELS:END-->
 
 			<!--EMAIL LABELS:START-->

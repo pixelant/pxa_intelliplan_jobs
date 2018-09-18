@@ -136,7 +136,7 @@ class JobAjaxController extends ActionController
             ? $this->settings['applyJob']['fields'][$validationType]
             : [];
 
-        $isValidFields = $this->validateApplyJobFields($fields, $validationRules);
+        $isValidFields = $this->validateApplyJobFields($job, $fields, $validationRules);
         $isValidFiles = !$requireCV || $this->validateApplyJobFiles();
         $apiSuccess = false;
 
@@ -350,19 +350,26 @@ class JobAjaxController extends ActionController
     /**
      * Validate apply job fields
      *
+     * @param Job $job
      * @param array $fields
      * @param array $validationRules
      * @return bool
      */
-    protected function validateApplyJobFields(array $fields, array $validationRules): bool
+    protected function validateApplyJobFields(Job $job, array $fields, array $validationRules): bool
     {
         $isValid = true;
         // Simulate required values for additional questions
-        foreach ($fields as $field => $value) {
-            if (GeneralUtility::isFirstPartOfStr($field, JobController::ADDITIONAL_QUESTIONS_PREFIX)) {
-                $validationRules[$field] = 'required';
+        $questions = $this->settings['applyJob']['fields']['noCvQuestionsPreset'][$job->getJobOccupationId()]
+            ? $this->settings['applyJob']['fields']['noCvQuestionsPreset'][$job->getJobOccupationId()]
+            : [];
+        foreach ($questions as $questionNameTs => $question) {
+            $questionFieldName = JobController::ADDITIONAL_QUESTIONS_PREFIX . $questionNameTs;
+            if (!isset($fields[$questionFieldName])) {
+                $fields[$questionFieldName] = '';
             }
+            $validationRules[$questionFieldName] = 'required';
         }
+
         $missingFields = array_diff(array_keys($validationRules), array_keys($fields));
 
         // Force empty values for missing fields

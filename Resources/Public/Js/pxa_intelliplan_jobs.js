@@ -136,7 +136,7 @@ const PxaIntelliplanJobs = (function () {
 		setNewAttributeNamesForNewUploadElement: function(fileElement) {
 			let newLabel = fileElement.data('label').replace(
 				this.settings.additionalFilesCounterPlaceHolder,
-				this.additonalFilesCounter
+				this.additonalFilesCounter + 1
 			);
 			let newName = fileElement.data('name').replace(
 				this.settings.additionalFilesCounterPlaceHolder,

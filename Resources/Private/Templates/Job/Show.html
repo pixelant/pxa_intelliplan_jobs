@@ -45,14 +45,20 @@
                             <div class="side-content">
                                 <h3><f:translate key="fe.quick_facts" /></h3>
                                 <p><strong><f:translate key="fe.job" /></strong> <br>{job.service}</p>
-                                <f:if condition="{job.serviceCategory}">
-                                    <p><strong><f:translate key="fe.region" /></strong> <br>{job.serviceCategory}</p>
-                                </f:if>
                                 <f:if condition="{job.municipality}">
                                     <p><strong><f:translate key="fe.city" /></strong> <br>{job.municipality}</p>
                                 </f:if>
                                 <f:if condition="{job.employmentExtent}">
                                     <p><strong><f:translate key="fe.extent" /></strong> <br>{job.employmentExtent}</p>
+                                </f:if>
+                                <f:if condition="{job.type}">
+                                    <p>
+                                        <strong><f:translate key="fe.type" /></strong>
+                                        <br>
+                                        <pxa:strReplace value="{job.type}"
+                                                        needle="{settings.jobTypes.replaceValues.needle}"
+                                                        replacement="{settings.jobTypes.replaceValues.replacement}" />
+                                    </p>
                                 </f:if>
                                 <f:if condition="{job.employmentType}">
                                     <p><strong><f:translate key="fe.duration" /></strong> <br>{job.employmentType}</p>
@@ -65,16 +71,16 @@
                                 </f:if>
                             </div>
                         </div>
-                    
+
                         <f:if condition="{job.contentElementsUids}">
                             <f:cObject typoscriptObjectPath="lib.pxaIntelliplanJobsContentElementsRenderer" data="{uids: job.contentElementsUids}" />
                         </f:if>
-                    
+
                         <f:if condition="{settings.showShareForm}">
                             <div class="light-gray-background">
                                 <div class="side-form">
                                     <h3><f:translate key="fe.tell_friend" /></h3>
-                                
+
                                     <f:form controller="JobAjax" action="share" pluginName="Pi2" pageType="{settings.sharePageType}" objectName="shareJob" class="pxa-tell-friend">
                                         <div class="form-group" data-field="receiverName">
                                             <f:form.textfield class="form-control" placeholder="{f:translate(key: 'fe.friend_name')}" property="receiverName"/>
@@ -85,9 +91,9 @@
                                         <div class="form-group" data-field="senderName">
                                             <f:form.textfield class="form-control" placeholder="{f:translate(key: 'fe.your_name')}" property="senderName"/>
                                         </div>
-                                    
+
                                         <button type="submit" class="btn btn-default text-uppercase"><f:translate key="fe.submit" /></button>
-                                    
+
                                         <f:form.hidden property="shareUrl" value="{shareUrl}" />
                                         <f:form.hidden name="job" value="{job}" />
                                     </f:form>
@@ -151,49 +157,33 @@
                         </div>
                     </div>
 
-
-                    <div class="panel-box">
-                        <div class="panel-header">
-                            <h2><f:translate key="fe.no_cv" /></h2>
-                        </div>
-                        <f:form enctype="multipart/form-data" class="js__panel-collapsible" name="apply-job" action="applyJob" controller="JobAjax" pluginName="Pi2" pageType="{settings.sharePageType}">
-                            <f:form.hidden name="job" value="{job}" />
-
-                            <div class="panel-box__body">
-                                <f:render section="applyJobFields" />
-
-                                <f:for each="{settings.applyJob.fields.noCvRadios -> pxa:explode()}" as="checkbox">
-                                    <div class="form-additions" data-field="{checkbox}">
-                                        <p><strong><f:translate key="fe.checkbox_{checkbox}" /></strong></p>
-                                        <f:if condition="{f:translate(key: 'fe.checkbox_{checkbox}_tip')}">
-                                            <p><em><f:translate key="fe.checkbox_{checkbox}_tip" /></em></p>
-                                        </f:if>
-                                        <div class="radio-item">
-                                            <label>
-                                                <f:form.radio name="applyJob[{checkbox}]" value="{f:translate(key: 'fe.yes')}" />
-                                                <span><f:translate key="fe.yes" /></span>
-                                            </label>
-                                        </div>
-                                        <div class="radio-item">
-                                            <label>
-                                                <f:form.radio name="applyJob[{checkbox}]" value="{f:translate(key: 'fe.no')}" />
-                                                <span><f:translate key="fe.no" /></span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                </f:for>
-
-                                <div class="form-additions">
-                                    <f:render section="agreeOnTerms" />
-                                </div>
+                    <f:if condition="{job.jobCategoryId} == {settings.jobTypes.cvOptionalCategoryId}">
+                        <div class="panel-box">
+                            <div class="panel-header">
+                                <h2><f:translate key="fe.no_cv" /></h2>
                             </div>
+                            <f:form enctype="multipart/form-data" class="js__panel-collapsible" name="apply-job" action="applyJob" controller="JobAjax" pluginName="Pi2" pageType="{settings.sharePageType}">
+                                <f:form.hidden name="job" value="{job}" />
 
-                            <f:render section="submitButton" />
-                        </f:form>
-                        <div class="ajax-loader _ready">
-                            <f:render partial="AjaxLoader" />
+                                <div class="panel-box__body">
+                                    <f:render section="applyJobFields" />
+
+                                    <f:if condition="{noCvQuestionsPreset}">
+                                        <f:render section="noCvQuestionsPreset" arguments="{noCvQuestionsPreset: noCvQuestionsPreset, additionalQuestionsPrefix: additionalQuestionsPrefix, job: job}" />
+                                    </f:if>
+
+                                    <div class="form-additions">
+                                        <f:render section="agreeOnTerms" />
+                                    </div>
+                                </div>
+
+                                <f:render section="submitButton" />
+                            </f:form>
+                            <div class="ajax-loader _ready">
+                                <f:render partial="AjaxLoader" />
+                            </div>
                         </div>
-                    </div>
+                    </f:if>
                 </div>
             </div>
         </div>
@@ -254,7 +244,7 @@
         <div class="row">
             <div class="col-sm-6">
                 <p class="additions-label">
-                    <strong data-file-label="1"><f:translate key="fe.{label}"/></strong>
+                    <strong data-file-label="1"><f:translate key="fe.{label}"/> 1</strong>
                 </p>
                 <span data-field="{name}"></span>
             </div>
@@ -279,14 +269,14 @@
 <f:section name="addAdditionalFile">
     <div class="form-additions">
         <div class="row">
-            <div class="col-sm-6">
-                <a href="javascript: {}" data-add-document="1">
-                    <i class="icons icon-arrow-right5"></i>
-                    <span><f:translate key="fe.add_documents" /></span>
-                </a>
-            </div>
-            <div class="col-sm-6">
-                <p><f:translate key="fe.add_documents_tip" /></p>
+            <div class="col-sm-12">
+                <p class="text-center">
+                    <a href="javascript: {}" data-add-document="1">
+                        <i class="icons icon-arrow-right5"></i>
+                        <span><f:translate key="fe.add_documents" /></span>
+                    </a>
+                </p>
+                <p class="text-center"><f:translate key="fe.add_documents_tip" /></p>
             </div>
         </div>
     </div>
@@ -315,7 +305,7 @@
                 <div class="col-sm-6">
                     <div class="form-item" data-field="{field}">
                         <label>
-                            <f:translate key="placeholder.{field}"></f:translate>
+                            <f:translate key="placeholder.{field}" />
                         </label>
                         <f:form.textfield
                                 class="form-control"
@@ -330,6 +320,36 @@
             </f:cycle>
         </f:for>
     </div>
+</f:section>
+
+<f:section name="noCvQuestionsPreset">
+    <f:for each="{noCvQuestionsPreset}" key="key" as="question">
+        <div class="form-additions" data-field="{additionalQuestionsPrefix}{key}">
+            <f:if condition="{question.type} == 'radio'">
+                <f:then>
+                    <p><strong>{question.question}</strong></p>
+                    <f:if condition="{question.tip}">
+                        <p><em>{question.tip}</em></p>
+                    </f:if>
+                    <f:for each="{question.options -> pxa:explode(delimiter: '|')}" as="option">
+                        <div class="radio-item">
+                            <label>
+                                <f:form.radio name="applyJob[{additionalQuestionsPrefix}{key}]" value="{option}" />
+                                <span>{option}</span>
+                            </label>
+                        </div>
+                    </f:for>
+                </f:then>
+                <f:else>
+                    <p><strong>{question.question}</strong></p>
+                    <f:if condition="{question.tip}">
+                        <p><em>{question.tip}</em></p>
+                    </f:if>
+                    <f:form.textfield class="form-control" name="applyJob[{additionalQuestionsPrefix}{key}]" />
+                </f:else>
+            </f:if>
+        </div>
+    </f:for>
 </f:section>
 
 <f:section name="submitButton">

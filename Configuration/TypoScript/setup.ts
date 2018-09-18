@@ -55,12 +55,6 @@ plugin.tx_pxaintelliplanjobs {
                 }
 
                 validationNoCV < .validationCV
-                validationNoCV {
-                    secondary_education = required
-                    driver_license = required
-                    have_car = required
-                    work_shifts = required
-                }
 
                 apiSupportFields = first_name,surname,mobile_phone,email,job_ad_id,comment,agreement_type,zip_code,city,birthday_year,birthday_month,birthday_day_of_month,social_number,linkedin_url
                 # Exclude some fields when doing SetPersonalInformation
@@ -71,7 +65,83 @@ plugin.tx_pxaintelliplanjobs {
                 allowedMimeTypes = application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/pdf,application/rtf,text/rtf,text/plain
 
                 # If user doesn't have CV what checkboxes to render
-                noCvRadios = secondary_education,driver_license,have_car,work_shifts
+                noCvQuestionsPreset {
+                    # Job occupation ID
+                    8204 {
+                        0 {
+                            question = Har du svenskt B-körkort?
+                            type = radio
+                            options = Ja|Nej
+                        }
+
+                        1 {
+                            question = Har du tillgång till bil?
+                            type = radio
+                            options = Ja|Nej
+                        }
+
+                        2 {
+                            question = Har du truckkort?
+                            type = radio
+                            options = Ja|Nej
+                        }
+
+                        3.question = Om ja, hur lång erfarenhet har du av truckkörning?
+                        4 {
+                            question = Har du tidigare erfarenhet av lagerarbete?
+                            type = radio
+                            options = Ja|Nej
+                        }
+
+                        5.question = Om ja, hur lång erfarenhet har du?
+                        6 {
+                            question = Kan du arbeta skift?
+                            type = radio
+                            options = Ja|Nej
+                        }
+
+                        7.question = Hur snart kan du börja arbeta?
+                    }
+
+                    111 {
+                        0 {
+                            question = Har du svenskt B-körkort?
+                            type = radio
+                            options = Ja|Nej
+                        }
+
+                        1 {
+                            question = Har du tillgång till bil?
+                            type = radio
+                            options = Ja|Nej
+                        }
+
+                        2 {
+                            question = Har du erfarenhet av industriarbete?
+                            type = radio
+                            options = Ja|Nej
+                        }
+
+                        3.question = Om ja, hur lång erfarenhet har du?
+
+                        4 {
+                            question = Har du erfarenhet av verkstadsarbete?
+                            type = radio
+                            options = Ja|Nej
+                        }
+
+                        5.question = Om ja, hur lång erfarenhet har du?
+
+                        6 {
+                            question = Kan du arbeta skift?
+                            type = radio
+                            options = Ja|Nej
+                        }
+
+                        7.question = Hur snart kan du börja arbeta?
+                    }
+                }
+
             }
         }
 
@@ -80,6 +150,23 @@ plugin.tx_pxaintelliplanjobs {
                 width = {$plugin.tx_pxaintelliplanjobs.settings.singleView.image.width}
                 height = {$plugin.tx_pxaintelliplanjobs.settings.singleView.image.height}
             }
+        }
+
+        # Some values from job type field from API need to have different value than it's
+        jobTypes {
+            replaceValues {
+                needle {
+                    0 = Bemanning Kollektivare
+                    1 = Bemanning/rekrytering tjänstemän
+                }
+
+                replacement {
+                    0 = Bemanning
+                    1 = Bemanning
+                }
+            }
+
+            cvOptionalCategoryId = 8195
         }
     }
 }
@@ -113,6 +200,12 @@ PXA_INTELLIPLAN_JOBS_AJAX {
         view =< plugin.tx_pxaintelliplanjobs.view
     }
 }
+
+[globalVar = GP:tx_pxaintelliplanjobs_pi1|job > 0]
+    config.defaultGetVars {
+        tx_pxaintelliplanjobs_pi1.action = show
+    }
+[end]
 
 lib.pxaIntelliplanJobsContentElementsRenderer = COA
 lib.pxaIntelliplanJobsContentElementsRenderer {

@@ -133,27 +133,6 @@
 			<trans-unit id="fe.no_cv">
 			    <source>No resume? Application without!</source>
 			</trans-unit>
-			<trans-unit id="fe.checkbox_secondary_education">
-			    <source>Do you have full secondary education?</source>
-			</trans-unit>
-			<trans-unit id="fe.checkbox_driver_license">
-			    <source>Do you have a Swedish B driver license</source>
-			</trans-unit>
-			<trans-unit id="fe.checkbox_have_car">
-				<source>Do you have access to a car?</source>
-			</trans-unit>
-			<trans-unit id="fe.checkbox_work_shifts">
-			    <source>Can you work in shifts?</source>
-			</trans-unit>
-			<trans-unit id="fe.checkbox_work_shifts_tip">
-			    <source>Day - evening shift, night etc.</source>
-			</trans-unit>
-			<trans-unit id="fe.yes">
-			    <source>Yes</source>
-			</trans-unit>
-			<trans-unit id="fe.no">
-			    <source>No</source>
-			</trans-unit>
 			<trans-unit id="fe.question">
 			    <source>Question</source>
 			</trans-unit>
@@ -172,6 +151,9 @@
 			<trans-unit id="fe.application">
 			    <source>Application</source>
 			</trans-unit>
+			<trans-unit id="fe.type">
+			    <source>Assignment</source>
+			</trans-unit>
 			<!--FE LABELS:END-->
 
 			<!--EMAIL LABELS:START-->
@@ -187,7 +169,7 @@
 			<!--EMAIL LABELS:END-->
 
 			<trans-unit id="fe.professional_area">
-				<source>What are you looking for for a job?</source>
+				<source>What kind of job are you looking for?</source>
 			</trans-unit>
 			<trans-unit id="fe.place">
 				<source>Where do you want to work?</source>

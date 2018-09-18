@@ -25,6 +25,11 @@ use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 class JobController extends ActionController
 {
     /**
+     * Prefix for form name where additonal questions are rendered
+     */
+    const ADDITIONAL_QUESTIONS_PREFIX = 'additional_question_';
+
+    /**
      * @var \Pixelant\PxaIntelliplanJobs\Domain\Repository\JobRepository
      * @inject
      */
@@ -66,6 +71,15 @@ class JobController extends ActionController
      */
     public function showAction(Job $job)
     {
+        if (!empty($job->getJobOccupationId())
+            && isset($this->settings['applyJob']['fields']['noCvQuestionsPreset'][$job->getJobOccupationId()])
+        ) {
+            $this->view->assign(
+                'noCvQuestionsPreset',
+                $this->settings['applyJob']['fields']['noCvQuestionsPreset'][$job->getJobOccupationId()]
+            );
+            $this->view->assign('additionalQuestionsPrefix', self::ADDITIONAL_QUESTIONS_PREFIX);
+        }
         $this->view->assign('shareUrl', urlencode($this->getShareUrl($job)));
         $this->view->assign('job', $job);
     }

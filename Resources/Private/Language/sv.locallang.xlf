@@ -112,27 +112,6 @@
 			<trans-unit id="fe.no_cv">
 				<target>Inget CV? Ansökan utan!</target>
 			</trans-unit>
-			<trans-unit id="fe.checkbox_secondary_education">
-				<target>Har du fullständig gymnasieutbildning?</target>
-			</trans-unit>
-			<trans-unit id="fe.checkbox_driver_license">
-			    <target>Har du ett svenskt B-körkort</target>
-			</trans-unit>
-			<trans-unit id="fe.checkbox_have_car">
-				<target>Har du tillgång till bil?</target>
-			</trans-unit>
-			<trans-unit id="fe.checkbox_work_shifts">
-				<target>Kan du arbeta i skift?</target>
-			</trans-unit>
-			<trans-unit id="fe.checkbox_work_shifts_tip">
-				<target>Dag - kväll skift, natt etc.</target>
-			</trans-unit>
-			<trans-unit id="fe.yes">
-				<target>Ja</target>
-			</trans-unit>
-			<trans-unit id="fe.no">
-				<target>Nej</target>
-			</trans-unit>
 			<trans-unit id="fe.question">
 				<target>Fråga</target>
 			</trans-unit>

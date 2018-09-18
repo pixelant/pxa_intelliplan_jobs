@@ -1,10 +1,12 @@
 <?php
+
 namespace Pixelant\PxaIntelliplanJobs\Tests\Unit;
 
 use Nimut\TestingFramework\MockObject\AccessibleMockObjectInterface;
 use Nimut\TestingFramework\TestCase\UnitTestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 use Pixelant\PxaIntelliplanJobs\Controller\JobAjaxController;
+use Pixelant\PxaIntelliplanJobs\Controller\JobController;
 use Pixelant\PxaIntelliplanJobs\Domain\Model\DTO\ShareJob;
 use Pixelant\PxaIntelliplanJobs\Domain\Model\Job;
 
@@ -44,17 +46,28 @@ class JobAjaxControllerTest extends UnitTestCase
      */
     public function radioFieldsWillBeExcludedAfterCvTextFieldGeneration()
     {
-        $settings['applyJob']['fields']['noCvRadios'] = 'radio1,radio2';
+        $job = new Job();
+        $job->_setProperty('uid', 123);
+        $job->setJobOccupationId(111);
+
+        $settings['applyJob']['fields']['noCvQuestionsPreset'][$job->getJobOccupationId()] = [
+            '0' => [
+                'question' => 'test',
+            ],
+            '1' => [
+                'question' => 'test 2',
+            ]
+        ];
         $fields = [
-            'radio1' => 'test 123',
-            'radio2' => '123 342',
+            JobController::ADDITIONAL_QUESTIONS_PREFIX . '0' => 'test 123',
+            JobController::ADDITIONAL_QUESTIONS_PREFIX . '1' => '123 342',
             'remain' => 'Remain value'
         ];
         $fieldsExpect = ['remain' => 'Remain value'];
 
         $this->subject->_set('settings', $settings);
 
-        $this->subject->_callRef('generateTextFileFromNotSupportedFields', $fields);
+        $this->subject->_callRef('generateTextFromAdditionalQuestions', $job, $fields);
 
         $this->assertEquals($fieldsExpect, $fields);
     }

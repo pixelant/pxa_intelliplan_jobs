@@ -31,7 +31,7 @@ const PxaIntelliplanJobs = (function () {
 					that.sendAjax($form, function (data) {
 						let submit = $form.find('[type="submit"]');
 
-						submit.before(that.getMessage(data.successMessage, true));
+						submit.after(that.getMessage(data.successMessage, true));
 					});
 				});
 			}

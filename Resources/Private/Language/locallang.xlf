@@ -154,6 +154,12 @@
 			<trans-unit id="fe.type">
 			    <source>Assignment</source>
 			</trans-unit>
+			<trans-unit id="fe.yes">
+			    <source>Yes</source>
+			</trans-unit>
+			<trans-unit id="fe.no">
+				<source>No</source>
+			</trans-unit>
 			<!--FE LABELS:END-->
 
 			<!--EMAIL LABELS:START-->

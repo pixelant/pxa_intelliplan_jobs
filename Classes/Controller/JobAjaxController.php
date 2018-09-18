@@ -364,8 +364,14 @@ class JobAjaxController extends ActionController
             : [];
         foreach ($questions as $questionNameTs => $question) {
             $questionFieldName = JobController::ADDITIONAL_QUESTIONS_PREFIX . $questionNameTs;
-            if (!isset($fields[$questionFieldName])) {
+            // If this is not set and radio, simulate empty value
+            if (!isset($fields[$questionFieldName]) && isset($question['type']) && $question['type'] === 'radio') {
                 $fields[$questionFieldName] = '';
+            } elseif (!empty($question['additional']) && ((int)$fields[$questionFieldName] === 1)) {
+                // If question radio has additional questions and was marked as answer "Yes", need to make
+                // all sub questions required too
+                $subQuestionFieldName = JobController::ADDITIONAL_QUESTIONS_PREFIX . 'sub_question_' . $questionNameTs;
+                $validationRules[$subQuestionFieldName] = 'required';
             }
             $validationRules[$questionFieldName] = 'required';
         }
@@ -382,7 +388,7 @@ class JobAjaxController extends ActionController
                 foreach (GeneralUtility::trimExplode(',', $validationRules[$field], true) as $rule) {
                     switch ($rule) {
                         case 'required':
-                            if (empty($value)) {
+                            if (empty($value) && $value !== '0') {
                                 $isValid = false;
                                 $this->addError($field, $this->translate('fe.error_field_required'));
                             }
@@ -497,21 +503,43 @@ class JobAjaxController extends ActionController
 
         $i = 1;
         $prefixLength = strlen(JobController::ADDITIONAL_QUESTIONS_PREFIX);
+        $unsetFields = [];
         foreach ($fields as $field => $value) {
             if (GeneralUtility::isFirstPartOfStr($field, JobController::ADDITIONAL_QUESTIONS_PREFIX)) {
+                $unsetFields[] = $field;
                 $questionTSName = substr($field, $prefixLength);
-
+                // For radios it's yes or no
+                if (isset($questions[$questionTSName]['type']) && $questions[$questionTSName]['type'] === 'radio') {
+                    $value = (int)$value === 1
+                        ? $this->translate('fe.yes')
+                        : $this->translate('fe.no');
+                }
+                // If this is sub-question
+                if (!isset($questions[$questionTSName])
+                    && GeneralUtility::isFirstPartOfStr($questionTSName, 'sub_question_')
+                ) {
+                    $questionTSName = substr($questionTSName, 13);
+                    if ((int)$fields[JobController::ADDITIONAL_QUESTIONS_PREFIX . $questionTSName] === 0) {
+                        //Skip sub-questions if "No" selected
+                        continue;
+                    }
+                    $questionText = $questions[$questionTSName]['additional'];
+                } else {
+                    $questionText = $questions[$questionTSName]['question'];
+                }
                 $text .= sprintf(
                     '%d. %s: "%s"' . "\r\n" . '%s: "%s"' . "\r\n\r\n",
                     $i,
                     $this->translate('fe.question'),
-                    $questions[$questionTSName]['question'],
+                    $questionText,
                     $this->translate('fe.answer'),
                     $value
                 );
                 $i++;
-                unset($fields[$field]);
             }
+        }
+        foreach ($unsetFields as $unsetField) {
+            unset($fields[$unsetField]);
         }
 
         return $text;

@@ -329,32 +329,55 @@
 
 <f:section name="noCvQuestionsPreset">
     <f:for each="{noCvQuestionsPreset}" key="key" as="question">
-        <div class="form-additions" data-field="{additionalQuestionsPrefix}{key}">
-            <f:if condition="{question.type} == 'radio'">
-                <f:then>
-                    <p><strong>{question.question}</strong></p>
-                    <f:if condition="{question.tip}">
-                        <p><em>{question.tip}</em></p>
-                    </f:if>
-                    <f:for each="{question.options -> pxa:explode(delimiter: '|')}" as="option">
-                        <div class="radio-item">
-                            <label>
-                                <f:form.radio name="applyJob[{additionalQuestionsPrefix}{key}]" value="{option}" />
-                                <span>{option}</span>
-                            </label>
-                        </div>
-                    </f:for>
-                </f:then>
-                <f:else>
-                    <p><strong>{question.question}</strong></p>
-                    <f:if condition="{question.tip}">
-                        <p><em>{question.tip}</em></p>
-                    </f:if>
-                    <f:form.textfield class="form-control" name="applyJob[{additionalQuestionsPrefix}{key}]" />
-                </f:else>
-            </f:if>
-        </div>
+        <f:if condition="{question.type} == 'radio'">
+            <f:then>
+                <f:render
+                        section="noCvRadioField"
+                        arguments="{question: question, prefix: additionalQuestionsPrefix, key: key}"/>
+            </f:then>
+            <f:else>
+                <f:render
+                        section="noCvInputField"
+                        arguments="{question: question.question, tip: question.tip, prefix: additionalQuestionsPrefix, key: key}"/>
+            </f:else>
+        </f:if>
     </f:for>
+</f:section>
+
+<f:section name="noCvRadioField">
+    <div class="form-additions" data-field="{prefix}{key}" data-sub-question-name="{f:if(condition: question.additional, then: '{prefix}sub_question_{key}', else: '0')}">
+        <p><strong>{question.question}</strong></p>
+        <f:if condition="{question.tip}">
+            <p><em>{question.tip}</em></p>
+        </f:if>
+        <div class="radio-item">
+            <label>
+                <f:form.radio name="applyJob[{prefix}{key}]" value="1" />
+                <span><f:translate key="fe.yes" /></span>
+            </label>
+        </div>
+        <div class="radio-item">
+            <label>
+                <f:form.radio name="applyJob[{prefix}{key}]" value="0" />
+                <span><f:translate key="fe.no" /></span>
+            </label>
+        </div>
+    </div>
+    <f:if condition="{question.additional}">
+        <f:render
+                section="noCvInputField"
+                arguments="{additional: '1', question: question.additional, prefix: prefix, key: 'sub_question_{key}'}"/>
+    </f:if>
+</f:section>
+
+<f:section name="noCvInputField">
+    <div class="form-additions{f:if(condition: additional, then: ' hidden')}" data-field="{prefix}{key}">
+        <p><strong>{question}</strong></p>
+        <f:if condition="{tip}">
+            <p><em>{tip}</em></p>
+        </f:if>
+        <f:form.textfield class="form-control" name="applyJob[{prefix}{key}]" />
+    </div>
 </f:section>
 
 <f:section name="submitButton">

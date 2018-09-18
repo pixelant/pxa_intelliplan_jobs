@@ -89,6 +89,7 @@ plugin.tx_pxaintelliplanjobs {
                     0 = Bemanning Kollektivare
                     1 = Bemanning/rekrytering tjänstemän
                 }
+
                 replacement {
                     0 = Bemanning
                     1 = Bemanning
@@ -129,6 +130,12 @@ PXA_INTELLIPLAN_JOBS_AJAX {
         view =< plugin.tx_pxaintelliplanjobs.view
     }
 }
+
+[globalVar = GP:tx_pxaintelliplanjobs_pi1|job > 0]
+    config.defaultGetVars {
+        tx_pxaintelliplanjobs_pi1.action = show
+    }
+[end]
 
 lib.pxaIntelliplanJobsContentElementsRenderer = COA
 lib.pxaIntelliplanJobsContentElementsRenderer {

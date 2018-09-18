@@ -163,6 +163,12 @@
 			<trans-unit id="fe.type">
 				<target>Uppdragstyp</target>
 			</trans-unit>
+			<trans-unit id="fe.yes">
+				<target>Ja</target>
+			</trans-unit>
+			<trans-unit id="fe.no">
+				<target>Nej</target>
+			</trans-unit>
 			<!--FE LABELS:END-->
 
 			<!--EMAIL LABELS:START-->

@@ -13,6 +13,7 @@ const PxaIntelliplanJobs = (function () {
 		this.additionalFileLastItem = null;
 		this.additonalFilesCounter = 0;
 		this.scrollButton = $(settings.scrollButton);
+		this.radioWithSubQuestionWrapper = $(settings.radioWithSubQuestionWrapper)
 		this.settings = settings;
 	}
 
@@ -80,6 +81,32 @@ const PxaIntelliplanJobs = (function () {
 
 				that.scrollToSmooth($(this).data('scroll-to'), $(this).data('scroll-fix'));
 			});
+
+			// Check if need to make subquestions visible
+			if (this.radioWithSubQuestionWrapper.length > 0) {
+				this.radioWithSubQuestionWrapper.each(function () {
+					let $this = $(this);
+					if (parseInt($this.data('sub-question-name')) !== 0) {
+						$this.find('input[type="radio"]').on('change', function () {
+							that.toggleSubQuestionsVisibility($(this), $this.data('sub-question-name'))
+						});
+					}
+				});
+			}
+		},
+
+		/**
+		 * Show/hide sub-questions
+		 *
+		 * @param $radio
+		 * @param hiddenName
+		 */
+		toggleSubQuestionsVisibility: function ($radio, hiddenName) {
+			if (parseInt($radio.val()) === 1) {
+				$('[data-field="' + hiddenName + '"]').removeClass('hidden');
+			} else {
+				$('[data-field="' + hiddenName + '"]').addClass('hidden');
+			}
 		},
 
 		/**
@@ -114,7 +141,7 @@ const PxaIntelliplanJobs = (function () {
 		 *
 		 * @param fileElement
 		 */
-		resetNewUploadElement: function(fileElement) {
+		resetNewUploadElement: function (fileElement) {
 			// Reset error class
 			fileElement
 				.find('.' + this.settings.errorFieldClass)
@@ -133,7 +160,7 @@ const PxaIntelliplanJobs = (function () {
 		 *
 		 * @param fileElement
 		 */
-		setNewAttributeNamesForNewUploadElement: function(fileElement) {
+		setNewAttributeNamesForNewUploadElement: function (fileElement) {
 			let newLabel = fileElement.data('label').replace(
 				this.settings.additionalFilesCounterPlaceHolder,
 				this.additonalFilesCounter + 1
@@ -330,6 +357,7 @@ $(document).ready(function () {
 		fileUploadInput: '.js__file-upload',
 		fileUploadClear: '.js__file-upload__clear',
 
+		radioWithSubQuestionWrapper: '[data-sub-question-name]',
 		scrollButton: '[data-job-scroll="1"]'
 	});
 });

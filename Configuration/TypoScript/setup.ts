@@ -71,74 +71,62 @@ plugin.tx_pxaintelliplanjobs {
                         0 {
                             question = Har du svenskt B-körkort?
                             type = radio
-                            options = Ja|Nej
                         }
 
                         1 {
                             question = Har du tillgång till bil?
                             type = radio
-                            options = Ja|Nej
                         }
 
                         2 {
                             question = Har du truckkort?
                             type = radio
-                            options = Ja|Nej
+                            additional =  Om ja, hur lång erfarenhet har du av truckkörning?
                         }
 
-                        3.question = Om ja, hur lång erfarenhet har du av truckkörning?
-                        4 {
+                        3 {
                             question = Har du tidigare erfarenhet av lagerarbete?
                             type = radio
-                            options = Ja|Nej
+                            additional = Om ja, hur lång erfarenhet har du?
                         }
 
-                        5.question = Om ja, hur lång erfarenhet har du?
-                        6 {
+                        4 {
                             question = Kan du arbeta skift?
                             type = radio
-                            options = Ja|Nej
                         }
 
-                        7.question = Hur snart kan du börja arbeta?
+                        5.question = Hur snart kan du börja arbeta?
                     }
 
-                    111 {
+                    8205 {
                         0 {
                             question = Har du svenskt B-körkort?
                             type = radio
-                            options = Ja|Nej
                         }
 
                         1 {
                             question = Har du tillgång till bil?
                             type = radio
-                            options = Ja|Nej
                         }
 
                         2 {
                             question = Har du erfarenhet av industriarbete?
                             type = radio
-                            options = Ja|Nej
+                            additional = Om ja, hur lång erfarenhet har du?
                         }
 
-                        3.question = Om ja, hur lång erfarenhet har du?
-
-                        4 {
+                        3 {
                             question = Har du erfarenhet av verkstadsarbete?
                             type = radio
-                            options = Ja|Nej
+                            additional = Om ja, hur lång erfarenhet har du?
                         }
 
-                        5.question = Om ja, hur lång erfarenhet har du?
-
-                        6 {
+                        4 {
                             question = Kan du arbeta skift?
                             type = radio
-                            options = Ja|Nej
                         }
 
-                        7.question = Hur snart kan du börja arbeta?
+                        5.question = Hur snart kan du börja arbeta?
                     }
                 }
 

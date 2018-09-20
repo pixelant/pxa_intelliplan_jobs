@@ -137,6 +137,7 @@ plugin.tx_pxaintelliplanjobs {
             image {
                 width = {$plugin.tx_pxaintelliplanjobs.settings.singleView.image.width}
                 height = {$plugin.tx_pxaintelliplanjobs.settings.singleView.image.height}
+                defaultLogoImage = {$plugin.tx_pxaintelliplanjobs.settings.singleView.image.defaultLogoImage}
             }
         }
 

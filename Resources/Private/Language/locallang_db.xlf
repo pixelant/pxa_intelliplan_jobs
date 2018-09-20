@@ -212,6 +212,9 @@
 			<trans-unit id="ts.siteDomain">
 			    <source>Site domain in footer</source>
 			</trans-unit>
+			<trans-unit id="ts.singleView.image.defaultLogoImage">
+			    <source>Default image path if no logo set for job ad</source>
+			</trans-unit>
 			<!--Typoscript constant editor:END-->
 
 			<!--Extension manager:START-->

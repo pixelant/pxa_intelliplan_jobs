@@ -45,5 +45,8 @@ plugin.tx_pxaintelliplanjobs {
 
         # cat=plugin.tx_pxaintelliplanjobs/pxaintelliplanjobs/090; type=string; label=LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:ts.singleView.image.height
         singleView.image.height =
+
+        # cat=plugin.tx_pxaintelliplanjobs/pxaintelliplanjobs/100; type=string; label=LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:ts.singleView.image.defaultLogoImage
+        singleView.image.defaultLogoImage =
     }
 }

@@ -7,7 +7,18 @@
     <div class="page-header container">
         <div class="page-header__logo">
             <f:if condition="{job.companyLogoUrl}">
-                <img src="{job.companyLogoUrl}" alt="{job.company}" title="{job.company}">
+                <f:then>
+                    <img src="{job.companyLogoUrl}" alt="{job.company}" title="{job.company}">
+                </f:then>
+                <f:else>
+                    <f:if condition="{settings.singleView.image.defaultLogoImage}">
+                        <f:image
+                                src="{settings.singleView.image.defaultLogoImage}"
+                                width="150c"
+                                height="45c"
+                                alt="{job.company}" />
+                    </f:if>
+                </f:else>
             </f:if>
         </div>
         <div class="red-preheader">

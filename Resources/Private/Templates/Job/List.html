@@ -63,7 +63,19 @@
                             </f:if>
                             <div class="filtering-item__logo">
                                 <f:if condition="{job.companyLogoUrl}">
-                                    <img class="filtering-item__logo-image" src="{job.companyLogoUrl}" alt="{job.company}" title="{job.company}">
+                                    <f:then>
+                                        <img class="filtering-item__logo-image" src="{job.companyLogoUrl}" alt="{job.company}" title="{job.company}">
+                                    </f:then>
+                                    <f:else>
+                                        <f:if condition="{settings.singleView.image.defaultLogoImage}">
+                                            <f:image
+                                                    src="{settings.singleView.image.defaultLogoImage}"
+                                                    width="150c"
+                                                    height="45c"
+                                                    class="filtering-item__logo-image"
+                                                    alt="{job.company}" />
+                                        </f:if>
+                                    </f:else>
                                 </f:if>
                             </div>
                             <div class="filtering-item__body">

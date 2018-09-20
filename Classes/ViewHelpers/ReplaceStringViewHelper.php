@@ -10,7 +10,7 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
  * Class StrReplaceViewHelper
  * @package Pixelant\PxaIntelliplanJobs\ViewHelpers
  */
-class StrReplaceViewHelper extends AbstractViewHelper
+class ReplaceStringViewHelper extends AbstractViewHelper
 {
     use CompileWithRenderStatic;
 
@@ -19,8 +19,8 @@ class StrReplaceViewHelper extends AbstractViewHelper
      */
     public function initializeArguments()
     {
-        $this->registerArgument('needle', 'mixed', 'Need to replace', true);
-        $this->registerArgument('replacement', 'mixed', 'Replace with', true);
+        $this->registerArgument('needle', 'array', 'Need to replace', true);
+        $this->registerArgument('replacement', 'array', 'Replace with', true);
         $this->registerArgument('value', 'string', 'String value to replace', true);
     }
 
@@ -37,8 +37,14 @@ class StrReplaceViewHelper extends AbstractViewHelper
     ): string {
         $needle = $arguments['needle'];
         $replacement = $arguments['replacement'];
-        $value = $arguments['value'];
+        $value = trim(preg_replace('/\s\s+/', ' ', strtolower($arguments['value'])));
 
-        return str_replace($needle, $replacement, $value);
+        foreach ($needle as $key => $needleItem) {
+            if (strtolower($needleItem) === $value) {
+                return $replacement[$key] ?? '';
+            }
+        }
+
+        return '';
     }
 }

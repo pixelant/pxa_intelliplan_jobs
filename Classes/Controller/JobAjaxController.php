@@ -132,11 +132,12 @@ class JobAjaxController extends ActionController
         $fields = $this->request->getArgument('applyJob');
         // Is this form with CV or not
         $validationType = $requireCV ? 'validationCV' : 'validationNoCV';
+
         $validationRules = is_array($this->settings['applyJob']['fields'][$validationType])
             ? $this->settings['applyJob']['fields'][$validationType]
             : [];
 
-        $isValidFields = $this->validateApplyJobFields($job, $fields, $validationRules);
+        $isValidFields = $this->validateApplyJobFields($job, $fields, $validationRules, $requireCV);
         $isValidFiles = !$requireCV || $this->validateApplyJobFiles();
         $apiSuccess = false;
 
@@ -353,27 +354,30 @@ class JobAjaxController extends ActionController
      * @param Job $job
      * @param array $fields
      * @param array $validationRules
+     * @param bool $requireCV
      * @return bool
      */
-    protected function validateApplyJobFields(Job $job, array $fields, array $validationRules): bool
+    protected function validateApplyJobFields(Job $job, array $fields, array $validationRules, bool $requireCV): bool
     {
         $isValid = true;
-        // Simulate required values for additional questions
-        $questions = $this->settings['applyJob']['fields']['noCvQuestionsPreset'][$job->getJobOccupationId()]
-            ? $this->settings['applyJob']['fields']['noCvQuestionsPreset'][$job->getJobOccupationId()]
-            : [];
-        foreach ($questions as $questionNameTs => $question) {
-            $questionFieldName = JobController::ADDITIONAL_QUESTIONS_PREFIX . $questionNameTs;
-            // If this is not set and radio, simulate empty value
-            if (!isset($fields[$questionFieldName]) && isset($question['type']) && $question['type'] === 'radio') {
-                $fields[$questionFieldName] = '';
-            } elseif (!empty($question['additional']) && ((int)$fields[$questionFieldName] === 1)) {
-                // If question radio has additional questions and was marked as answer "Yes", need to make
-                // all sub questions required too
-                $subQuestionFieldName = JobController::ADDITIONAL_QUESTIONS_PREFIX . 'sub_question_' . $questionNameTs;
-                $validationRules[$subQuestionFieldName] = 'required';
+        if (!$requireCV) {
+            // Simulate required values for additional questions
+            $questions = $this->settings['applyJob']['fields']['noCvQuestionsPreset'][$job->getJobOccupationId()]
+                ? $this->settings['applyJob']['fields']['noCvQuestionsPreset'][$job->getJobOccupationId()]
+                : [];
+            foreach ($questions as $questionNameTs => $question) {
+                $questionFieldName = JobController::ADDITIONAL_QUESTIONS_PREFIX . $questionNameTs;
+                // If this is not set and radio, simulate empty value
+                if (!isset($fields[$questionFieldName]) && isset($question['type']) && $question['type'] === 'radio') {
+                    $fields[$questionFieldName] = '';
+                } elseif (!empty($question['additional']) && ((int)$fields[$questionFieldName] === 1)) {
+                    // If question radio has additional questions and was marked as answer "Yes", need to make
+                    // all sub questions required too
+                    $subQuestionFieldName = JobController::ADDITIONAL_QUESTIONS_PREFIX . 'sub_question_' . $questionNameTs;
+                    $validationRules[$subQuestionFieldName] = 'required';
+                }
+                $validationRules[$questionFieldName] = 'required';
             }
-            $validationRules[$questionFieldName] = 'required';
         }
 
         $missingFields = array_diff(array_keys($validationRules), array_keys($fields));

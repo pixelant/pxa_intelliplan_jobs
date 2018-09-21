@@ -137,8 +137,15 @@
                                 <div class="panel-header">
                                     <h2><f:translate key="fe.no_cv" /></h2>
                                 </div>
-                                <f:form enctype="multipart/form-data" class="js__panel-collapsible" name="apply-job" action="applyJob" controller="JobAjax" pluginName="Pi2" pageType="{settings.sharePageType}">
-                                    <f:form.hidden name="job" value="{job}" />
+                                <f:form
+                                        enctype="multipart/form-data"
+                                        class="js__panel-collapsible"
+                                        name="apply-job"
+                                        action="applyJob"
+                                        controller="JobAjax"
+                                        pluginName="Pi2"
+                                        pageType="{settings.sharePageType}"
+                                        arguments="{job: job}">
                                     <div class="panel-box__body">
                                         <f:render section="applyJobFields" />
                                         <f:if condition="{noCvQuestionsPreset}">
@@ -168,9 +175,14 @@
                             <h2><f:translate key="fe.application" /></h2>
                         </div>
 
-                        <f:form enctype="multipart/form-data" name="apply-job" action="applyJob" controller="JobAjax" pluginName="Pi2" pageType="{settings.sharePageType}">
-                            <f:form.hidden name="job" value="{job}" />
-                            <f:form.hidden name="requireCV" value="1" />
+                        <f:form
+                                enctype="multipart/form-data"
+                                name="apply-job"
+                                action="applyJob"
+                                controller="JobAjax"
+                                pluginName="Pi2"
+                                pageType="{settings.sharePageType}"
+                                arguments="{job: job, requireCV: 1}">
 
                             <div class="panel-box__body">
                                 <f:render section="applyJobFields" />

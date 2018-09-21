@@ -128,6 +128,37 @@
     </div>
 
     <div id="pxa-apply-job">
+        <div class="light-gray-background">
+            <f:if condition="{job.jobCategoryId} == {settings.jobTypes.cvOptionalCategoryId}">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-8 center-block">
+                            <div class="panel-box">
+                                <div class="panel-header">
+                                    <h2><f:translate key="fe.no_cv" /></h2>
+                                </div>
+                                <f:form enctype="multipart/form-data" class="js__panel-collapsible" name="apply-job" action="applyJob" controller="JobAjax" pluginName="Pi2" pageType="{settings.sharePageType}">
+                                    <f:form.hidden name="job" value="{job}" />
+                                    <div class="panel-box__body">
+                                        <f:render section="applyJobFields" />
+                                        <f:if condition="{noCvQuestionsPreset}">
+                                            <f:render section="noCvQuestionsPreset" arguments="{noCvQuestionsPreset: noCvQuestionsPreset, additionalQuestionsPrefix: additionalQuestionsPrefix, job: job}" />
+                                        </f:if>
+                                        <div class="form-additions">
+                                            <f:render section="agreeOnTerms" />
+                                        </div>
+                                    </div>
+                                    <f:render section="submitButton" />
+                                </f:form>
+                                <div class="ajax-loader _ready">
+                                    <f:render partial="AjaxLoader" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </f:if>
+        </div>
         <div class="panel-box__bg-wrp">
             <div class="container">
                 <div class="row">
@@ -171,37 +202,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="light-gray-background">
-            <f:if condition="{job.jobCategoryId} == {settings.jobTypes.cvOptionalCategoryId}">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-8 center-block">
-                            <div class="panel-box">
-                                <div class="panel-header">
-                                    <h2><f:translate key="fe.no_cv" /></h2>
-                                </div>
-                                <f:form enctype="multipart/form-data" class="js__panel-collapsible" name="apply-job" action="applyJob" controller="JobAjax" pluginName="Pi2" pageType="{settings.sharePageType}">
-                                    <f:form.hidden name="job" value="{job}" />
-                                    <div class="panel-box__body">
-                                        <f:render section="applyJobFields" />
-                                        <f:if condition="{noCvQuestionsPreset}">
-                                            <f:render section="noCvQuestionsPreset" arguments="{noCvQuestionsPreset: noCvQuestionsPreset, additionalQuestionsPrefix: additionalQuestionsPrefix, job: job}" />
-                                        </f:if>
-                                        <div class="form-additions">
-                                            <f:render section="agreeOnTerms" />
-                                        </div>
-                                    </div>
-                                    <f:render section="submitButton" />
-                                </f:form>
-                                <div class="ajax-loader _ready">
-                                    <f:render partial="AjaxLoader" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </f:if>
         </div>
     </div>
 

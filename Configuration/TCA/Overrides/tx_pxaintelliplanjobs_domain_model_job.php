@@ -13,7 +13,7 @@ defined('TYPO3_MODE') || die('Access denied.');
         'exclude' => false,
         'fieldConfiguration' => [
             'foreign_table_where' => ' AND sys_category.sys_language_uid IN (-1, 0) AND sys_category.pid=###CURRENT_PID### ',
-            'minitems' => 1,
+            'minitems' => 0,
             'maxitems' => 1
         ],
         'l10n_mode' => 'exclude',

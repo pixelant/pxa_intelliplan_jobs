@@ -50,7 +50,7 @@ class JobController extends ActionController
             /** @var Job $job */
             foreach ($jobs as $job) {
                 $category = $job->getCategoryTypo3();
-                if (!isset($subCategories[$category->getUid()])) {
+                if ($category !== null && !isset($subCategories[$category->getUid()])) {
                     $subCategories[$category->getUid()] = $category;
                 }
             }

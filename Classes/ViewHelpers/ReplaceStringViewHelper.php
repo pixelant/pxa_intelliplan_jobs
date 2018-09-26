@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Pixelant\PxaIntelliplanJobs\ViewHelpers;
 
+use TYPO3\CMS\Core\Utility\StringUtility;
 use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
 use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
 
@@ -37,14 +38,14 @@ class ReplaceStringViewHelper extends AbstractViewHelper
     ): string {
         $needle = $arguments['needle'];
         $replacement = $arguments['replacement'];
-        $value = trim(preg_replace('/\s\s+/', ' ', strtolower($arguments['value'])));
+        $value = trim(strtolower($arguments['value']));
 
         foreach ($needle as $key => $needleItem) {
-            if (strtolower($needleItem) === $value) {
+            if (StringUtility::beginsWith($value, $needleItem)) {
                 return $replacement[$key] ?? '';
             }
         }
 
-        return '';
+        return $arguments['value'];
     }
 }

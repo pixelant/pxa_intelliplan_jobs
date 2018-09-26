@@ -145,13 +145,13 @@ plugin.tx_pxaintelliplanjobs {
         jobTypes {
             replaceValues {
                 needle {
-                    0 = Bemanning Kollektivare
-                    1 = Bemanning/rekrytering tjänstemän
+                    0 = bemanning
+                    1 = rekrytering
                 }
 
                 replacement {
                     0 = Bemanning
-                    1 = Bemanning
+                    1 = Rekrytering
                 }
             }
 

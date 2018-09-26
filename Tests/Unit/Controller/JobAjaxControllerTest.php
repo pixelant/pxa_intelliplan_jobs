@@ -234,13 +234,13 @@ class JobAjaxControllerTest extends UnitTestCase
             'name' => 'name',
             'surname' => ''
         ];
-        $this->assertFalse($this->subject->_call('validateApplyJobFields', $job, $fields, $validationRules));
+        $this->assertFalse($this->subject->_call('validateApplyJobFields', $job, $fields, $validationRules, true));
 
         $fields = [
             'name' => 'name',
             'surname' => 'valid'
         ];
-        $this->assertTrue($this->subject->_call('validateApplyJobFields', $job, $fields, $validationRules));
+        $this->assertTrue($this->subject->_call('validateApplyJobFields', $job, $fields, $validationRules, true));
     }
 
     /**
@@ -263,14 +263,14 @@ class JobAjaxControllerTest extends UnitTestCase
             'email' => '',
             'email2' => 'notvalidemail'
         ];
-        $this->assertFalse($this->subject->_call('validateApplyJobFields', $job, $fields, $validationRules));
+        $this->assertFalse($this->subject->_call('validateApplyJobFields', $job, $fields, $validationRules, true));
 
         $fields = [
             'name' => 'name',
             'email' => 'email@site.com',
             'email2' => 'email@site.com'
         ];
-        $this->assertTrue($this->subject->_call('validateApplyJobFields', $job, $fields, $validationRules));
+        $this->assertTrue($this->subject->_call('validateApplyJobFields', $job, $fields, $validationRules, true));
     }
 
     /**
@@ -293,14 +293,14 @@ class JobAjaxControllerTest extends UnitTestCase
             'phone' => '',
             'phone2' => '123aaa'
         ];
-        $this->assertFalse($this->subject->_call('validateApplyJobFields', $job, $fields, $validationRules));
+        $this->assertFalse($this->subject->_call('validateApplyJobFields', $job, $fields, $validationRules, true));
 
         $fields = [
             'name' => 'name',
             'phone' => '+3111111',
             'phone2' => '8821478-963'
         ];
-        $this->assertTrue($this->subject->_call('validateApplyJobFields', $job, $fields, $validationRules));
+        $this->assertTrue($this->subject->_call('validateApplyJobFields', $job, $fields, $validationRules, true));
     }
 
     /**
@@ -321,13 +321,13 @@ class JobAjaxControllerTest extends UnitTestCase
             'name' => 'name',
             'agree_on_terms' => ''
         ];
-        $this->assertFalse($this->subject->_call('validateApplyJobFields', $job, $fields, $validationRules));
+        $this->assertFalse($this->subject->_call('validateApplyJobFields', $job, $fields, $validationRules, true));
 
         $fields = [
             'name' => 'name',
             'agree_on_terms' => '1'
         ];
-        $this->assertTrue($this->subject->_call('validateApplyJobFields', $job, $fields, $validationRules));
+        $this->assertTrue($this->subject->_call('validateApplyJobFields', $job, $fields, $validationRules, true));
     }
 
     /**

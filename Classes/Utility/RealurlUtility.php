@@ -18,8 +18,9 @@ class RealurlUtility
      */
     public static function getRealurlConfiguration(): array
     {
-        if (!empty(self::getSingleViewPids())) {
-            $pagesConfiguration = array_fill_keys(self::getSingleViewPids(), 'pxa_intelliplan_jobs');
+        $singleViewPids = self::getSingleViewPids();
+        if (!empty($singleViewPids)) {
+            $pagesConfiguration = array_fill_keys($singleViewPids, 'pxa_intelliplan_jobs');
             $pagesConfiguration['pxa_intelliplan_jobs'] = self::getConfiguration();
         }
 
@@ -33,14 +34,8 @@ class RealurlUtility
      */
     public static function getSingleViewPids(): array
     {
-        static $pids;
-        if ($pids === null) {
-            $extConf = ConfigurationUtility::getExtensionConfiguration();
-
-            $pids = GeneralUtility::intExplode(',', $extConf['singleViewPids'] ?? '');
-        }
-
-        return $pids;
+        $extConf = ConfigurationUtility::getExtensionConfiguration();
+        return GeneralUtility::intExplode(',', $extConf['singleViewPids'] ?? '');
     }
 
     /**

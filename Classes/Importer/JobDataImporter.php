@@ -221,17 +221,18 @@ class JobDataImporter extends AbstractImporter
                 break;
             case 'category':
                 $value = $data[strtolower($importField)];
+                if (!empty($value)) {
+                    /** @var Category $category */
+                    $category = $this->categoryRepository->findOneByTitle($value);
+                    if ($category === null) {
+                        // @codingStandardsIgnoreStart
+                        throw new CategoryNotFoundException('Category "' . $value . '" not found while importing job', 1531209414046);
+                        // @codingStandardsIgnoreEnd
+                    }
 
-                /** @var Category $category */
-                $category = $this->categoryRepository->findOneByTitle($value);
-                if ($category === null) {
-                    // @codingStandardsIgnoreStart
-                    throw new CategoryNotFoundException('Category "' . $value . '" not found while importing job', 1531209414046);
-                    // @codingStandardsIgnoreEnd
+                    // Set id to categories
+                    $jobData['category_typo3'] = $category->getUid();
                 }
-
-                // Set id to categories
-                $jobData['category_typo3'] = $category->getUid();
                 break;
             default:
                 $value = $data[strtolower($importField)];

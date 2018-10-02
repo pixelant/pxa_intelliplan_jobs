@@ -130,6 +130,12 @@ class JobAjaxController extends ActionController
     {
         /** @var array $fields */
         $fields = $this->request->getArgument('applyJob');
+        /*
+         * @TODO how to fix this for safari checkbox?
+         */
+        if (!isset($fields['agreement_type'])) {
+            $fields['agreement_type'] = 1;
+        }
         // Is this form with CV or not
         $validationType = $requireCV ? 'validationCV' : 'validationNoCV';
 

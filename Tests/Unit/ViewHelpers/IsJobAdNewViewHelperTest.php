@@ -41,7 +41,7 @@ class IsJobAdNewViewHelperTest extends ViewHelperBaseTestcase
         $closure = function () {};
 
         $pubDate = new \DateTime();
-        $pubDate->modify('-2 days');
+        $pubDate->modify('-3 days'); // One day added, because of API error
 
         $job = new Job();
         $job->setPubDate($pubDate);
@@ -91,7 +91,7 @@ class IsJobAdNewViewHelperTest extends ViewHelperBaseTestcase
         $closure = function () {};
 
         $pubDate = new \DateTime();
-        $pubDate->modify('-6 days');
+        $pubDate->modify('-7 days'); // One day added, because of API error
 
         $job = new Job();
         $job->setPubDate($pubDate);

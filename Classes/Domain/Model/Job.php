@@ -307,6 +307,20 @@ class Job extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $bottomImages = null;
 
     /**
+     * Flag if "pubDateTo" was modified
+     *
+     * @var bool
+     */
+    protected $pubDateToModified = false;
+
+    /**
+     * Flag if "pubDate" was modified
+     *
+     * @var bool
+     */
+    protected $pubDateModified = false;
+
+    /**
      * __construct
      */
     public function __construct()
@@ -677,6 +691,12 @@ class Job extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     public function getPubDate()
     {
+        if (!$this->pubDateModified) {
+            // Bugfix, date from API is not correct
+            $this->pubDate->modify('+1 day');
+            $this->pubDateModified = true;
+        }
+
         return $this->pubDate;
     }
 
@@ -1129,6 +1149,12 @@ class Job extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     public function getPubDateTo()
     {
+        if (!$this->pubDateToModified) {
+            // BUGFIX, value from api is not correct
+            $this->pubDateTo->modify('+1 day');
+            $this->pubDateToModified = true;
+        }
+
         return $this->pubDateTo;
     }
 

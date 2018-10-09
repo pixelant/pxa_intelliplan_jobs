@@ -394,6 +394,7 @@ class JobAjaxController extends ActionController
         }
 
         foreach ($fields as $field => $value) {
+            $value = trim($value);
             if (isset($validationRules[$field])) {
                 foreach (GeneralUtility::trimExplode(',', $validationRules[$field], true) as $rule) {
                     switch ($rule) {

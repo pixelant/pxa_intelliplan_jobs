@@ -68,6 +68,7 @@ class RealurlUtility
                     'languageField' => 'sys_language_uid',
                     'transOrigPointerField' => 'l10n_parent',
                     'noMatch' => 'bypass',
+                    'enable404forInvalidAlias' => false
                 ]
             ]
         ];

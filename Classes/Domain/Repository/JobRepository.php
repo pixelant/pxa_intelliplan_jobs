@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Pixelant\PxaIntelliplanJobs\Domain\Repository;
 
+use Pixelant\PxaIntelliplanJobs\Domain\Model\Job;
 use TYPO3\CMS\Extbase\Domain\Model\Category;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
@@ -41,7 +42,7 @@ class JobRepository extends Repository
      * Find job by ID
      *
      * @param int $id
-     * @return object
+     * @return Job|object|null
      */
     public function findById(int $id)
     {

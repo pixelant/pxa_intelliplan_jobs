@@ -15,7 +15,10 @@ namespace Pixelant\PxaIntelliplanJobs\Controller;
  ***/
 
 use Pixelant\PxaIntelliplanJobs\Domain\Model\Job;
+use TYPO3\CMS\Core\Utility\HttpUtility;
+use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+use TYPO3\CMS\Extbase\Mvc\Exception\NoSuchArgumentException;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
@@ -42,6 +45,16 @@ class JobController extends ActionController
      */
     public function listAction()
     {
+        if ($this->request->hasArgument('job')) {
+            // If job arguments was set, this means that realurl
+            // didn't found alias, so get var was set as string and
+            // and Typoscirpt condition didn't match. Need to show 404 page
+            // We can not enable 404 page in realrul, because we need to try to find
+            // job ad by inteliplan id in show action.
+            $this->getTSFE()->pageNotFoundAndExit(
+                'Job was not found with alias "' . $this->request->getArgument('job') . '"'
+            );
+        }
         $jobs = $this->jobRepository->findAllWithOrder($this->settings['sortOrder']);
 
         if ($jobs->count() > 0) {
@@ -69,8 +82,12 @@ class JobController extends ActionController
      * @param Job $job
      * @return void
      */
-    public function showAction(Job $job)
+    public function showAction(Job $job = null)
     {
+        if ($job === null) {
+            $this->handleJobNotFound();
+        }
+
         if (!empty($job->getJobOccupationId())
             && isset($this->settings['applyJob']['fields']['noCvQuestionsPreset'][$job->getJobOccupationId()])
         ) {
@@ -82,6 +99,37 @@ class JobController extends ActionController
         }
         $this->view->assign('shareUrl', urlencode($this->getShareUrl($job)));
         $this->view->assign('job', $job);
+    }
+
+    /**
+     * Try to find object by inteliplan ID and redirect to correct url if found
+     * @return Job
+     */
+    protected function handleJobNotFound()
+    {
+        // Try to find job by external inteliplan uid
+        try {
+            $jobAdId = $this->request->getArgument('job');
+
+            if (MathUtility::canBeInterpretedAsInteger($jobAdId)) {
+                $job = $this->jobRepository->findById((int)$jobAdId);
+
+                if ($job !== null) {
+                    $uriBuilder = $this->controllerContext->getUriBuilder()->reset();
+                    $url = $uriBuilder
+                        ->setTargetPageUid($this->getTSFE()->id)
+                        ->uriFor('show', ['job' => $job]);
+
+                    if (!empty($url)) {
+                        HttpUtility::redirect($url, HttpUtility::HTTP_STATUS_301);
+                    }
+                }
+            }
+        } catch (NoSuchArgumentException $exception) {
+            $jobAdId = 'Job id not provided';
+        }
+
+        $this->getTSFE()->pageNotFoundAndExit('Job ad with uid "' . $jobAdId . '" not found');
     }
 
     /**
@@ -114,10 +162,8 @@ class JobController extends ActionController
     protected function getShareUrl(Job $job): string
     {
         $uriBuilder = $this->getControllerContext()->getUriBuilder()->reset();
-        /** @var TypoScriptFrontendController $tsfe */
-        $tsfe = $GLOBALS['TSFE'];
 
-        $targetPage = $this->settings['singleViewPid'] ?: $tsfe->id;
+        $targetPage = $this->settings['singleViewPid'] ?: $this->getTSFE()->id;
 
         return $uriBuilder
             ->setTargetPageUid($targetPage)
@@ -164,5 +210,13 @@ class JobController extends ActionController
     protected function isOptionEnabled(string $option): bool
     {
         return (int)$this->settings[$option] === 1;
+    }
+
+    /**
+     * @return TypoScriptFrontendController
+     */
+    protected function getTSFE()
+    {
+        return $GLOBALS['TSFE'];
     }
 }

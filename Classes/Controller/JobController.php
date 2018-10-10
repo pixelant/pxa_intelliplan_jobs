@@ -15,7 +15,6 @@ namespace Pixelant\PxaIntelliplanJobs\Controller;
  ***/
 
 use Pixelant\PxaIntelliplanJobs\Domain\Model\Job;
-use TYPO3\CMS\Core\Utility\HttpUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Mvc\Exception\NoSuchArgumentException;
@@ -121,7 +120,7 @@ class JobController extends ActionController
                         ->uriFor('show', ['job' => $job]);
 
                     if (!empty($url)) {
-                        HttpUtility::redirect($url, HttpUtility::HTTP_STATUS_301);
+                        $this->redirectToUri($url, 0, 301);
                     }
                 }
             }

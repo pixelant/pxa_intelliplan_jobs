@@ -60,7 +60,9 @@ plugin.tx_pxaintelliplanjobs {
                 # Exclude some fields when doing SetPersonalInformation
                 excludeSetFields = recruit_interest,success,staffing_interest
 
-                requiredFilesFields = cv,letter
+                requiredFilesFields {
+                    validationCV = cv,letter
+                }
                 allowedFileTypes = doc,docx,pdf,rtf,txt
                 allowedMimeTypes = application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/pdf,application/rtf,text/rtf,text/plain
 

@@ -149,7 +149,7 @@ class JobAjaxController extends ActionController
             : [];
 
         $isValidFields = $this->validateApplyJobFields($job, $fields, $validationRules, $requireCV);
-        $isValidFiles = !$requireCV || $this->validateApplyJobFiles();
+        $isValidFiles =  $this->validateApplyJobFiles($validationType);
         $apiSuccess = false;
 
         if ($isValidFields && $isValidFiles) {
@@ -247,12 +247,13 @@ class JobAjaxController extends ActionController
     /**
      * Check if all required files are provided
      *
+     * @param string $validationType
      * @return bool
      */
-    protected function validateApplyJobFiles(): bool
+    protected function validateApplyJobFiles(string $validationType): bool
     {
         $isValid = true;
-        $requiredFiles = $this->settings['applyJob']['fields']['requiredFilesFields'] ?? '';
+        $requiredFiles = $this->settings['applyJob']['fields']['requiredFilesFields'][$validationType] ?? '';
 
         $uploadedFilesErrors = $_FILES['tx_pxaintelliplanjobs_pi2']['error']['applyJobFiles'] ?? [];
         $uploadedFilesNames = $_FILES['tx_pxaintelliplanjobs_pi2']['name']['applyJobFiles'] ?? [];

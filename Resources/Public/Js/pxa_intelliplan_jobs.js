@@ -9,9 +9,8 @@ const PxaIntelliplanJobs = (function () {
 		this.formTellFriend = $(settings.formTellFriend);
 		this.formApplyJob = $(settings.formApplyJob);
 		this.addAdditionalFileButton = $(settings.addAdditionalFileButton);
-		this.additionalFileTemplate = $(settings.additionalFileTemplate);
-		this.additionalFileLastItem = null;
-		this.additonalFilesCounter = 0;
+		this.additionalFileLastItem = {};
+		this.additonalFilesCounter = {};
 		this.scrollButton = $(settings.scrollButton);
 		this.radioWithSubQuestionWrapper = $(settings.radioWithSubQuestionWrapper)
 		this.settings = settings;
@@ -70,8 +69,13 @@ const PxaIntelliplanJobs = (function () {
 			if (this.addAdditionalFileButton.length > 0) {
 				this.addAdditionalFileButton.on('click', function (e) {
 					e.preventDefault();
+					let uid = parseInt($(this).data('uid'));
 
-					that.addAdditionalFile();
+					if (uid > 0) {
+						that.addAdditionalFile(uid);
+					} else {
+						console.log('Uid was not valid for additional files');
+					}
 				});
 			}
 
@@ -112,16 +116,18 @@ const PxaIntelliplanJobs = (function () {
 		/**
 		 * Add more files upload to form
 		 */
-		addAdditionalFile: function () {
-			if (this.additonalFilesCounter === 0) {
+		addAdditionalFile: function (uid) {
+			let additionalFileTemplate = this.getAdditionalFileTemplate(uid);
+
+			if (this.getAdditionalFileCounter(uid) === 0) {
 				// Just make visible template
-				this.additionalFileTemplate.removeClass('hidden');
-				this.additionalFileLastItem = this.additionalFileTemplate;
+				additionalFileTemplate.removeClass('hidden');
+				this.saveAdditionalFileLastItem(uid, additionalFileTemplate);
 			} else {
-				let additionalFile = this.additionalFileTemplate.clone();
+				let additionalFile = additionalFileTemplate.clone();
 
 				this.resetNewUploadElement(additionalFile);
-				this.setNewAttributeNamesForNewUploadElement(additionalFile);
+				this.setNewAttributeNamesForNewUploadElement(uid, additionalFile);
 
 				this.initFileUploadActions(
 					additionalFile.find(this.settings.fileUploadInput),
@@ -129,11 +135,65 @@ const PxaIntelliplanJobs = (function () {
 					true // Reset values
 				);
 
-				this.additionalFileLastItem.after(additionalFile);
-				this.additionalFileLastItem = additionalFile;
+				this.getAdditionalFileLastItem(uid).after(additionalFile);
+				this.saveAdditionalFileLastItem(uid, additionalFile);
 			}
 
-			this.additonalFilesCounter++;
+			this.increaseAdditionalFileCounter(uid);
+		},
+
+		/**
+		 * Additional file template by uid set
+		 * @param uid
+		 * @return {jQuery}
+		 */
+		getAdditionalFileTemplate: function (uid) {
+			return $(this.settings.additionalFileTemplate + '[data-uid="' + uid + '"]');
+		},
+
+		/**
+		 * Counter of additional files for given uid set
+		 *
+		 * @param uid
+		 * @return int
+		 */
+		getAdditionalFileCounter: function (uid) {
+			if (typeof this.additonalFilesCounter[uid] === 'undefined') {
+				this.additonalFilesCounter[uid] = 0;
+			}
+
+			return this.additonalFilesCounter[uid];
+		},
+
+		/**
+		 * Increase counter of additional files for given uid set
+		 * @param uid
+		 */
+		increaseAdditionalFileCounter: function (uid) {
+			if (typeof this.additonalFilesCounter[uid] === 'undefined') {
+				this.additonalFilesCounter[uid] = 0;
+			}
+
+			this.additonalFilesCounter[uid]++;
+		},
+
+		/**
+		 * Save last item added for set
+		 *
+		 * @param uid
+		 * @param lastItem
+		 */
+		saveAdditionalFileLastItem: function (uid, lastItem) {
+			this.additionalFileLastItem[uid] = lastItem;
+		},
+
+		/**
+		 * Get last item for set
+		 * @param uid
+		 * @return {jQuery}
+		 */
+		getAdditionalFileLastItem: function (uid) {
+			return this.additionalFileLastItem[uid] || null;
 		},
 
 		/**
@@ -158,16 +218,17 @@ const PxaIntelliplanJobs = (function () {
 		/**
 		 * Set new values for upload element
 		 *
+		 * @param uid
 		 * @param fileElement
 		 */
-		setNewAttributeNamesForNewUploadElement: function (fileElement) {
+		setNewAttributeNamesForNewUploadElement: function (uid, fileElement) {
 			let newLabel = fileElement.data('label').replace(
 				this.settings.additionalFilesCounterPlaceHolder,
-				this.additonalFilesCounter + 1
+				this.getAdditionalFileCounter(uid) + 1
 			);
 			let newName = fileElement.data('name').replace(
 				this.settings.additionalFilesCounterPlaceHolder,
-				this.additonalFilesCounter
+				this.getAdditionalFileCounter(uid)
 			);
 			let newNameInput = 'tx_pxaintelliplanjobs_pi2[applyJobFiles][' + newName + ']';
 
@@ -351,7 +412,7 @@ $(document).ready(function () {
 		acceptTerms: '.acceptTerms',
 
 		addAdditionalFileButton: '[data-add-document="1"]',
-		additionalFileTemplate: '#pxa-additional-file-template',
+		additionalFileTemplate: '.additional-file-template',
 		additionalFilesCounterPlaceHolder: '###COUNTER###',
 		fileLabelWrapper: '[data-file-label="1"]',
 		fileUploadInput: '.js__file-upload',

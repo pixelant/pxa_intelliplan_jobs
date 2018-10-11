@@ -148,9 +148,13 @@
                                         arguments="{job: job}">
                                     <div class="panel-box__body">
                                         <f:render section="applyJobFields" />
+
                                         <f:if condition="{noCvQuestionsPreset}">
                                             <f:render section="noCvQuestionsPreset" arguments="{noCvQuestionsPreset: noCvQuestionsPreset, additionalQuestionsPrefix: additionalQuestionsPrefix, job: job}" />
                                         </f:if>
+
+                                        <f:render section="addAdditionalFile" arguments="{uid: 2}" />
+
                                         <div class="form-additions">
                                             <f:render section="agreeOnTerms" />
                                         </div>
@@ -194,11 +198,7 @@
                                     </div>
                                 </div>
 
-                                <div id="pxa-additional-file-template" class="hidden" data-label="{f:translate(key:'fe.additional_file')} ###COUNTER###" data-name="file_###COUNTER###">
-                                    <f:render section="additionalFileUploadFileTemplate" arguments="{label: 'additional_file', name: 'file_0'}"/>
-                                </div>
-
-                                <f:render section="addAdditionalFile" />
+                                <f:render section="addAdditionalFile" arguments="{uid: 1}" />
 
                                 <div class="form-additions _has-text">
                                     <f:render section="agreeOnTerms" />
@@ -307,11 +307,16 @@
 </f:section>
 
 <f:section name="addAdditionalFile">
+    <f:comment>Uid is unique for this additional files set</f:comment>
+    <div data-uid="{uid}" class="hidden additional-file-template" data-label="{f:translate(key:'fe.additional_file')} ###COUNTER###" data-name="file_###COUNTER###">
+        <f:render section="additionalFileUploadFileTemplate" arguments="{label: 'additional_file', name: 'file_0'}"/>
+    </div>
+
     <div class="form-additions _has-text">
         <div class="row">
             <div class="col-sm-12">
                 <p class="text-center">
-                    <a href="javascript: {}" data-add-document="1">
+                    <a href="javascript: {}" data-add-document="1" data-uid="{uid}">
                         <i class="icons icon-arrow-right5"></i>
                         <span><f:translate key="fe.add_documents" /></span>
                     </a>

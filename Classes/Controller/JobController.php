@@ -15,6 +15,7 @@ namespace Pixelant\PxaIntelliplanJobs\Controller;
  ***/
 
 use Pixelant\PxaIntelliplanJobs\Domain\Model\Job;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Mvc\Exception\NoSuchArgumentException;
@@ -83,7 +84,20 @@ class JobController extends ActionController
      */
     public function showAction(Job $job = null)
     {
-        if ($job === null) {
+        list($lastPathSegment) = array_reverse(
+            GeneralUtility::trimExplode(
+                '/',
+                GeneralUtility::getIndpEnv('TYPO3_SITE_SCRIPT'),
+                true
+            )
+        );
+        // If job was not found
+        // or last path segment was numeric, that means that external job ad ID was provided,
+        // but job with such UID also exist
+        // this depends on realurl configuration.
+        if ($job === null ||
+            (MathUtility::canBeInterpretedAsInteger($lastPathSegment) && intval($lastPathSegment) === $job->getUid())
+        ) {
             $this->handleJobNotFound();
         }
 
@@ -102,7 +116,6 @@ class JobController extends ActionController
 
     /**
      * Try to find object by inteliplan ID and redirect to correct url if found
-     * @return Job
      */
     protected function handleJobNotFound()
     {

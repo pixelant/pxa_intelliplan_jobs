@@ -67,6 +67,11 @@ plugin.tx_pxaintelliplanjobs {
                 allowedMimeTypes = application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/pdf,application/rtf,text/rtf,text/plain
 
                 # If user doesn't have CV what checkboxes to render
+                cvQuestionsPreset {
+                    all {
+                        0.question = Hur snart kan du börja arbeta?
+                    }
+                }
                 noCvQuestionsPreset {
                     # Job occupation ID
                     8204 {

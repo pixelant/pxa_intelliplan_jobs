@@ -20,7 +20,6 @@ use Pixelant\PxaIntelliplanJobs\Domain\Model\DTO\ShareJob;
 use Pixelant\PxaIntelliplanJobs\Domain\Model\Job;
 use TYPO3\CMS\Core\Mail\MailMessage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Mvc\View\JsonView;
 use TYPO3\CMS\Extbase\Property\PropertyMappingConfiguration;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
@@ -29,7 +28,7 @@ use TYPO3\CMS\Fluid\View\StandaloneView;
 /**
  * JobController
  */
-class JobAjaxController extends ActionController
+class JobAjaxController extends AbstractAction
 {
     /**
      * Reserved upload field name for CV
@@ -149,20 +148,18 @@ class JobAjaxController extends ActionController
             : [];
 
         $isValidFields = $this->validateApplyJobFields($job, $fields, $validationRules, $requireCV);
-        $isValidFiles =  $this->validateApplyJobFiles($validationType);
+        $isValidFiles = $this->validateApplyJobFiles($validationType);
         $apiSuccess = false;
 
         if ($isValidFields && $isValidFiles) {
-            if (!$requireCV) {
-                $text = $this->generateTextFromAdditionalQuestions($job, $fields);
+            $text = $this->generateTextFromAdditionalQuestions($requireCV, $job, $fields);
 
-                if (!empty($text)) {
-                    $fields['comment'] = $text;
-                }
-                // This is not used anymore, additional question added as comment
-                // If CV is not required, create text file with information from radio buttons data
-                //$this->uploadFiles[self::CV_UPLOAD_FIELD_NAME] = $this->generateTextFileFromNotSupportedFields($text);
+            if (!empty($text)) {
+                $fields['comment'] = $text;
             }
+            // This is not used anymore, additional question added as comment
+            // If CV is not required, create text file with information from radio buttons data
+            //$this->uploadFiles[self::CV_UPLOAD_FIELD_NAME] = $this->generateTextFileFromNotSupportedFields($text);
 
             $intelliplanApi = GeneralUtility::makeInstance(IntelliplanApi::class);
             $response = $intelliplanApi->applyForJob($job, $fields, $this->uploadFiles);
@@ -378,24 +375,24 @@ class JobAjaxController extends ActionController
     protected function validateApplyJobFields(Job $job, array $fields, array $validationRules, bool $requireCV): bool
     {
         $isValid = true;
-        if (!$requireCV) {
-            // Simulate required values for additional questions
-            $questions = $this->settings['applyJob']['fields']['noCvQuestionsPreset'][$job->getJobOccupationId()]
-                ? $this->settings['applyJob']['fields']['noCvQuestionsPreset'][$job->getJobOccupationId()]
-                : [];
-            foreach ($questions as $questionNameTs => $question) {
-                $questionFieldName = JobController::ADDITIONAL_QUESTIONS_PREFIX . $questionNameTs;
-                // If this is not set and radio, simulate empty value
-                if (!isset($fields[$questionFieldName]) && isset($question['type']) && $question['type'] === 'radio') {
-                    $fields[$questionFieldName] = '';
-                } elseif (!empty($question['additional']) && ((int)$fields[$questionFieldName] === 1)) {
-                    // If question radio has additional questions and was marked as answer "Yes", need to make
-                    // all sub questions required too
-                    $subQuestionFieldName = JobController::ADDITIONAL_QUESTIONS_PREFIX . 'sub_question_' . $questionNameTs;
-                    $validationRules[$subQuestionFieldName] = 'required';
-                }
-                $validationRules[$questionFieldName] = 'required';
+
+        // Simulate required values for additional questions
+        $questions = $this->getQuestionsPreset(
+            $requireCV ? self::CV_QUESTION_PRESET : self::NO_CV_QUESTION_PRESET,
+            $job
+        );
+        foreach ($questions as $questionNameTs => $question) {
+            $questionFieldName = JobController::ADDITIONAL_QUESTIONS_PREFIX . $questionNameTs;
+            // If this is not set and radio, simulate empty value
+            if (!isset($fields[$questionFieldName]) && isset($question['type']) && $question['type'] === 'radio') {
+                $fields[$questionFieldName] = '';
+            } elseif (!empty($question['additional']) && ((int)$fields[$questionFieldName] === 1)) {
+                // If question radio has additional questions and was marked as answer "Yes", need to make
+                // all sub questions required too
+                $subQuestionFieldName = JobController::ADDITIONAL_QUESTIONS_PREFIX . 'sub_question_' . $questionNameTs;
+                $validationRules[$subQuestionFieldName] = 'required';
             }
+            $validationRules[$questionFieldName] = 'required';
         }
 
         $missingFields = array_diff(array_keys($validationRules), array_keys($fields));
@@ -514,15 +511,17 @@ class JobAjaxController extends ActionController
     /**
      * Get text from additional fields
      *
+     * @param bool $requireCV
      * @param array $fields
      * @return string
      */
-    protected function generateTextFromAdditionalQuestions(Job $job, array &$fields): string
+    protected function generateTextFromAdditionalQuestions(bool $requireCV, Job $job, array &$fields): string
     {
         $text = '';
-        $questions = $this->settings['applyJob']['fields']['noCvQuestionsPreset'][$job->getJobOccupationId()]
-            ? $this->settings['applyJob']['fields']['noCvQuestionsPreset'][$job->getJobOccupationId()]
-            : [];
+        $questions = $this->getQuestionsPreset(
+            $requireCV ? self::CV_QUESTION_PRESET : self::NO_CV_QUESTION_PRESET,
+            $job
+        );
 
         $i = 1;
         $prefixLength = strlen(JobController::ADDITIONAL_QUESTIONS_PREFIX);

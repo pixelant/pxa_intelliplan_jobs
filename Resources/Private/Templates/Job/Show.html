@@ -150,7 +150,7 @@
                                         <f:render section="applyJobFields" />
 
                                         <f:if condition="{noCvQuestionsPreset}">
-                                            <f:render section="noCvQuestionsPreset" arguments="{noCvQuestionsPreset: noCvQuestionsPreset, additionalQuestionsPrefix: additionalQuestionsPrefix, job: job}" />
+                                            <f:render section="questionsPreset" arguments="{questionsPreset: noCvQuestionsPreset, additionalQuestionsPrefix: additionalQuestionsPrefix, job: job}" />
                                         </f:if>
 
                                         <f:render section="addAdditionalFile" arguments="{uid: 2}" />
@@ -191,13 +191,16 @@
                             <div class="panel-box__body">
                                 <f:render section="applyJobFields" />
 
+                                <f:if condition="{cvQuestionsPreset}">
+                                    <f:render section="questionsPreset" arguments="{questionsPreset: cvQuestionsPreset, additionalQuestionsPrefix: additionalQuestionsPrefix, job: job}" />
+                                </f:if>
+
                                 <div class="form-additions">
                                     <div class="row">
                                         <f:render section="uploadFile" arguments="{label: 'add_cv', name: 'cv'}"/>
                                         <f:render section="uploadFile" arguments="{label: 'add_letter', name: 'letter'}"/>
                                     </div>
                                 </div>
-
                                 <f:render section="addAdditionalFile" arguments="{uid: 1}" />
 
                                 <div class="form-additions _has-text">
@@ -367,8 +370,8 @@
     </div>
 </f:section>
 
-<f:section name="noCvQuestionsPreset">
-    <f:for each="{noCvQuestionsPreset}" key="key" as="question">
+<f:section name="questionsPreset">
+    <f:for each="{questionsPreset}" key="key" as="question">
         <f:if condition="{question.type} == 'radio'">
             <f:then>
                 <f:render

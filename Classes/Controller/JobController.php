@@ -17,7 +17,6 @@ namespace Pixelant\PxaIntelliplanJobs\Controller;
 use Pixelant\PxaIntelliplanJobs\Domain\Model\Job;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
-use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Mvc\Exception\NoSuchArgumentException;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
@@ -25,7 +24,7 @@ use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 /**
  * JobController
  */
-class JobController extends ActionController
+class JobController extends AbstractAction
 {
     /**
      * Prefix for form name where additonal questions are rendered
@@ -101,15 +100,16 @@ class JobController extends ActionController
             $this->handleJobNotFound();
         }
 
-        if (!empty($job->getJobOccupationId())
-            && isset($this->settings['applyJob']['fields']['noCvQuestionsPreset'][$job->getJobOccupationId()])
-        ) {
-            $this->view->assign(
-                'noCvQuestionsPreset',
-                $this->settings['applyJob']['fields']['noCvQuestionsPreset'][$job->getJobOccupationId()]
-            );
-            $this->view->assign('additionalQuestionsPrefix', self::ADDITIONAL_QUESTIONS_PREFIX);
-        }
+        $this->view->assign(
+            self::NO_CV_QUESTION_PRESET,
+            $this->getQuestionsPreset(self::NO_CV_QUESTION_PRESET, $job)
+        );
+        $this->view->assign(
+            self::CV_QUESTION_PRESET,
+            $this->getQuestionsPreset(self::CV_QUESTION_PRESET, $job)
+        );
+
+        $this->view->assign('additionalQuestionsPrefix', self::ADDITIONAL_QUESTIONS_PREFIX);
         $this->view->assign('shareUrl', urlencode($this->getShareUrl($job)));
         $this->view->assign('job', $job);
     }

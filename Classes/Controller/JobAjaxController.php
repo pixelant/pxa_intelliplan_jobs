@@ -102,10 +102,15 @@ class JobAjaxController extends ActionController
         if ($isValid) {
             $mail = GeneralUtility::makeInstance(MailMessage::class);
 
+            $variables = [
+                'shareJob' => $shareJob,
+                'job' => $job
+            ];
+
             $mail
                 ->setTo($shareJob->getReceiverEmail(), $shareJob->getReceiverName())
                 ->setFrom($shareJob->getSenderEmail(), $shareJob->getSenderName())
-                ->setBody($this->getShareJobMessage($shareJob, $job), 'text/html')
+                ->setBody($this->getMailMessage($this->settings['shareJob']['template'], $variables), 'text/html')
                 ->setSubject($shareJob->getSubject())
                 ->send();
         }
@@ -224,10 +229,15 @@ class JobAjaxController extends ActionController
             }
         }
 
+        $success = $isValidFields && $isValidFiles && $apiSuccess;
+        if ($success && intval($this->settings['mail']['thankYouMail']['subject']) === 1) {
+            $emailField = $this->settings['mail']['thankYouMail']['apiMailField'];
+            $this->sendThankYouMail($fields[$emailField], $job);
+        }
         $this->view->assign(
             'value',
             [
-                'success' => $isValidFields && $isValidFiles && $apiSuccess,
+                'success' => $success,
                 'errors' => $this->responseErrors,
                 'successMessage' => $this->translate('fe.success_apply_job')
             ]
@@ -333,23 +343,24 @@ class JobAjaxController extends ActionController
     /**
      * Generate email message
      *
-     * @param ShareJob $shareJob
-     * @param Job $job
+     * @param string $template
+     * @param array $variables
      * @return string
      */
-    protected function getShareJobMessage(ShareJob $shareJob, Job $job): string
+    protected function getMailMessage(string $template, array $variables = []): string
     {
-        $templatePathAndFilename = GeneralUtility::getFileAbsFileName($this->settings['shareJob']['template']);
+        $templatePathAndFilename = GeneralUtility::getFileAbsFileName($template);
 
         /** @var StandaloneView $standaloneView */
         $standaloneView = $this->objectManager->get(StandaloneView::class);
         $standaloneView->setTemplatePathAndFilename($templatePathAndFilename);
         $standaloneView->setFormat('html');
 
-        $standaloneView
-            ->assign('settings', $this->settings)
-            ->assign('shareJob', $shareJob)
-            ->assign('job', $job);
+
+        $standaloneView->assignMultiple(array_merge(
+            ['settings' => $this->settings],
+            $variables
+        ));
 
         return $standaloneView->render();
     }
@@ -571,6 +582,35 @@ class JobAjaxController extends ActionController
         fclose($fp);
 
         return $tempFile;
+    }
+
+    /**
+     * Send thank you email
+     *
+     * @param string $receiver
+     * @param Job $job
+     */
+    protected function sendThankYouMail(string $receiver, Job $job)
+    {
+        $mail = GeneralUtility::makeInstance(MailMessage::class);
+
+        $variables = [
+            'job' => $job
+        ];
+        $senderName = $this->settings['mail']['senderName'] ?: 'Sender name';
+        $senderEmail = $this->settings['mail']['senderEmail']
+            ?: 'noreply@' . GeneralUtility::getIndpEnv('TYPO3_HOST_ONLY');
+        $subject = $this->settings['mail']['thankYouMail']['subject'] ?: 'No subject';
+
+        $mail
+            ->setTo($receiver)
+            ->setFrom($senderEmail, $senderName)
+            ->setBody(
+                $this->getMailMessage($this->settings['mail']['thankYouMail']['template'], $variables),
+                'text/html'
+            )
+            ->setSubject($subject)
+            ->send();
     }
 
     /**

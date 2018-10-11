@@ -64,6 +64,9 @@
 			<trans-unit id="fe.success_sent">
 				<source>Email was sent</source>
 			</trans-unit>
+			<trans-unit id="fe.success_apply_job_title">
+				<source>Thank you for your application!</source>
+			</trans-unit>
 			<trans-unit id="fe.success_apply_job">
 			    <source>Successfully applied job</source>
 			</trans-unit>

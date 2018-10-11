@@ -236,6 +236,7 @@ class JobAjaxController extends AbstractAction
             [
                 'success' => $success,
                 'errors' => $this->responseErrors,
+                'successTitle' => $this->translate('fe.success_apply_job_title'),
                 'successMessage' => $this->translate('fe.success_apply_job')
             ]
         );

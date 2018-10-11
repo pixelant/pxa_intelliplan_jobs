@@ -56,7 +56,15 @@ const PxaIntelliplanJobs = (function () {
 
 					if (that.isFormApplyJobSubmitAllowed($form)) {
 						that.sendAjax($form, function (data) {
-							$form.replaceWith(that.getMessage(data.successMessage, true));
+							let html = '<div class="apply-job-success-message">';
+							html += '<h4>' + data.successTitle + '</h4>';
+							html += that.getMessage(data.successMessage, true);
+							html += '</div>';
+
+							let formParent = $form.parents(that.settings.formParent);
+
+							formParent.html(html);
+							that.scrollToSmooth(formParent);
 						});
 					}
 				});
@@ -374,8 +382,9 @@ const PxaIntelliplanJobs = (function () {
 		 * @param scrollFix
 		 */
 		scrollToSmooth: function (target, scrollFix) {
-			let hash = target;
-			target = $(target);
+			target = (typeof target === 'string') ? $(target) : target;
+
+			scrollFix = scrollFix || this.settings.scrollFix;
 
 			let scrollFixParts = scrollFix.split('|'), // First value is for tables, second desktop;
 				isDesktop = window.outerWidth >= 992;
@@ -383,7 +392,7 @@ const PxaIntelliplanJobs = (function () {
 			scrollFix = parseInt(isDesktop ? scrollFixParts[1] : scrollFixParts[0]);
 
 			$('html, body').animate({
-				scrollTop: $(hash).offset().top + scrollFix
+				scrollTop: target.offset().top + scrollFix
 			}, 800);
 		}
 	};
@@ -409,6 +418,7 @@ $(document).ready(function () {
 		errorFieldClass: 'has-error',
 
 		formApplyJob: 'form[name="apply-job"]',
+		formParent: '.panel-box',
 		acceptTerms: '.acceptTerms',
 
 		addAdditionalFileButton: '[data-add-document="1"]',
@@ -419,6 +429,7 @@ $(document).ready(function () {
 		fileUploadClear: '.js__file-upload__clear',
 
 		radioWithSubQuestionWrapper: '[data-sub-question-name]',
-		scrollButton: '[data-job-scroll="1"]'
+		scrollButton: '[data-job-scroll="1"]',
+		scrollFix: '-40|-180'
 	});
 });

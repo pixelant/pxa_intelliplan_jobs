@@ -151,7 +151,7 @@ class JobAjaxController extends AbstractAction
         $isValidFiles = $this->validateApplyJobFiles($validationType);
         $apiSuccess = false;
 
-        if ($isValidFields && $isValidFiles) {
+        if (false && $isValidFields && $isValidFiles) {
             $text = $this->generateTextFromAdditionalQuestions($requireCV, $job, $fields);
 
             if (!empty($text)) {
@@ -227,14 +227,14 @@ class JobAjaxController extends AbstractAction
         }
 
         $success = $isValidFields && $isValidFiles && $apiSuccess;
-        if ($success && intval($this->settings['mail']['thankYouMail']['subject']) === 1) {
+        if (false && $success && intval($this->settings['mail']['thankYouMail']['subject']) === 1) {
             $emailField = $this->settings['mail']['thankYouMail']['apiMailField'];
             $this->sendThankYouMail($fields[$emailField], $job);
         }
         $this->view->assign(
             'value',
             [
-                'success' => $success,
+                'success' => true,
                 'errors' => $this->responseErrors,
                 'successMessage' => $this->translate('fe.success_apply_job')
             ]

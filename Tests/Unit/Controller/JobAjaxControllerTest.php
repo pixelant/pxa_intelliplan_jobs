@@ -176,7 +176,7 @@ class JobAjaxControllerTest extends UnitTestCase
      */
     public function validateApplyJobPassIfAllRequiredFilesUploadedAndAllAllowed()
     {
-        $settings['applyJob']['fields']['requiredFilesFields'] = 'cv,letter';
+        $settings['applyJob']['fields']['requiredFilesFields']['validationCV'] = 'cv,letter';
         $settings['applyJob']['fields']['allowedFileTypes'] = 'doc,docx';
         $settings['applyJob']['fields']['allowedMimeTypes'] = 'text/plain';
 
@@ -212,7 +212,7 @@ class JobAjaxControllerTest extends UnitTestCase
             ->method('getMimeType')
             ->willReturn('text/plain');
 
-        $this->assertTrue($this->subject->_call('validateApplyJobFiles'));
+        $this->assertTrue($this->subject->_call('validateApplyJobFiles', 'validationCV'));
 
         $_FILES = $_FILES_BACKUP;
     }

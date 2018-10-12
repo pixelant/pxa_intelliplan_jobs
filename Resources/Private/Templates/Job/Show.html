@@ -356,6 +356,7 @@
                             <f:translate key="placeholder.{field}" />
                         </label>
                         <f:form.textfield
+                                placeholder="{f:if(condition:'{field} == \'phone_number_home\'', then: '000-000 00 00', else: '')}"
                                 class="form-control"
                                 name="applyJob[{field}]" />
                     </div>

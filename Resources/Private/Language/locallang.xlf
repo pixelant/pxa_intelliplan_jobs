@@ -145,6 +145,9 @@
 			<trans-unit id="fe.add_documents">
 			    <source>Add additional documents</source>
 			</trans-unit>
+			<trans-unit id="fe.add_document_no_cv">
+			    <source>Add document</source>
+			</trans-unit>
 			<trans-unit id="fe.add_documents_tip">
 				<source>Ex. driver's license, diploma, certificate of study</source>
 			</trans-unit>

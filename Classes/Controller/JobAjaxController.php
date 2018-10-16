@@ -228,8 +228,7 @@ class JobAjaxController extends AbstractAction
 
         $success = $isValidFields && $isValidFiles && $apiSuccess;
         if ($success && intval($this->settings['mail']['thankYouMail']['enable']) === 1) {
-            $emailField = $this->settings['mail']['thankYouMail']['apiMailField'];
-            $this->sendThankYouMail($fields[$emailField], $job);
+            $this->sendThankYouMail($fields, $job);
         }
         $this->view->assign(
             'value',
@@ -588,15 +587,17 @@ class JobAjaxController extends AbstractAction
     /**
      * Send thank you email
      *
-     * @param string $receiver
+     * @param array $fields
      * @param Job $job
      */
-    protected function sendThankYouMail(string $receiver, Job $job)
+    protected function sendThankYouMail(array $fields, Job $job)
     {
+        $receiver = $fields[$this->settings['mail']['thankYouMail']['apiMailField']];
         $mail = GeneralUtility::makeInstance(MailMessage::class);
 
         $variables = [
-            'job' => $job
+            'job' => $job,
+            'fields' => $fields,
         ];
         $senderName = $this->settings['mail']['senderName'] ?: 'Sender name';
         $senderEmail = $this->settings['mail']['senderEmail']

@@ -178,6 +178,19 @@
 			<trans-unit id="mail.subject">
 				<source>Job tip from %s: "%s"</source>
 			</trans-unit>
+			
+			<trans-unit id="mail.hi">
+			    <source>Hi</source>
+			</trans-unit>
+			<trans-unit id="mail.thanks.text1">
+			    <source>Thank you for your application for the service as "%s", as you did at %s.</source>
+			</trans-unit>
+			<trans-unit id="mail.thanks.text2">
+			    <source>We have received your application and process it as soon as possible.</source>
+			</trans-unit>
+			<trans-unit id="mail.thanks.regards">
+			    <source>With kind regards</source>
+			</trans-unit>
 			<!--EMAIL LABELS:END-->
 
 			<trans-unit id="fe.professional_area">

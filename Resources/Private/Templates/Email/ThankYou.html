@@ -12,10 +12,11 @@
 <p>
     <f:translate key="mail.thanks.regards" extensionName="PxaIntelliplanJobs" />
     <br />
-    {settings.shareJob.siteName}<br />
+    {settings.shareJob.siteName}<br /><br />
     <f:if condition="{settings.mail.thankYouMail.logo}">
         <f:image src="{settings.mail.thankYouMail.logo}"
                  width="149"
+                 absolute="1"
                  title="{settings.shareJob.siteName}"
                  alt="{settings.shareJob.siteName}" />
     </f:if>

@@ -55,6 +55,9 @@ plugin.tx_pxaintelliplanjobs {
 
             # cat=plugin.tx_pxaintelliplanjobs/mailsettings/040; type=string; label=LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:ts.thankYouMail.subject
             thankYouMail.subject =
+
+            # cat=plugin.tx_pxaintelliplanjobs/mailsettings/050; type=string; label=LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:ts.thankYouMail.logo
+            thankYouMail.logo =
         }
 
         # cat=plugin.tx_pxaintelliplanjobs/mailsettings/050; type=string; label=LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:ts.siteName

@@ -224,6 +224,9 @@
 			<trans-unit id="ts.thankYouMail.subject">
 			    <source>Subject of "thank you email"</source>
 			</trans-unit>
+			<trans-unit id="ts.thankYouMail.logo">
+			    <source>Mail logo</source>
+			</trans-unit>
 			<!--Typoscript constant editor:END-->
 
 			<!--Extension manager:START-->

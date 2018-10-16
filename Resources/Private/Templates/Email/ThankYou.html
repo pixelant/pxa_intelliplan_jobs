@@ -1,3 +1,24 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
-Thank you
+<p>
+    <f:translate key="mail.hi" extensionName="PxaIntelliplanJobs" />
+    {fields.first_name} {fields.surname}!
+</p>
+<p>
+    <f:translate key="mail.thanks.text1"
+                 extensionName="PxaIntelliplanJobs"
+                 arguments="{0: job.title, 1: settings.shareJob.siteDomain}" />
+    <f:translate key="mail.thanks.text2" extensionName="PxaIntelliplanJobs" />
+</p>
+<p>
+    <f:translate key="mail.thanks.regards" extensionName="PxaIntelliplanJobs" />
+    <br />
+    {settings.shareJob.siteName}<br /><br />
+    <f:if condition="{settings.mail.thankYouMail.logo}">
+        <f:image src="{settings.mail.thankYouMail.logo}"
+                 width="149"
+                 absolute="1"
+                 title="{settings.shareJob.siteName}"
+                 alt="{settings.shareJob.siteName}" />
+    </f:if>
+</p>
 </html>

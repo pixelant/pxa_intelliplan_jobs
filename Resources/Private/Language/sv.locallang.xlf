@@ -187,6 +187,19 @@
 			<trans-unit id="mail.subject">
 				<target>Jobbtips från %s: "%s"</target>
 			</trans-unit>
+
+			<trans-unit id="mail.hi">
+				<target>Hej</target>
+			</trans-unit>
+			<trans-unit id="mail.thanks.text1">
+				<target>Tack för din ansökan till tjänsten som "%s", som du gjort på %s.</target>
+			</trans-unit>
+			<trans-unit id="mail.thanks.text2">
+				<target>Vi har tagit emot din ansökan och behandlar den så snart som möjligt.</target>
+			</trans-unit>
+			<trans-unit id="mail.thanks.regards">
+				<target>Med vänlig hälsning</target>
+			</trans-unit>
 			<!--EMAIL LABELS:END-->
 
 			<trans-unit id="fe.professional_area">

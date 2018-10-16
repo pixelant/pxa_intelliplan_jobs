@@ -173,6 +173,7 @@ plugin.tx_pxaintelliplanjobs {
                 subject = {$plugin.tx_pxaintelliplanjobs.settings.mail.thankYouMail.subject}
                 template = EXT:pxa_intelliplan_jobs/Resources/Private/Templates/Email/ThankYou.html
                 apiMailField = email
+                logo = {$plugin.tx_pxaintelliplanjobs.settings.mail.thankYouMail.logo}
             }
         }
     }

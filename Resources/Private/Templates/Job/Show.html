@@ -154,7 +154,7 @@
                                             <f:render section="questionsPreset" arguments="{questionsPreset: noCvQuestionsPreset, additionalQuestionsPrefix: additionalQuestionsPrefix, job: job}" />
                                         </f:if>
 
-                                        <f:render section="addAdditionalFile" arguments="{uid: 2}" />
+                                        <f:render section="addAdditionalFile" arguments="{uid: 2, noCvForm: 1}" />
 
                                         <div class="form-additions">
                                             <f:render section="agreeOnTerms" />
@@ -323,7 +323,7 @@
                 <p class="text-center">
                     <a href="javascript: {}" data-add-document="1" data-uid="{uid}">
                         <i class="icons icon-arrow-right5"></i>
-                        <span><f:translate key="fe.add_documents" /></span>
+                        <span><f:translate key="{f:if(condition: noCvForm, then: 'fe.add_document_no_cv', else: 'fe.add_documents')}" /></span>
                     </a>
                 </p>
                 <p class="text-center"><f:translate key="fe.add_documents_tip" /></p>

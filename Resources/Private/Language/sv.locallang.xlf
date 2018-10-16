@@ -121,6 +121,9 @@
 			<trans-unit id="fe.add_documents">
 				<target>Lägg till ytterligare dokument</target>
 			</trans-unit>
+			<trans-unit id="fe.add_document_no_cv">
+			    <target>Lägg till dokument</target>
+			</trans-unit>
 			<trans-unit id="fe.add_documents_tip">
 				<target>Ex. truckförarbevis, examensbevis, studieintyg</target>
 			</trans-unit>

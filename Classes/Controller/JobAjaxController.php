@@ -227,7 +227,7 @@ class JobAjaxController extends AbstractAction
         }
 
         $success = $isValidFields && $isValidFiles && $apiSuccess;
-        if ($success && intval($this->settings['mail']['thankYouMail']['subject']) === 1) {
+        if ($success && intval($this->settings['mail']['thankYouMail']['enable']) === 1) {
             $emailField = $this->settings['mail']['thankYouMail']['apiMailField'];
             $this->sendThankYouMail($fields[$emailField], $job);
         }

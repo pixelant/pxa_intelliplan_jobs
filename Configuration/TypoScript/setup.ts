@@ -29,7 +29,7 @@ plugin.tx_pxaintelliplanjobs {
 
         shareJob {
             allowMappingProperties = receiverName,receiverEmail,senderName,senderEmail,shareUrl
-            defaultSenderEmail = {$plugin.tx_pxaintelliplanjobs.settings.shareJob.defaultSenderEmail}
+            defaultSenderEmail = {$plugin.tx_pxaintelliplanjobs.settings.mail.senderEmail}
             siteName = {$plugin.tx_pxaintelliplanjobs.settings.shareJob.siteName}
             siteDomain = {$plugin.tx_pxaintelliplanjobs.settings.shareJob.siteDomain}
 
@@ -60,11 +60,18 @@ plugin.tx_pxaintelliplanjobs {
                 # Exclude some fields when doing SetPersonalInformation
                 excludeSetFields = recruit_interest,success,staffing_interest
 
-                requiredFilesFields = cv,letter
+                requiredFilesFields {
+                    validationCV = cv,letter
+                }
                 allowedFileTypes = doc,docx,pdf,rtf,txt
                 allowedMimeTypes = application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/pdf,application/rtf,text/rtf,text/plain
 
                 # If user doesn't have CV what checkboxes to render
+                cvQuestionsPreset {
+                    all {
+                        0.question = Hur snart kan du börja arbeta?
+                    }
+                }
                 noCvQuestionsPreset {
                     # Job occupation ID
                     8204 {
@@ -156,6 +163,17 @@ plugin.tx_pxaintelliplanjobs {
             }
 
             cvOptionalCategoryId = 8195
+        }
+
+        mail {
+            senderName = {$plugin.tx_pxaintelliplanjobs.settings.mail.senderName}
+            senderEmail = {$plugin.tx_pxaintelliplanjobs.settings.mail.senderEmail}
+            thankYouMail {
+                enable = {$plugin.tx_pxaintelliplanjobs.settings.mail.thankYouMail.enable}
+                subject = {$plugin.tx_pxaintelliplanjobs.settings.mail.thankYouMail.subject}
+                template = EXT:pxa_intelliplan_jobs/Resources/Private/Templates/Email/ThankYou.html
+                apiMailField = email
+            }
         }
     }
 }

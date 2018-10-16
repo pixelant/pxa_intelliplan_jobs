@@ -67,7 +67,8 @@ class JobAjaxControllerTest extends UnitTestCase
 
         $this->subject->_set('settings', $settings);
 
-        $this->subject->_callRef('generateTextFromAdditionalQuestions', $job, $fields);
+        $requireCV = false;
+        $this->subject->_callRef('generateTextFromAdditionalQuestions', $requireCV, $job, $fields);
 
         $this->assertEquals($fieldsExpect, $fields);
     }
@@ -150,7 +151,7 @@ class JobAjaxControllerTest extends UnitTestCase
      */
     public function validateApplyJobFilesFailsIfNotAllRequiredFilesUploadedOrSomeAreNotAllowed($filesUpload, $mimeType)
     {
-        $settings['applyJob']['fields']['requiredFilesFields'] = 'cv,letter';
+        $settings['applyJob']['fields']['requiredFilesFields']['validationCV'] = 'cv,letter';
         $settings['applyJob']['fields']['allowedFileTypes'] = 'doc,docx';
         $settings['applyJob']['fields']['allowedMimeTypes'] = 'text/plain';
 
@@ -165,7 +166,7 @@ class JobAjaxControllerTest extends UnitTestCase
             ->method('getMimeType')
             ->willReturn($mimeType);
 
-        $this->assertFalse($this->subject->_call('validateApplyJobFiles'));
+        $this->assertFalse($this->subject->_call('validateApplyJobFiles', 'validationCV'));
 
         $_FILES = $_FILES_BACKUP;
     }
@@ -175,7 +176,7 @@ class JobAjaxControllerTest extends UnitTestCase
      */
     public function validateApplyJobPassIfAllRequiredFilesUploadedAndAllAllowed()
     {
-        $settings['applyJob']['fields']['requiredFilesFields'] = 'cv,letter';
+        $settings['applyJob']['fields']['requiredFilesFields']['validationCV'] = 'cv,letter';
         $settings['applyJob']['fields']['allowedFileTypes'] = 'doc,docx';
         $settings['applyJob']['fields']['allowedMimeTypes'] = 'text/plain';
 
@@ -211,7 +212,7 @@ class JobAjaxControllerTest extends UnitTestCase
             ->method('getMimeType')
             ->willReturn('text/plain');
 
-        $this->assertTrue($this->subject->_call('validateApplyJobFiles'));
+        $this->assertTrue($this->subject->_call('validateApplyJobFiles', 'validationCV'));
 
         $_FILES = $_FILES_BACKUP;
     }

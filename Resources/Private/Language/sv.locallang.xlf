@@ -154,8 +154,11 @@
 			<trans-unit id="fe.success_sent">
 				<target>E-postmeddelandet har skickats.</target>
 			</trans-unit>
+			<trans-unit id="fe.success_apply_job_title">
+			    <target>Tack för din ansökan!</target>
+			</trans-unit>
 			<trans-unit id="fe.success_apply_job">
-				<target>Jobbansökan har skickats</target>
+				<target>Vi har tagit emot din ansökan och behandlar den så snart som möjligt.</target>
 			</trans-unit>
 			<trans-unit id="fe.application">
 				<target>Ansökan</target>

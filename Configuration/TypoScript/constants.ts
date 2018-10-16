@@ -28,15 +28,6 @@ plugin.tx_pxaintelliplanjobs {
         # cat=plugin.tx_pxaintelliplanjobs/pxaintelliplanjobs/030; type=options[Yes=1,No=0]; label=LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:ts.showShareForm
         showShareForm = 1
 
-        # cat=plugin.tx_pxaintelliplanjobs/pxaintelliplanjobs/040; type=string; label=LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:ts.defaultSenderEmail
-        shareJob.defaultSenderEmail = noreply@site.com
-
-        # cat=plugin.tx_pxaintelliplanjobs/pxaintelliplanjobs/050; type=string; label=LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:ts.siteName
-        shareJob.siteName = Site name
-
-        # cat=plugin.tx_pxaintelliplanjobs/pxaintelliplanjobs/060; type=string; label=LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:ts.siteDomain
-        shareJob.siteDomain = www.site.com
-
         # cat=plugin.tx_pxaintelliplanjobs/pxaintelliplanjobs/070; type=string; label=LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:ts.termsLink
         applyJob.termsLink =
 
@@ -48,5 +39,28 @@ plugin.tx_pxaintelliplanjobs {
 
         # cat=plugin.tx_pxaintelliplanjobs/pxaintelliplanjobs/100; type=string; label=LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:ts.singleView.image.defaultLogoImage
         singleView.image.defaultLogoImage =
+    }
+
+    # customsubcategory=mailsettings=Mail settings
+    settings {
+        mail {
+            # cat=plugin.tx_pxaintelliplanjobs/mailsettings/010; type=string; label=LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:ts.senderName
+            senderName = Sender
+
+            # cat=plugin.tx_pxaintelliplanjobs/mailsettings/020; type=string; label=LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:ts.senderEmail
+            senderEmail = noreply@site.com
+
+            # cat=plugin.tx_pxaintelliplanjobs/mailsettings/030; type=options[Yes=1,No=0]; label=LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:ts.thankYouMail.enable
+            thankYouMail.enable = 1
+
+            # cat=plugin.tx_pxaintelliplanjobs/mailsettings/040; type=string; label=LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:ts.thankYouMail.subject
+            thankYouMail.subject =
+        }
+
+        # cat=plugin.tx_pxaintelliplanjobs/mailsettings/050; type=string; label=LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:ts.siteName
+        shareJob.siteName = Site name
+
+        # cat=plugin.tx_pxaintelliplanjobs/mailsettings/060; type=string; label=LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:ts.siteDomain
+        shareJob.siteDomain = www.site.com
     }
 }

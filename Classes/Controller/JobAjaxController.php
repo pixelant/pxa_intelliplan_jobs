@@ -20,7 +20,6 @@ use Pixelant\PxaIntelliplanJobs\Domain\Model\DTO\ShareJob;
 use Pixelant\PxaIntelliplanJobs\Domain\Model\Job;
 use TYPO3\CMS\Core\Mail\MailMessage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Mvc\View\JsonView;
 use TYPO3\CMS\Extbase\Property\PropertyMappingConfiguration;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
@@ -29,7 +28,7 @@ use TYPO3\CMS\Fluid\View\StandaloneView;
 /**
  * JobController
  */
-class JobAjaxController extends ActionController
+class JobAjaxController extends AbstractAction
 {
     /**
      * Reserved upload field name for CV
@@ -102,10 +101,15 @@ class JobAjaxController extends ActionController
         if ($isValid) {
             $mail = GeneralUtility::makeInstance(MailMessage::class);
 
+            $variables = [
+                'shareJob' => $shareJob,
+                'job' => $job
+            ];
+
             $mail
                 ->setTo($shareJob->getReceiverEmail(), $shareJob->getReceiverName())
                 ->setFrom($shareJob->getSenderEmail(), $shareJob->getSenderName())
-                ->setBody($this->getShareJobMessage($shareJob, $job), 'text/html')
+                ->setBody($this->getMailMessage($this->settings['shareJob']['template'], $variables), 'text/html')
                 ->setSubject($shareJob->getSubject())
                 ->send();
         }
@@ -144,20 +148,18 @@ class JobAjaxController extends ActionController
             : [];
 
         $isValidFields = $this->validateApplyJobFields($job, $fields, $validationRules, $requireCV);
-        $isValidFiles = !$requireCV || $this->validateApplyJobFiles();
+        $isValidFiles = $this->validateApplyJobFiles($validationType);
         $apiSuccess = false;
 
         if ($isValidFields && $isValidFiles) {
-            if (!$requireCV) {
-                $text = $this->generateTextFromAdditionalQuestions($job, $fields);
+            $text = $this->generateTextFromAdditionalQuestions($requireCV, $job, $fields);
 
-                if (!empty($text)) {
-                    $fields['comment'] = $text;
-                }
-                // This is not used anymore, additional question added as comment
-                // If CV is not required, create text file with information from radio buttons data
-                //$this->uploadFiles[self::CV_UPLOAD_FIELD_NAME] = $this->generateTextFileFromNotSupportedFields($text);
+            if (!empty($text)) {
+                $fields['comment'] = $text;
             }
+            // This is not used anymore, additional question added as comment
+            // If CV is not required, create text file with information from radio buttons data
+            //$this->uploadFiles[self::CV_UPLOAD_FIELD_NAME] = $this->generateTextFileFromNotSupportedFields($text);
 
             $intelliplanApi = GeneralUtility::makeInstance(IntelliplanApi::class);
             $response = $intelliplanApi->applyForJob($job, $fields, $this->uploadFiles);
@@ -224,11 +226,17 @@ class JobAjaxController extends ActionController
             }
         }
 
+        $success = $isValidFields && $isValidFiles && $apiSuccess;
+        if ($success && intval($this->settings['mail']['thankYouMail']['enable']) === 1) {
+            $emailField = $this->settings['mail']['thankYouMail']['apiMailField'];
+            $this->sendThankYouMail($fields[$emailField], $job);
+        }
         $this->view->assign(
             'value',
             [
-                'success' => $isValidFields && $isValidFiles && $apiSuccess,
+                'success' => $success,
                 'errors' => $this->responseErrors,
+                'successTitle' => $this->translate('fe.success_apply_job_title'),
                 'successMessage' => $this->translate('fe.success_apply_job')
             ]
         );
@@ -237,12 +245,13 @@ class JobAjaxController extends ActionController
     /**
      * Check if all required files are provided
      *
+     * @param string $validationType
      * @return bool
      */
-    protected function validateApplyJobFiles(): bool
+    protected function validateApplyJobFiles(string $validationType): bool
     {
         $isValid = true;
-        $requiredFiles = $this->settings['applyJob']['fields']['requiredFilesFields'] ?? '';
+        $requiredFiles = $this->settings['applyJob']['fields']['requiredFilesFields'][$validationType] ?? '';
 
         $uploadedFilesErrors = $_FILES['tx_pxaintelliplanjobs_pi2']['error']['applyJobFiles'] ?? [];
         $uploadedFilesNames = $_FILES['tx_pxaintelliplanjobs_pi2']['name']['applyJobFiles'] ?? [];
@@ -333,23 +342,24 @@ class JobAjaxController extends ActionController
     /**
      * Generate email message
      *
-     * @param ShareJob $shareJob
-     * @param Job $job
+     * @param string $template
+     * @param array $variables
      * @return string
      */
-    protected function getShareJobMessage(ShareJob $shareJob, Job $job): string
+    protected function getMailMessage(string $template, array $variables = []): string
     {
-        $templatePathAndFilename = GeneralUtility::getFileAbsFileName($this->settings['shareJob']['template']);
+        $templatePathAndFilename = GeneralUtility::getFileAbsFileName($template);
 
         /** @var StandaloneView $standaloneView */
         $standaloneView = $this->objectManager->get(StandaloneView::class);
         $standaloneView->setTemplatePathAndFilename($templatePathAndFilename);
         $standaloneView->setFormat('html');
 
-        $standaloneView
-            ->assign('settings', $this->settings)
-            ->assign('shareJob', $shareJob)
-            ->assign('job', $job);
+
+        $standaloneView->assignMultiple(array_merge(
+            ['settings' => $this->settings],
+            $variables
+        ));
 
         return $standaloneView->render();
     }
@@ -366,24 +376,24 @@ class JobAjaxController extends ActionController
     protected function validateApplyJobFields(Job $job, array $fields, array $validationRules, bool $requireCV): bool
     {
         $isValid = true;
-        if (!$requireCV) {
-            // Simulate required values for additional questions
-            $questions = $this->settings['applyJob']['fields']['noCvQuestionsPreset'][$job->getJobOccupationId()]
-                ? $this->settings['applyJob']['fields']['noCvQuestionsPreset'][$job->getJobOccupationId()]
-                : [];
-            foreach ($questions as $questionNameTs => $question) {
-                $questionFieldName = JobController::ADDITIONAL_QUESTIONS_PREFIX . $questionNameTs;
-                // If this is not set and radio, simulate empty value
-                if (!isset($fields[$questionFieldName]) && isset($question['type']) && $question['type'] === 'radio') {
-                    $fields[$questionFieldName] = '';
-                } elseif (!empty($question['additional']) && ((int)$fields[$questionFieldName] === 1)) {
-                    // If question radio has additional questions and was marked as answer "Yes", need to make
-                    // all sub questions required too
-                    $subQuestionFieldName = JobController::ADDITIONAL_QUESTIONS_PREFIX . 'sub_question_' . $questionNameTs;
-                    $validationRules[$subQuestionFieldName] = 'required';
-                }
-                $validationRules[$questionFieldName] = 'required';
+
+        // Simulate required values for additional questions
+        $questions = $this->getQuestionsPreset(
+            $requireCV ? self::CV_QUESTION_PRESET : self::NO_CV_QUESTION_PRESET,
+            $job
+        );
+        foreach ($questions as $questionNameTs => $question) {
+            $questionFieldName = JobController::ADDITIONAL_QUESTIONS_PREFIX . $questionNameTs;
+            // If this is not set and radio, simulate empty value
+            if (!isset($fields[$questionFieldName]) && isset($question['type']) && $question['type'] === 'radio') {
+                $fields[$questionFieldName] = '';
+            } elseif (!empty($question['additional']) && ((int)$fields[$questionFieldName] === 1)) {
+                // If question radio has additional questions and was marked as answer "Yes", need to make
+                // all sub questions required too
+                $subQuestionFieldName = JobController::ADDITIONAL_QUESTIONS_PREFIX . 'sub_question_' . $questionNameTs;
+                $validationRules[$subQuestionFieldName] = 'required';
             }
+            $validationRules[$questionFieldName] = 'required';
         }
 
         $missingFields = array_diff(array_keys($validationRules), array_keys($fields));
@@ -502,15 +512,17 @@ class JobAjaxController extends ActionController
     /**
      * Get text from additional fields
      *
+     * @param bool $requireCV
      * @param array $fields
      * @return string
      */
-    protected function generateTextFromAdditionalQuestions(Job $job, array &$fields): string
+    protected function generateTextFromAdditionalQuestions(bool $requireCV, Job $job, array &$fields): string
     {
         $text = '';
-        $questions = $this->settings['applyJob']['fields']['noCvQuestionsPreset'][$job->getJobOccupationId()]
-            ? $this->settings['applyJob']['fields']['noCvQuestionsPreset'][$job->getJobOccupationId()]
-            : [];
+        $questions = $this->getQuestionsPreset(
+            $requireCV ? self::CV_QUESTION_PRESET : self::NO_CV_QUESTION_PRESET,
+            $job
+        );
 
         $i = 1;
         $prefixLength = strlen(JobController::ADDITIONAL_QUESTIONS_PREFIX);
@@ -571,6 +583,35 @@ class JobAjaxController extends ActionController
         fclose($fp);
 
         return $tempFile;
+    }
+
+    /**
+     * Send thank you email
+     *
+     * @param string $receiver
+     * @param Job $job
+     */
+    protected function sendThankYouMail(string $receiver, Job $job)
+    {
+        $mail = GeneralUtility::makeInstance(MailMessage::class);
+
+        $variables = [
+            'job' => $job
+        ];
+        $senderName = $this->settings['mail']['senderName'] ?: 'Sender name';
+        $senderEmail = $this->settings['mail']['senderEmail']
+            ?: 'noreply@' . GeneralUtility::getIndpEnv('TYPO3_HOST_ONLY');
+        $subject = $this->settings['mail']['thankYouMail']['subject'] ?: 'No subject';
+
+        $mail
+            ->setTo($receiver)
+            ->setFrom($senderEmail, $senderName)
+            ->setBody(
+                $this->getMailMessage($this->settings['mail']['thankYouMail']['template'], $variables),
+                'text/html'
+            )
+            ->setSubject($subject)
+            ->send();
     }
 
     /**

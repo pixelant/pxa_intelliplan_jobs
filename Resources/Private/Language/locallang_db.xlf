@@ -194,9 +194,6 @@
 			<trans-unit id="ts.showShareForm">
 			    <source>Show share form on job single view</source>
 			</trans-unit>
-			<trans-unit id="ts.defaultSenderEmail">
-			    <source>Default sender email (Share function)</source>
-			</trans-unit>
 			<trans-unit id="ts.termsLink">
 			    <source>Accept terms link (Typolink format)</source>
 			</trans-unit>
@@ -207,13 +204,25 @@
 				<source>Image height (additional images on single view)</source>
 			</trans-unit>
 			<trans-unit id="ts.siteName">
-			    <source>Site name in footer</source>
+			    <source>Site name in footer (share)</source>
 			</trans-unit>
 			<trans-unit id="ts.siteDomain">
-			    <source>Site domain in footer</source>
+			    <source>Site domain in footer (share)</source>
 			</trans-unit>
 			<trans-unit id="ts.singleView.image.defaultLogoImage">
 			    <source>Default image path if no logo set for job ad</source>
+			</trans-unit>
+			<trans-unit id="ts.senderName">
+			    <source>Sender name</source>
+			</trans-unit>
+			<trans-unit id="ts.senderEmail">
+			    <source>Sender email</source>
+			</trans-unit>
+			<trans-unit id="ts.thankYouMail.enable">
+			    <source>Send "thank you email" to participant</source>
+			</trans-unit>
+			<trans-unit id="ts.thankYouMail.subject">
+			    <source>Subject of "thank you email"</source>
 			</trans-unit>
 			<!--Typoscript constant editor:END-->
 

@@ -128,8 +128,9 @@
     </div>
 
     <div id="pxa-apply-job">
-        <div class="light-gray-background">
+        <div class="panel-box__bg-wrp">
             <f:if condition="{job.jobCategoryId} == {settings.jobTypes.cvOptionalCategoryId}">
+                <!--No cv form starts-->
                 <div class="container">
                     <div class="row">
                         <div class="col-md-8 center-block">
@@ -148,9 +149,13 @@
                                         arguments="{job: job}">
                                     <div class="panel-box__body">
                                         <f:render section="applyJobFields" />
+
                                         <f:if condition="{noCvQuestionsPreset}">
-                                            <f:render section="noCvQuestionsPreset" arguments="{noCvQuestionsPreset: noCvQuestionsPreset, additionalQuestionsPrefix: additionalQuestionsPrefix, job: job}" />
+                                            <f:render section="questionsPreset" arguments="{questionsPreset: noCvQuestionsPreset, additionalQuestionsPrefix: additionalQuestionsPrefix, job: job}" />
                                         </f:if>
+
+                                        <f:render section="addAdditionalFile" arguments="{uid: 2}" />
+
                                         <div class="form-additions">
                                             <f:render section="agreeOnTerms" />
                                         </div>
@@ -165,51 +170,51 @@
                     </div>
                 </div>
             </f:if>
-        </div>
-        <div class="panel-box__bg-wrp">
+
+            <!--CV form starts-->
             <div class="container">
                 <div class="row">
                     <div class="col-md-8 center-block">
                         <div class="panel-box">
-                        <div class="form-header text-center">
-                            <h2><f:translate key="fe.application" /></h2>
-                        </div>
+                            <div class="panel-header{f:if(condition: '{job.jobCategoryId} == {settings.jobTypes.cvOptionalCategoryId}', then: ' _open', else: '')}">
+                                <h2><f:translate key="fe.application" /></h2>
+                            </div>
 
-                        <f:form
-                                enctype="multipart/form-data"
-                                name="apply-job"
-                                action="applyJob"
-                                controller="JobAjax"
-                                pluginName="Pi2"
-                                pageType="{settings.sharePageType}"
-                                arguments="{job: job, requireCV: 1}">
+                            <f:form
+                                    enctype="multipart/form-data"
+                                    class="{f:if(condition: '{job.jobCategoryId} == {settings.jobTypes.cvOptionalCategoryId}', then: 'js__panel-collapsible _open', else: '')}"
+                                    name="apply-job"
+                                    action="applyJob"
+                                    controller="JobAjax"
+                                    pluginName="Pi2"
+                                    pageType="{settings.sharePageType}"
+                                    arguments="{job: job, requireCV: 1}">
 
-                            <div class="panel-box__body">
-                                <f:render section="applyJobFields" />
+                                <div class="panel-box__body">
+                                    <f:render section="applyJobFields" />
 
-                                <div class="form-additions">
-                                    <div class="row">
-                                        <f:render section="uploadFile" arguments="{label: 'add_cv', name: 'cv'}"/>
-                                        <f:render section="uploadFile" arguments="{label: 'add_letter', name: 'letter'}"/>
+                                    <f:if condition="{cvQuestionsPreset}">
+                                        <f:render section="questionsPreset" arguments="{questionsPreset: cvQuestionsPreset, additionalQuestionsPrefix: additionalQuestionsPrefix, job: job}" />
+                                    </f:if>
+
+                                    <div class="form-additions">
+                                        <div class="row">
+                                            <f:render section="uploadFile" arguments="{label: 'add_cv', name: 'cv'}"/>
+                                            <f:render section="uploadFile" arguments="{label: 'add_letter', name: 'letter'}"/>
+                                        </div>
+                                    </div>
+                                    <f:render section="addAdditionalFile" arguments="{uid: 1}" />
+
+                                    <div class="form-additions _has-text">
+                                        <f:render section="agreeOnTerms" />
                                     </div>
                                 </div>
 
-                                <div id="pxa-additional-file-template" class="hidden" data-label="{f:translate(key:'fe.additional_file')} ###COUNTER###" data-name="file_###COUNTER###">
-                                    <f:render section="additionalFileUploadFileTemplate" arguments="{label: 'additional_file', name: 'file_0'}"/>
-                                </div>
-
-                                <f:render section="addAdditionalFile" />
-
-                                <div class="form-additions _has-text">
-                                    <f:render section="agreeOnTerms" />
-                                </div>
+                                <f:render section="submitButton" />
+                            </f:form>
+                            <div class="ajax-loader _ready">
+                                <f:render partial="AjaxLoader" />
                             </div>
-
-                            <f:render section="submitButton" />
-                        </f:form>
-                        <div class="ajax-loader _ready">
-                            <f:render partial="AjaxLoader" />
-                        </div>
                         </div>
                     </div>
                 </div>
@@ -307,11 +312,16 @@
 </f:section>
 
 <f:section name="addAdditionalFile">
+    <f:comment>Uid is unique for this additional files set</f:comment>
+    <div data-uid="{uid}" class="hidden additional-file-template" data-label="{f:translate(key:'fe.additional_file')} ###COUNTER###" data-name="file_###COUNTER###">
+        <f:render section="additionalFileUploadFileTemplate" arguments="{label: 'additional_file', name: 'file_0'}"/>
+    </div>
+
     <div class="form-additions _has-text">
         <div class="row">
             <div class="col-sm-12">
                 <p class="text-center">
-                    <a href="javascript: {}" data-add-document="1">
+                    <a href="javascript: {}" data-add-document="1" data-uid="{uid}">
                         <i class="icons icon-arrow-right5"></i>
                         <span><f:translate key="fe.add_documents" /></span>
                     </a>
@@ -348,6 +358,7 @@
                             <f:translate key="placeholder.{field}" />
                         </label>
                         <f:form.textfield
+                                placeholder="{f:if(condition:'{field} == \'phone_number_home\'', then: '000-000 00 00', else: '')}"
                                 class="form-control"
                                 name="applyJob[{field}]" />
                     </div>
@@ -362,8 +373,8 @@
     </div>
 </f:section>
 
-<f:section name="noCvQuestionsPreset">
-    <f:for each="{noCvQuestionsPreset}" key="key" as="question">
+<f:section name="questionsPreset">
+    <f:for each="{questionsPreset}" key="key" as="question">
         <f:if condition="{question.type} == 'radio'">
             <f:then>
                 <f:render

@@ -88,10 +88,10 @@
 			<trans-unit id="placeholder.zip_code">
 				<target>Postnummer</target>
 			</trans-unit>
-			<trans-unit id="placeholder.mobile_phone">
+			<trans-unit id="placeholder.social_number">
 				<target>Personnummer - format 800101-0101</target>
 			</trans-unit>
-			<trans-unit id="placeholder.phone_number_home">
+			<trans-unit id="placeholder.mobile_phone">
 				<target>Telefonnummer</target>
 			</trans-unit>
 			<trans-unit id="fe.add_cv">

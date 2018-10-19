@@ -112,10 +112,10 @@
 			<trans-unit id="placeholder.zip_code">
 			    <source>Zip code</source>
 			</trans-unit>
-			<trans-unit id="placeholder.mobile_phone">
-			    <source>Mobile phone</source>
+			<trans-unit id="placeholder.social_number">
+			    <source>Social number</source>
 			</trans-unit>
-			<trans-unit id="placeholder.phone_number_home">
+			<trans-unit id="placeholder.mobile_phone">
 			    <source>Telephone</source>
 			</trans-unit>
 			<trans-unit id="fe.add_cv">

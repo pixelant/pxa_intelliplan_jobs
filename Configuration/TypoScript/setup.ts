@@ -40,17 +40,17 @@ plugin.tx_pxaintelliplanjobs {
             termsLink = {$plugin.tx_pxaintelliplanjobs.settings.applyJob.termsLink}
 
             fields {
-                formFields = first_name,surname,email,street_address,zip_code,city,mobile_phone,phone_number_home
+                formFields = first_name,surname,email,street_address,zip_code,city,social_number,mobile_phone
 
                 validationCV {
                     first_name = required
                     email = email
                     zip_code = required
-                    mobile_phone = required,phone
                     surname = required
                     street_address = required
                     city = required
-                    phone_number_home = required,phone
+                    mobile_phone = required,phone
+                    social_number = required,phone
                     agreement_type = agreeCheckbox
                 }
 

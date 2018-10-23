@@ -42,6 +42,11 @@ plugin.tx_pxaintelliplanjobs {
             fields {
                 formFields = first_name,surname,email,street_address,zip_code,city,social_number,mobile_phone
 
+                # Copy field to another field before sending api call
+                duplicateFields {
+                    social_number = birthday_year
+                }
+
                 validationCV {
                     first_name = required
                     email = email

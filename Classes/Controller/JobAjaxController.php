@@ -161,6 +161,17 @@ class JobAjaxController extends AbstractAction
             // If CV is not required, create text file with information from radio buttons data
             //$this->uploadFiles[self::CV_UPLOAD_FIELD_NAME] = $this->generateTextFileFromNotSupportedFields($text);
 
+            // Duplicate fields
+            if (isset($this->settings['applyJob']['fields']['duplicateFields'])
+                && is_array($this->settings['applyJob']['fields']['duplicateFields'])
+            ) {
+                foreach ($this->settings['applyJob']['fields']['duplicateFields'] as $field => $target) {
+                    if (isset($fields[$field])) {
+                        $fields[$target] = $fields[$field];
+                    }
+                }
+            }
+
             $intelliplanApi = GeneralUtility::makeInstance(IntelliplanApi::class);
             $response = $intelliplanApi->applyForJob($job, $fields, $this->uploadFiles);
 

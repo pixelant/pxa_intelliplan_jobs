@@ -88,7 +88,7 @@
 			<trans-unit id="placeholder.zip_code">
 				<target>Postnummer</target>
 			</trans-unit>
-			<trans-unit id="placeholder.social_number">
+			<trans-unit id="placeholder.social_security_number">
 				<target>Personnummer - format 800101-0101</target>
 			</trans-unit>
 			<trans-unit id="placeholder.mobile_phone">

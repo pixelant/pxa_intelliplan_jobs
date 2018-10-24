@@ -40,7 +40,7 @@ plugin.tx_pxaintelliplanjobs {
             termsLink = {$plugin.tx_pxaintelliplanjobs.settings.applyJob.termsLink}
 
             fields {
-                formFields = first_name,surname,email,street_address,zip_code,city,social_number,mobile_phone
+                formFields = first_name,surname,email,street_address,zip_code,city,social_security_number,mobile_phone
 
                 validationCV {
                     first_name = required
@@ -50,13 +50,13 @@ plugin.tx_pxaintelliplanjobs {
                     street_address = required
                     city = required
                     mobile_phone = required,phone
-                    social_number = required,phone
+                    social_security_number = required,phone
                     agreement_type = agreeCheckbox
                 }
 
                 validationNoCV < .validationCV
 
-                apiSupportFields = first_name,surname,mobile_phone,email,job_ad_id,comment,agreement_type,zip_code,city,birthday_year,birthday_month,birthday_day_of_month,social_number,linkedin_url
+                apiSupportFields = first_name,surname,mobile_phone,email,job_ad_id,comment,agreement_type,zip_code,city,birthday_year,birthday_month,birthday_day_of_month,social_security_number,linkedin_url
                 # Exclude some fields when doing SetPersonalInformation
                 excludeSetFields = recruit_interest,success,staffing_interest
 

@@ -143,7 +143,7 @@
 				<target>Denna fil är obligatorisk att ladda upp </target>
 			</trans-unit>
 			<trans-unit id="fe.error_api_apply_job_7">
-				<target>CDen sökande har redan sökt denna tjänst </target>
+				<target>En ansökan till denna tjänst har redan registrerats från den angivna mejladressen.</target>
 			</trans-unit>
 			<trans-unit id="fe.error_api_apply_job_unknown">
 				<target>Något gick fel med ansökningen till detta jobb </target>

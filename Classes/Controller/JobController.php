@@ -94,11 +94,12 @@ class JobController extends AbstractAction
         // or last path segment was numeric, that means that external job ad ID was provided,
         // but job with such UID also exist
         // this depends on realurl configuration.
-        if ($job === null ||
-            (MathUtility::canBeInterpretedAsInteger($lastPathSegment) && intval($lastPathSegment) === $job->getUid())
+        if ($job === null
+            || (MathUtility::canBeInterpretedAsInteger($lastPathSegment) && intval($lastPathSegment) === $job->getUid())
         ) {
-            $this->handleJobNotFound();
+            $this->findJobByApiIdAndRedirectOrNotFound($lastPathSegment);
         }
+
 
         $this->view->assign(
             self::NO_CV_QUESTION_PRESET,
@@ -117,28 +118,22 @@ class JobController extends AbstractAction
     /**
      * Try to find object by inteliplan ID and redirect to correct url if found
      */
-    protected function handleJobNotFound()
+    protected function findJobByApiIdAndRedirectOrNotFound($jobAdId)
     {
         // Try to find job by external inteliplan uid
-        try {
-            $jobAdId = $this->request->getArgument('job');
+        if (MathUtility::canBeInterpretedAsInteger($jobAdId)) {
+            $job = $this->jobRepository->findById((int)$jobAdId);
 
-            if (MathUtility::canBeInterpretedAsInteger($jobAdId)) {
-                $job = $this->jobRepository->findById((int)$jobAdId);
+            if ($job !== null) {
+                $uriBuilder = $this->controllerContext->getUriBuilder()->reset();
+                $url = $uriBuilder
+                    ->setTargetPageUid($this->getTSFE()->id)
+                    ->uriFor('show', ['job' => $job]);
 
-                if ($job !== null) {
-                    $uriBuilder = $this->controllerContext->getUriBuilder()->reset();
-                    $url = $uriBuilder
-                        ->setTargetPageUid($this->getTSFE()->id)
-                        ->uriFor('show', ['job' => $job]);
-
-                    if (!empty($url)) {
-                        $this->redirectToUri($url, 0, 301);
-                    }
+                if (!empty($url)) {
+                    $this->redirectToUri($url, 0, 301);
                 }
             }
-        } catch (NoSuchArgumentException $exception) {
-            $jobAdId = 'Job id not provided';
         }
 
         $this->getTSFE()->pageNotFoundAndExit('Job ad with uid "' . $jobAdId . '" not found');

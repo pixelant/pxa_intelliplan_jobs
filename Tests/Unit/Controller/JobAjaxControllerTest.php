@@ -332,6 +332,90 @@ class JobAjaxControllerTest extends UnitTestCase
     }
 
     /**
+     * @test
+     */
+    public function parseBirthDateFromSocialNumberWithEightNumbers()
+    {
+        $socialNumber = '19900518-0099';
+        $expect = [
+            'birthday_year' => '1990',
+            'birthday_month' => '05',
+            'birthday_day_of_month' => '18'
+        ];
+        $result = $this->subject->_call('parseBirthDateFromSocialNumber', $socialNumber);
+
+        $this->assertEquals($expect, $result);
+    }
+
+    /**
+     * @test
+     * @dataProvider sixLengthSocialNumber
+     */
+    public function parseBirthDateFromSocialNumberWithSixNumbers($socialNumber, $expect)
+    {
+        $result = $this->subject->_call('parseBirthDateFromSocialNumber', $socialNumber);
+
+        $this->assertEquals($expect, $result);
+    }
+
+    /**
+     * @return array
+     */
+    public function sixLengthSocialNumber()
+    {
+        return [
+            '21century1' => [
+                'socialNumber' => '001214',
+                'expect' => [
+                    'birthday_year' => '2000',
+                    'birthday_month' => '12',
+                    'birthday_day_of_month' => '14'
+                ]
+            ],
+            '21century2' => [
+                'socialNumber' => '021014',
+                'expect' => [
+                    'birthday_year' => '2002',
+                    'birthday_month' => '10',
+                    'birthday_day_of_month' => '14'
+                ]
+            ],
+            '21century3' => [
+                'socialNumber' => '121014',
+                'expect' => [
+                    'birthday_year' => '2012',
+                    'birthday_month' => '10',
+                    'birthday_day_of_month' => '14'
+                ]
+            ],
+            '20century1' => [
+                'socialNumber' => '890822',
+                'expect' => [
+                    'birthday_year' => '1989',
+                    'birthday_month' => '08',
+                    'birthday_day_of_month' => '22'
+                ]
+            ],
+            '20century2' => [
+                'socialNumber' => '990822',
+                'expect' => [
+                    'birthday_year' => '1999',
+                    'birthday_month' => '08',
+                    'birthday_day_of_month' => '22'
+                ]
+            ],
+            '20century3' => [
+                'socialNumber' => '220822',
+                'expect' => [
+                    'birthday_year' => '1922',
+                    'birthday_month' => '08',
+                    'birthday_day_of_month' => '22'
+                ]
+            ],
+        ];
+    }
+
+    /**
      * Simulate different cases where validation of files will fail
      *
      * @return array

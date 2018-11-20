@@ -50,7 +50,7 @@ plugin.tx_pxaintelliplanjobs {
                     street_address = required
                     city = required
                     mobile_phone = required,phone
-                    social_security_number = required,phone
+                    social_security_number = required,social_number
                     agreement_type = agreeCheckbox
                 }
 

@@ -58,6 +58,9 @@
 			<trans-unit id="fe.error_valid_phone">
 			    <source>Invalid format number</source>
 			</trans-unit>
+			<trans-unit id="fe.error_valid_social_number">
+			    <source>Invalid social number</source>
+			</trans-unit>
 			<trans-unit id="fe.error_file_not_allowed">
 			    <source>Filetype is not allowed. Please upload a file of any of these types: %s.</source>
 			</trans-unit>

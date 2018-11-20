@@ -149,7 +149,10 @@
 				<target>Något gick fel med ansökningen till detta jobb </target>
 			</trans-unit>
 			<trans-unit id="fe.error_valid_phone">
-				<target>Ogiltigt nummerformat </target>
+				<target>Ogiltigt nummerformat</target>
+			</trans-unit>
+			<trans-unit id="fe.error_valid_social_number">
+				<target>Ogiltigt personnummer</target>
 			</trans-unit>
 			<trans-unit id="fe.error_file_not_allowed">
 				<target>Felaktig filtyp, vänligen ladda upp en fil i något av följande format: %s.</target>

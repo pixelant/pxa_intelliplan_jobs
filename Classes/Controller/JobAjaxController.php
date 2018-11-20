@@ -161,6 +161,12 @@ class JobAjaxController extends AbstractAction
             // If CV is not required, create text file with information from radio buttons data
             //$this->uploadFiles[self::CV_UPLOAD_FIELD_NAME] = $this->generateTextFileFromNotSupportedFields($text);
 
+            if (!empty($fields['social_security_number'])) {
+                $fields = array_merge(
+                    $fields,
+                    $this->parseBirthDateFromSocialNumber($fields['social_security_number'])
+                );
+            }
             $intelliplanApi = GeneralUtility::makeInstance(IntelliplanApi::class);
             $response = $intelliplanApi->applyForJob($job, $fields, $this->uploadFiles);
 
@@ -432,6 +438,16 @@ class JobAjaxController extends AbstractAction
                                 $this->addError($field, $this->translate('fe.error_acceptTerms'));
                             }
                             break;
+                        case 'social_number':
+                            $socialNumberParts = GeneralUtility::trimExplode('-', $value, true);
+                            if (!(count($socialNumberParts) === 2
+                                && (strlen($socialNumberParts[0]) === 6 || strlen($socialNumberParts[0]) === 8)
+                                && strlen($socialNumberParts[1]) == 4
+                            )) {
+                                $isValid = false;
+                                $this->addError($field, $this->translate('fe.error_valid_social_number'));
+                            }
+                            break;
                     }
                 }
             }
@@ -613,6 +629,34 @@ class JobAjaxController extends AbstractAction
             )
             ->setSubject($subject)
             ->send();
+    }
+
+    /**
+     * Parse birth dates from social number
+     * @param string $socialNumber
+     * @return array
+     */
+    protected function parseBirthDateFromSocialNumber(string $socialNumber): array
+    {
+        list($socialNumberDate) = GeneralUtility::trimExplode('-', $socialNumber, true);
+
+        $birthdayYearLength = strlen($socialNumberDate) === 8 ? 4 : 2;
+
+        $birthday_year = substr($socialNumberDate, 0, $birthdayYearLength);
+        $birthday_month = substr($socialNumberDate, $birthdayYearLength, 2);
+        $birthday_day_of_month = substr($socialNumberDate, $birthdayYearLength + 2, 2);
+
+        if ($birthdayYearLength === 2) {
+            $birthday_year = ($birthday_year[0] === '0' || $birthday_year[0] === '1')
+                ? '20' . $birthday_year
+                : '19' . $birthday_year;
+        }
+
+        return [
+            'birthday_year' => $birthday_year,
+            'birthday_month' => $birthday_month,
+            'birthday_day_of_month' => $birthday_day_of_month
+        ];
     }
 
     /**

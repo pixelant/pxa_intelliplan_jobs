@@ -180,13 +180,23 @@ class JobDataImporter extends AbstractImporter
             $activeUids = array_map('intval', $activeUids);
         }
 
-        $hiddenField = $GLOBALS['TCA']['tx_pxaintelliplanjobs_domain_model_job']['ctrl']['enablecolumns']['disabled'];
+        $deleteField = $GLOBALS['TCA']['tx_pxaintelliplanjobs_domain_model_job']['ctrl']['delete'];
 
-        $GLOBALS['TYPO3_DB']->exec_UPDATEquery(
-            'tx_pxaintelliplanjobs_domain_model_job',
-            'uid NOT IN (' . implode(',', $activeUids) . ')',
-            [$hiddenField => 1]
-        );
+        $statement = $GLOBALS['TYPO3_DB']
+            ->exec_SELECTquery(
+                'uid',
+                'tx_pxaintelliplanjobs_domain_model_job',
+                'uid NOT IN (' . implode(',', $activeUids) . ') AND ' . $deleteField . '=0 '
+            );
+        $cmd = ['tx_pxaintelliplanjobs_domain_model_job' => []];
+        while ($row = $statement->fetch_assoc()) {
+            $cmd['tx_pxaintelliplanjobs_domain_model_job'][(string)$row['uid']]['delete'] = true;
+        }
+        if (!empty($cmd['tx_pxaintelliplanjobs_domain_model_job'])) {
+            $tce = $this->getDataHandler();
+            $tce->start([], $cmd);
+            $tce->process_cmdmap();
+        }
     }
 
     /**

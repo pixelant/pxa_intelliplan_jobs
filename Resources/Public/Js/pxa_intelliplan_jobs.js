@@ -289,6 +289,7 @@ const PxaIntelliplanJobs = (function () {
 				url = form.attr('action'),
 				formData = new FormData(form[0]);
 
+			formData.append('tx_pxaintelliplanjobs_pi2[applyJob][g-recaptcha-response]', grecaptcha.getResponse());
 			form.find('[type="submit"]').prop('disabled', true);
 			form.find('.text-danger').remove();
 			form.find('.' + that.settings.errorFieldClass)

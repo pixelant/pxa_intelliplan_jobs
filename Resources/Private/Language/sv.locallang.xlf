@@ -142,6 +142,9 @@
 			<trans-unit id="fe.error_file_required">
 				<target>Denna fil är obligatorisk att ladda upp </target>
 			</trans-unit>
+			<trans-unit id="fe.error_recaptcha_required">
+                <target>Bekräfta att du inte är en robot</target>
+            </trans-unit>
 			<trans-unit id="fe.error_api_apply_job_7">
 				<target>En ansökan till denna tjänst har redan registrerats från den angivna mejladressen.</target>
 			</trans-unit>

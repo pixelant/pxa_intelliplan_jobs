@@ -49,6 +49,9 @@
 			<trans-unit id="fe.error_file_required">
 				<source>This file is required to upload</source>
 			</trans-unit>
+			<trans-unit id="fe.error_recaptcha_required">
+            	<source>Press "I am not a robot"</source>
+            </trans-unit>
 			<trans-unit id="fe.error_api_apply_job_7">
 			    <source>An application for this service has already been registered from the specified email address.</source>
 			</trans-unit>

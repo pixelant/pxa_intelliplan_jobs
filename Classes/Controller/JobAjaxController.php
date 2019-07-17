@@ -134,6 +134,30 @@ class JobAjaxController extends AbstractAction
     {
         /** @var array $fields */
         $fields = $this->request->getArgument('applyJob');
+
+        if (isset($fields['g-recaptcha-response'])) {
+            $url = 'https://www.google.com/recaptcha/api/siteverify';
+            $data = array(
+                'secret' => '6LfjEa4UAAAAALJgiwoeYik45WIy0MxWbx8qhtUr',
+                'response' => $fields['g-recaptcha-response']
+            );
+            $options = array(
+                'http' => array(
+                    'method' => 'POST',
+                    'content' => http_build_query($data)
+                )
+            );
+            $context = stream_context_create($options);
+            $result = file_get_contents($url, false, $context);
+            if (json_decode($result, true)['success'] === false) {
+                $this->addError('submit', $this->translate('fe.error_recaptcha_required'));
+            }
+
+        } else {
+            $this->addError('submit', $this->translate('fe.error_recaptcha_required'));
+            die('no param');
+        }
+
         /*
          * @TODO how to fix this for safari checkbox?
          */

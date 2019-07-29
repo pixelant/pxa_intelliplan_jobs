@@ -97,8 +97,9 @@ class JobAjaxController extends AbstractAction
     public function shareAction(ShareJob $shareJob, Job $job)
     {
         $isValid = $this->validateShare($shareJob, $job);
+        $isValidRecaptcha = $this->validateRecaptcha();
 
-        if ($isValid) {
+        if ($isValidRecaptcha && $isValid) {
             $mail = GeneralUtility::makeInstance(MailMessage::class);
 
             $variables = [
@@ -134,6 +135,9 @@ class JobAjaxController extends AbstractAction
     {
         /** @var array $fields */
         $fields = $this->request->getArgument('applyJob');
+
+        $isValidRecaptcha = $this->validateRecaptcha();
+
         /*
          * @TODO how to fix this for safari checkbox?
          */
@@ -151,7 +155,7 @@ class JobAjaxController extends AbstractAction
         $isValidFiles = $this->validateApplyJobFiles($validationType);
         $apiSuccess = false;
 
-        if ($isValidFields && $isValidFiles) {
+        if ($isValidRecaptcha && $isValidFields && $isValidFiles) {
             $text = $this->generateTextFromAdditionalQuestions($requireCV, $job, $fields);
 
             if (!empty($text)) {
@@ -232,7 +236,7 @@ class JobAjaxController extends AbstractAction
             }
         }
 
-        $success = $isValidFields && $isValidFiles && $apiSuccess;
+        $success = $isValidRecaptcha && $isValidFields && $isValidFiles && $apiSuccess;
         if ($success && intval($this->settings['mail']['thankYouMail']['enable']) === 1) {
             $this->sendThankYouMail($fields, $job);
         }
@@ -493,6 +497,48 @@ class JobAjaxController extends AbstractAction
         }
 
         return $valid;
+    }
+
+    /**
+     * Validate recaptcha
+     *
+     * @return bool
+     */
+    protected function validateRecaptcha()
+    {
+        // If no credentials assume check is disabled
+        if (!$this->isRecaptchaCredentialsSet()) {
+            return true;
+        }
+
+        $recaptchaResponse = GeneralUtility::_POST('g-recaptcha-response');
+
+        if (!empty($recaptchaResponse)) {
+            $url = 'https://www.google.com/recaptcha/api/siteverify';
+            $data = [
+                'secret' => $this->settings['recaptcha']['secretKey'],
+                'response' => $recaptchaResponse
+            ];
+            $options = [
+                'http' => [
+                    'method' => 'POST',
+                    'content' => http_build_query($data)
+                ]
+            ];
+            $context = stream_context_create($options);
+            $result = file_get_contents($url, false, $context);
+            if (json_decode($result, true)['success'] === false) {
+                $this->addError('recaptcha', $this->translate('fe.error_recaptcha_required'));
+
+                return false;
+            }
+
+            return true;
+        } else {
+            $this->addError('recaptcha', $this->translate('fe.error_recaptcha_required'));
+
+            return false;
+        }
     }
 
     /**

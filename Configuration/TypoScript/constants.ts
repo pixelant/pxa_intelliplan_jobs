@@ -66,4 +66,15 @@ plugin.tx_pxaintelliplanjobs {
         # cat=plugin.tx_pxaintelliplanjobs/mailsettings/060; type=string; label=LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:ts.siteDomain
         shareJob.siteDomain = www.site.com
     }
+
+    # customsubcategory=recaptcha=Recaptcha settings
+    settings {
+        recaptcha {
+            # cat=plugin.tx_pxaintelliplanjobs/recaptcha/010; type=string; label=LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:ts.siteKey
+            siteKey =
+
+            # cat=plugin.tx_pxaintelliplanjobs/recaptcha/020; type=string; label=LLL:EXT:pxa_intelliplan_jobs/Resources/Private/Language/locallang_db.xlf:ts.secretKey
+            secretKey =
+        }
+    }
 }

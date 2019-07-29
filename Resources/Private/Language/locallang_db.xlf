@@ -185,6 +185,12 @@
 			<!--Flexform:END-->
 
 			<!--Typoscript constant editor:START-->
+			<trans-unit id="ts.secretKey">
+			    <source>Secret key</source>
+			</trans-unit>
+			<trans-unit id="ts.siteKey">
+			    <source>Site key</source>
+			</trans-unit>
 			<trans-unit id="ts.dateFormat">
 			    <source>Date format</source>
 			</trans-unit>

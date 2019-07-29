@@ -176,6 +176,11 @@ plugin.tx_pxaintelliplanjobs {
                 logo = {$plugin.tx_pxaintelliplanjobs.settings.mail.thankYouMail.logo}
             }
         }
+
+        recaptcha {
+            siteKey = {$plugin.tx_pxaintelliplanjobs.settings.recaptcha.siteKey}
+            secretKey = {$plugin.tx_pxaintelliplanjobs.settings.recaptcha.secretKey}
+        }
     }
 }
 

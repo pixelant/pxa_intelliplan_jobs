@@ -31,4 +31,14 @@ abstract class AbstractAction extends ActionController
             ?? $this->settings['applyJob']['fields'][$key]['all']
             ?? [];
     }
+
+    /**
+     * Check if recaptcha credentials were given
+     *
+     * @return bool
+     */
+    protected function isRecaptchaCredentialsSet(): bool
+    {
+        return !empty($this->settings['recaptcha']['siteKey']) && !empty($this->settings['recaptcha']['secretKey']);
+    }
 }

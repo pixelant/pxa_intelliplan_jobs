@@ -15,6 +15,7 @@ namespace Pixelant\PxaIntelliplanJobs\Controller;
  ***/
 
 use Pixelant\PxaIntelliplanJobs\Domain\Model\Job;
+use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Extbase\Mvc\Exception\NoSuchArgumentException;
@@ -109,6 +110,8 @@ class JobController extends AbstractAction
             self::CV_QUESTION_PRESET,
             $this->getQuestionsPreset(self::CV_QUESTION_PRESET, $job)
         );
+
+        $this->includeRecaptchaScript();
 
         $this->view->assign('additionalQuestionsPrefix', self::ADDITIONAL_QUESTIONS_PREFIX);
         $this->view->assign('shareUrl', urlencode($this->getShareUrl($job)));
@@ -217,6 +220,26 @@ class JobController extends AbstractAction
     protected function isOptionEnabled(string $option): bool
     {
         return (int)$this->settings[$option] === 1;
+    }
+
+    /**
+     * Include recaptcha lib
+     */
+    protected function includeRecaptchaScript()
+    {
+        if ($this->isRecaptchaCredentialsSet()) {
+            $pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
+            $pageRenderer->addJsFooterFile(
+                'https://www.google.com/recaptcha/api.js',
+                'text/javascript',
+                false,
+                false,
+                '',
+                true,
+                '|',
+                true
+            );
+        }
     }
 
     /**

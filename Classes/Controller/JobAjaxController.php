@@ -118,7 +118,7 @@ class JobAjaxController extends AbstractAction
         $this->view->assign(
             'value',
             [
-                'success' => $isValid,
+                'success' => $isValid && $isValidRecaptcha,
                 'errors' => $this->responseErrors,
                 'successMessage' => $this->translate('fe.success_sent')
             ]

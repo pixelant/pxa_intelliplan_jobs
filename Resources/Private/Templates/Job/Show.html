@@ -26,7 +26,7 @@
                 <span>{job.municipality}</span>
             </h2>
         </div>
-        <h1>{job.title}</h1>
+        <h1 data-job-uid="{job.uid}">{job.title}</h1>
         <f:comment>
             <f:if condition="{job.pubDateTo}">
                 <p><f:translate key="fe.apply_before" /> <f:format.date date="{job.pubDateTo}" format="{settings.dateFormatHeader}"/></p>

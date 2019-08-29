@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace Pixelant\PxaIntelliplanJobs\Importer;
 
+use DmitryDulepov\Realurl\Cache\CacheFactory;
+use DmitryDulepov\Realurl\Cache\CacheInterface;
 use Pixelant\PxaIntelliplanJobs\Domain\Model\Category;
 use Pixelant\PxaIntelliplanJobs\Domain\Model\Job;
 use Pixelant\PxaIntelliplanJobs\Exception\CategoryNotFoundException;
@@ -67,6 +69,21 @@ class JobDataImporter extends AbstractImporter
         'pubDateTo',
         'lastUpdated'
     ];
+
+    /**
+     * @var CacheInterface
+     */
+    protected $realUrlCache = null;
+
+    /**
+     * JobDataImporter constructor.
+     */
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->realUrlCache = CacheFactory::getCache();
+    }
 
     /**
      * Import jobs data
@@ -165,6 +182,32 @@ class JobDataImporter extends AbstractImporter
         }
 
         $this->hideNoActiveJobAds($activeJobsUids);
+
+        $this->cleanUpUniqueAliasForDeletedRecords();
+    }
+
+    /**
+     * Clean all unique aliases for deleted jobs
+     */
+    protected function cleanUpUniqueAliasForDeletedRecords()
+    {
+        $db = $GLOBALS['TYPO3_DB'];
+
+        $result = $db->sql_query(
+            'SELECT uniqalias.uid, url_cache_id FROM ' .
+            'tx_realurl_uniqalias uniqalias JOIN tx_pxaintelliplanjobs_domain_model_job jobs ON uniqalias.value_id=jobs.uid ' .
+            'LEFT JOIN tx_realurl_uniqalias_cache_map cache ON uniqalias.uid=cache.alias_uid ' .
+            'WHERE jobs.deleted=1 AND uniqalias.tablename=' . $db->fullQuoteStr('tx_pxaintelliplanjobs_domain_model_job', 'tx_realurl_uniqalias'));
+
+        while (false !== ($data = $db->sql_fetch_assoc($result))) {
+            if ($data['url_cache_id']) {
+                $this->realUrlCache->clearUrlCacheById($data['url_cache_id']);
+            }
+            $db->exec_DELETEquery(
+                'tx_realurl_uniqalias',
+                'uid=' . (int)$data['uid']
+            );
+        }
     }
 
     /**

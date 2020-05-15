@@ -312,6 +312,10 @@ const PxaIntelliplanJobs = (function () {
 							callback(data);
 						}
 					} else {
+                        document.querySelectorAll('.g-recaptcha')
+                            .forEach(function (item, index) {
+                                grecaptcha.reset(index)
+                            });
 						for (let prop in data.errors) {
 							if (!data.errors.hasOwnProperty(prop)) {
 								continue;
